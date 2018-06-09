@@ -3,27 +3,29 @@
 [System.Serializable]
 public class Item
 {
+    public string ItemName; // название
+    public int ItemID; // id
+    public Texture2D ItemIcon; // иконка
+    public StateOfPreparing stateOfPreparing; // состояние приготовленности
+    public StateOfIncision stateOfIncision; // состояние предварителности??? 
+    public bool breading; // запанированно (???)
 
-    public string ItemName;
-    public int ItemID;
-    public Texture2D ItemIcon;
-    public StateOfRare stateOfRare;
-    public StateOfIncision stateOfIncision;
-
-    public enum StateOfRare
+    public enum StateOfPreparing
     {
-        Raw,
-        Fried,
-        Burnt
+        Raw, // сырое (стартовое)
+        Fried, // пожаренное
+        Burnt, // пережаренное
+        Cooked, // сваренное
+        Baked, // запеченное
+        Stew // тушеное
     }
 
     public enum StateOfIncision
     {
-        Whole,
-        Cutted,
-        Diced,
-        Stripped
-
+        Whole, //целое
+        Cutted, //порезанное
+        Grated, //тертое
+        Beaten, //отбитое
+        Forcemeat //фарш
     }
-
 }
