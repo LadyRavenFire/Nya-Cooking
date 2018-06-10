@@ -8,7 +8,7 @@ public class Item
     public Texture2D ItemIcon; // иконка
     public StateOfPreparing stateOfPreparing; // состояние приготовленности
     public StateOfIncision stateOfIncision; // состояние предварителности??? 
-    public bool breading; // запанированно (???)
+    public bool Breading; // запанированно (???)
 
     public enum StateOfPreparing
     {
@@ -27,5 +27,16 @@ public class Item
         Grated, //тертое
         Beaten, //отбитое
         Forcemeat //фарш
+    }
+
+    public Item(string name, int id, StateOfIncision incision, StateOfPreparing preparing, bool breading)
+    {
+        ItemName = name;
+        ItemID = id;
+        ItemIcon = Resources.Load<Texture2D>("ItemIcons/" + name); //загружаем иконку по названию предмета
+        stateOfPreparing = preparing;
+        stateOfIncision = incision;       
+        Breading = breading;
+
     }
 }

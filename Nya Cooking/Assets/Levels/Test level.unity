@@ -139,13 +139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af10ee464fc851b4199d4df6ed89da26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Items:
-  - ItemName: Meat
-    ItemID: 0
-    ItemIcon: {fileID: 2800000, guid: be1d3ad204dfac74e9156455bf5addaa, type: 3}
-    stateOfPreparing: 0
-    stateOfIncision: 0
-    breading: 0
+  Items: []
 --- !u!4 &424973940
 Transform:
   m_ObjectHideFlags: 0
@@ -186,6 +180,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 354389146f4da5940b14d24ef737cb9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SlotsX: 5
+  SlotsY: 1
   inventory: []
 --- !u!4 &1390379451
 Transform:

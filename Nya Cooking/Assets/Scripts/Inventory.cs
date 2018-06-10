@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
+    public int SlotsX, SlotsY;
     public List<Item> inventory = new List<Item>();
     private ItemDataBase _database;
 
@@ -19,7 +20,7 @@ public class Inventory : MonoBehaviour
     {
         for (int i = 0; i < inventory.Count; i++)
         {
-            GUI.Label(new Rect(10,i * 40,200,50), inventory[i].ItemIcon);
+            GUI.Label(new Rect(10,i * 20,200,50), inventory[i].ItemIcon);
         }
     }
 }
