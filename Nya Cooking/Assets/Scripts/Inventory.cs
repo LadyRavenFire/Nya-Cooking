@@ -8,10 +8,7 @@ public class Inventory : MonoBehaviour
     public GUISkin Skin;
     public List<Item> inventory = new List<Item>();
     public List<Item> Slots = new List<Item>();
-    //public bool showInventory; // potencial delete
     private ItemDataBase _database;
-    //private bool showTooltip;
-    //private string tooltip;
 
     void Start()
     {
@@ -24,30 +21,12 @@ public class Inventory : MonoBehaviour
         AddItem(0);
         AddItem(0);
         RemoveItem(0);
-        //print(InventoryContains(0));
-    }
-
-    void Update()
-    {
-       // if (Input.GetButtonDown("Inventory"))//potencial delete
-        //{
-        //    showInventory = !showInventory;
-       // }
     }
 
     void OnGUI()
     {
-       // tooltip = "";
         GUI.skin = Skin;
-        //if (showInventory)
-        //{
-            DrawInventory();
-        //}
-
-       // if (showTooltip)
-       // {
-       //     GUI.Box(new Rect(Event.current.mousePosition.x, Event.current.mousePosition.y,50,50), tooltip/*, Skin.GetStyle("Slot")*/);
-       // }
+        DrawInventory();
     }
 
     void DrawInventory()
@@ -63,28 +42,11 @@ public class Inventory : MonoBehaviour
                 if (Slots[index].ItemName != null)
                 {
                     GUI.DrawTexture(slotRect, Slots[index].ItemIcon);
-                   // if (slotRect.Contains(Event.current.mousePosition))
-                   //{
-                   //     tooltip = CreateTooltip(Slots[index]);
-                   //     showTooltip = true;
-                   // }
                 }
-
-               // if (tooltip == "")
-               // {
-               //     showTooltip = false;
-               // }
-
                 index++;
             }
         }
     }
-
-   // string CreateTooltip(Item item)
-   // {
-   //     tooltip = item.ItemName;
-   //     return tooltip;
-   // }
 
     void RemoveItem(int id)
     {
