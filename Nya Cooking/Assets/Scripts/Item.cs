@@ -39,4 +39,9 @@ public class Item
         Breading = breading;
 
     }
+
+    public Item()
+    {
+
+    }
 }

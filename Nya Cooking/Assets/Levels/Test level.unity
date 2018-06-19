@@ -182,7 +182,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SlotsX: 5
   SlotsY: 1
+  Skin: {fileID: 11400000, guid: 3d22b835af06592438a1dab2cb4dc677, type: 2}
   inventory: []
+  Slots: []
+  showInventory: 0
 --- !u!4 &1390379451
 Transform:
   m_ObjectHideFlags: 0
