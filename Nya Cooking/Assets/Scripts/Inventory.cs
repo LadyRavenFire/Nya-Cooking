@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//tooltip is in the 7 lesson. Maybe delete later....
+// comment at 8 lesson - drop outside
+// next 9 lesson
 public class Inventory : MonoBehaviour
 {
     public int SlotsX, SlotsY;
@@ -9,6 +10,11 @@ public class Inventory : MonoBehaviour
     public List<Item> inventory = new List<Item>();
     public List<Item> Slots = new List<Item>();
     private ItemDataBase _database;
+
+    private bool _draggingItem;
+    private Item _draggedItem;
+    private int _prevIndex;
+
 
     void Start()
     {
@@ -20,17 +26,22 @@ public class Inventory : MonoBehaviour
         _database = GameObject.FindGameObjectWithTag("ItemDataBase").GetComponent<ItemDataBase>();
         AddItem(0);
         AddItem(0);
-        RemoveItem(0);
+        //RemoveItem(0);
     }
 
     void OnGUI()
     {
         GUI.skin = Skin;
         DrawInventory();
+        if (_draggingItem)
+        {
+            GUI.DrawTexture(new Rect(Event.current.mousePosition.x, Event.current.mousePosition.y, 50, 50), _draggedItem.ItemIcon);
+        }
     }
 
     void DrawInventory()
     {
+        Event e = Event.current;
         int index = 0;
         for (int y = 0; y < SlotsY; y++)
         {
@@ -42,6 +53,36 @@ public class Inventory : MonoBehaviour
                 if (Slots[index].ItemName != null)
                 {
                     GUI.DrawTexture(slotRect, Slots[index].ItemIcon);
+                    if (slotRect.Contains(e.mousePosition))
+                    {
+                        if (e.button == 0 && e.type == EventType.MouseDrag && !_draggingItem)
+                        {
+                            _draggingItem = true;
+                            _prevIndex = index;
+                            _draggedItem = Slots[index];
+                            inventory[index] = new Item();
+                        }
+
+                        if (e.type == EventType.MouseUp && _draggingItem)
+                        {
+                            inventory[_prevIndex] = inventory[index];
+                            inventory[index] = _draggedItem;
+                            _draggingItem = false;
+                            _draggedItem = null;
+                        }
+                    }
+                }
+                else
+                {
+                    if (slotRect.Contains(e.mousePosition))
+                    {
+                        if (e.type == EventType.MouseUp && _draggingItem)
+                        {
+                            inventory[index] = _draggedItem;
+                            _draggingItem = false;
+                            _draggedItem = null;
+                        }
+                    }
                 }
                 index++;
             }
