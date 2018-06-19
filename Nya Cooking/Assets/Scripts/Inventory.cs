@@ -16,11 +16,14 @@ public class Inventory : MonoBehaviour
         for (int i = 0; i < (SlotsX*SlotsY); i++)
         {
             Slots.Add(new Item());
+            inventory.Add(new Item());
         }
         _database = GameObject.FindGameObjectWithTag("ItemDataBase").GetComponent<ItemDataBase>();
-        inventory.Add(_database.Items[0]);
-        inventory.Add(_database.Items[0]);
-        inventory.Add(_database.Items[0]);
+        //inventory.Add(_database.Items[0]);
+        //inventory.Add(_database.Items[0]);
+        //inventory.Add(_database.Items[0]);
+        inventory[0] = _database.Items[0]; // add item? >_< need normal function later....
+        inventory[1] = _database.Items[0];
     }
 
     void Update()
@@ -47,11 +50,19 @@ public class Inventory : MonoBehaviour
 
     void DrawInventory()
     {
-        for (int x = 0; x < SlotsX; x++)
+        int index = 0;
+        for (int y = 0; y < SlotsY; y++)
         {
-            for (int y = 0; y < SlotsY; y++)
+            for (int x = 0; x < SlotsX; x++)
             {
-                GUI.Box(new Rect(x * 60, y * 60, 50, 50), "", Skin.GetStyle("Slot"));
+                Rect slotRect = new Rect(x * 60, y * 60, 50, 50);
+                GUI.Box(slotRect, "", Skin.GetStyle("Slot"));
+                Slots[index] = inventory[index];
+                if (Slots[index].ItemName != null)
+                {
+                    GUI.DrawTexture(slotRect, Slots[index].ItemIcon);
+                }
+                index++;
             }
         }
     }
