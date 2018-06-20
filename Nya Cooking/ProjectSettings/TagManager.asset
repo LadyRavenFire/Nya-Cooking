@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - ItemDataBase
+  - Stove
+  - Inventory
   layers:
   - Default
   - TransparentFX

@@ -10,6 +10,7 @@ public class Inventory : MonoBehaviour
     public List<Item> inventory = new List<Item>();
     public List<Item> Slots = new List<Item>();
     private ItemDataBase _database;
+    public Stove stove;
 
     private bool _draggingItem;
     private Item _draggedItem;
@@ -24,6 +25,7 @@ public class Inventory : MonoBehaviour
             inventory.Add(new Item());
         }
         _database = GameObject.FindGameObjectWithTag("ItemDataBase").GetComponent<ItemDataBase>();
+        stove = GameObject.FindGameObjectWithTag("Stove").GetComponent<Stove>();
         AddItem(0);
         AddItem(0);
         //RemoveItem(0);
@@ -84,8 +86,18 @@ public class Inventory : MonoBehaviour
                         }
                     }
                 }
+
                 index++;
             }
+        }
+
+        if (e.type == EventType.mouseUp && _draggingItem && stove.IsEnterCollider)
+        {
+            stove.AddItem(_draggedItem);
+            //inventory[_prevIndex] = _draggedItem;
+            _draggingItem = false;
+            _draggedItem = null;
+
         }
         if (e.type == EventType.mouseUp && _draggingItem)
         {
