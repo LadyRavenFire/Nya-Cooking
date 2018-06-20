@@ -87,6 +87,12 @@ public class Inventory : MonoBehaviour
                 index++;
             }
         }
+        if (e.type == EventType.mouseUp && _draggingItem)
+        {
+            inventory[_prevIndex] = _draggedItem;
+            _draggingItem = false;
+            _draggedItem = null;
+        }
     }
 
     void RemoveItem(int id)
