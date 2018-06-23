@@ -94,7 +94,6 @@ public class Inventory : MonoBehaviour
         if (e.type == EventType.mouseUp && _draggingItem && stove.IsEnterCollider)
         {
             stove.AddItem(_draggedItem);
-            //inventory[_prevIndex] = _draggedItem;
             _draggingItem = false;
             _draggedItem = null;
 
@@ -111,7 +110,7 @@ public class Inventory : MonoBehaviour
     {
         for (int i = 0; i < inventory.Count; i++)
         {
-            if (inventory[i].ItemID == id)
+            if (inventory[i].ItemId == id)
             {
                 inventory[i] = new Item();
                 break;
@@ -119,7 +118,7 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    void AddItem(int id)
+    public void AddItem(int id)
     {
         for (int i = 0; i < inventory.Count; i++)
         {
@@ -127,10 +126,25 @@ public class Inventory : MonoBehaviour
             {
                 for (int j = 0; j < _database.Items.Count; j++)
                 {
-                    if (_database.Items[j].ItemID == id)
+                    if (_database.Items[j].ItemId == id)
                     {
                         inventory[i] = _database.Items[j];
                     }
+                }
+                break;
+            }
+        }
+    }
+
+    public void AddItemFromOther(Item item)
+    {
+        for (int i = 0; i < inventory.Count; i++)
+        {
+            if (inventory[i].ItemName == null)
+            {
+                for (int j = 0; j < _database.Items.Count; j++)
+                {
+                    inventory[i] = item;
                 }
                 break;
             }
@@ -142,7 +156,7 @@ public class Inventory : MonoBehaviour
         bool result = false;
         for (int i = 0; i < inventory.Count; i++)
         {
-            if (inventory[id].ItemID == id)
+            if (inventory[id].ItemId == id)
             {
                 result = true;
                 break;

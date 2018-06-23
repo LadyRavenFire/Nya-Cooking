@@ -9,5 +9,6 @@ public class ItemDataBase : MonoBehaviour
     void Start()
     {
         Items.Add(new Item("Meat", 0, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw, false));
+        Items.Add(new Item("Meat_fried", 1, Item.StateOfIncision.Whole, Item.StateOfPreparing.Fried, false)); //ПЕРЕДЕЛАТЬ
     }
 }

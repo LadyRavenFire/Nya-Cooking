@@ -4,7 +4,7 @@
 public class Item
 {
     public string ItemName; // название
-    public int ItemID; // id
+    public int ItemId; // id
     public Texture2D ItemIcon; // иконка
     public StateOfPreparing stateOfPreparing; // состояние приготовленности
     public StateOfIncision stateOfIncision; // состояние предварителности??? 
@@ -32,7 +32,7 @@ public class Item
     public Item(string name, int id, StateOfIncision incision, StateOfPreparing preparing, bool breading)
     {
         ItemName = name;
-        ItemID = id;
+        ItemId = id;
         ItemIcon = Resources.Load<Texture2D>("ItemIcons/" + name); //загружаем иконку по названию предмета
         stateOfPreparing = preparing;
         stateOfIncision = incision;       
