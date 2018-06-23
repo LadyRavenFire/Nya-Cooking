@@ -26,9 +26,9 @@ public class Stove : MonoBehaviour
         if (ItemInStove[0].ItemName != null && _isCooking == false)
         {
             ItemInStove[0].stateOfPreparing = Item.StateOfPreparing.Fried;
-            if (ItemInStove[0].ItemId == 0) // костыль, переделать
+            if (ItemInStove[0].ItemId == 0) // костыль, переделать 
             {
-                ItemInStove[0] = _database.Items[1];
+                ItemInStove[0] = _database.Items[1]; // вот тут жопка сама, если просто поменять текстуру предмета - то она поменяется у всех предметов данного вида!
             }
             _isCooking = true;
             print("EDA V NYTRI!!!");

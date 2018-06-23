@@ -5,12 +5,12 @@ using UnityEngine;
 // next 9 lesson
 public class Inventory : MonoBehaviour
 {
-    public int SlotsX, SlotsY;
-    public GUISkin Skin;
-    public List<Item> inventory = new List<Item>();
+    public int SlotsX, SlotsY; // количество слотов инвентаря в длинну и высоту
+    public GUISkin Skin; // скин инвентаря (ака текстурка)
+    public List<Item> inventory = new List<Item>(); 
     public List<Item> Slots = new List<Item>();
     private ItemDataBase _database;
-    public Stove stove;
+    public Stove stove; 
 
     private bool _draggingItem;
     private Item _draggedItem;
@@ -19,13 +19,13 @@ public class Inventory : MonoBehaviour
 
     void Start()
     {
-        for (int i = 0; i < (SlotsX*SlotsY); i++)
+        for (int i = 0; i < (SlotsX*SlotsY); i++) 
         {
             Slots.Add(new Item());
             inventory.Add(new Item());
         }
-        _database = GameObject.FindGameObjectWithTag("ItemDataBase").GetComponent<ItemDataBase>();
-        stove = GameObject.FindGameObjectWithTag("Stove").GetComponent<Stove>();
+        _database = GameObject.FindGameObjectWithTag("ItemDataBase").GetComponent<ItemDataBase>(); // тут и строкой ниже ищем по тегу база данных и печка и добавляем объекты в таблицу
+        stove = GameObject.FindGameObjectWithTag("Stove").GetComponent<Stove>(); // тут кст могут быть ошибки, если печек будет много, нужно подумать как улучшить
         AddItem(0);
         AddItem(0);
         //RemoveItem(0);
@@ -49,15 +49,15 @@ public class Inventory : MonoBehaviour
         {
             for (int x = 0; x < SlotsX; x++)
             {
-                Rect slotRect = new Rect(x * 60, y * 60, 50, 50);
-                GUI.Box(slotRect, "", Skin.GetStyle("Slot"));
-                Slots[index] = inventory[index];
+                Rect slotRect = new Rect(x * 60, y * 60, 50, 50); // функция отрисовки ячеек инвентаря
+                GUI.Box(slotRect, "", Skin.GetStyle("Slot")); // функция отрисовки ячеек инвентаря
+                Slots[index] = inventory[index]; 
                 if (Slots[index].ItemName != null)
                 {
-                    GUI.DrawTexture(slotRect, Slots[index].ItemIcon);
+                    GUI.DrawTexture(slotRect, Slots[index].ItemIcon); // функция отрисовки предметов в инвентаре
                     if (slotRect.Contains(e.mousePosition))
                     {
-                        if (e.button == 0 && e.type == EventType.MouseDrag && !_draggingItem)
+                        if (e.button == 0 && e.type == EventType.MouseDrag && !_draggingItem) 
                         {
                             _draggingItem = true;
                             _prevIndex = index;
