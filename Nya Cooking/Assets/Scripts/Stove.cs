@@ -10,6 +10,8 @@ public class Stove : MonoBehaviour
     private bool _isCooking;
     public Inventory inventory;
     private ItemDataBase _database;
+    private float _timer;
+    private bool _timerFlag;
 
     void Start()
     {
@@ -19,20 +21,26 @@ public class Stove : MonoBehaviour
         _isCooking = false;
         inventory = GameObject.FindGameObjectWithTag("Inventory").GetComponent<Inventory>();
         _database = GameObject.FindGameObjectWithTag("ItemDataBase").GetComponent<ItemDataBase>();
+        _timer = 0;
+        _timerFlag = false;
     }
 
     void Update()
     {
-        if (ItemInStove[0].ItemName != null && _isCooking == false)
+        if (!IsEmpty && _isCooking == false)
         {
-            ItemInStove[0].stateOfPreparing = Item.StateOfPreparing.Fried;
-            if (ItemInStove[0].ItemId == 0) // костыль, переделать
+            //ItemInStove[0].stateOfPreparing = Item.StateOfPreparing.Fried; <- вот так хотелось бы
+            if (ItemInStove[0].ItemId == 0 && _timerFlag == false) // костыль, переделать (Хотя может быть и не костыль....)
             {
-                ItemInStove[0] = _database.Items[1];
+                _timer = 5;
+                _timerFlag = true;       
+                // ItemInStove[0] = _database.Items[1]; 
             }
-            _isCooking = true;
+
+            _isCooking = true;            
             print("EDA V NYTRI!!!");
         }
+        PreparingTimer();
     }
 
     void DeleteItem(int id)
@@ -45,6 +53,9 @@ public class Stove : MonoBehaviour
                 break;
             }
         }
+
+        IsEmpty = true;
+        _isCooking = false;
     }
 
     public void AddItem(Item item)
@@ -71,6 +82,34 @@ public class Stove : MonoBehaviour
             inventory.AddItemFromOther(ItemInStove[0]);
             print("Vz9l item iz pechki!");
             DeleteItem(1);
+            //_isCooking = false;
+        }
+    }
+
+    void Prepare()
+    {
+        if (ItemInStove[0].ItemId == 0)
+        {
+            ItemInStove[0] = _database.Items[1];           
+            print("Eda prigotovilas`");
+        }
+        _timerFlag = false;
+        _timer = 0;
+    }
+
+    void PreparingTimer()
+    {
+        if (_isCooking && _timerFlag)
+        {
+            if (_timer > 0)
+            {
+                _timer-= Time.deltaTime;
+            }
+
+            if (_timer < 0)
+            {
+                Prepare();
+            }
         }
     }
 }

@@ -94,6 +94,7 @@ public class Inventory : MonoBehaviour
         if (e.type == EventType.mouseUp && _draggingItem && stove.IsEnterCollider)
         {
             stove.AddItem(_draggedItem);
+            stove.IsEmpty = false;
             _draggingItem = false;
             _draggedItem = null;
 
