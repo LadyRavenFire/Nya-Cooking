@@ -9,7 +9,6 @@ public class Stove : MonoBehaviour
     public bool IsEmpty;
     private bool _isCooking;
     public Inventory inventory;
-    private ItemDataBase _database;
     private float _timer;
     private bool _timerFlag;
 
@@ -22,7 +21,6 @@ public class Stove : MonoBehaviour
         IsEmpty = true;
         _isCooking = false;
         inventory = GameObject.FindGameObjectWithTag("Inventory").GetComponent<Inventory>();
-        _database = GameObject.FindGameObjectWithTag("ItemDataBase").GetComponent<ItemDataBase>();
         _timer = 0;
         _timerFlag = false;
     }
@@ -31,12 +29,10 @@ public class Stove : MonoBehaviour
     {
         if (!IsEmpty && _isCooking == false)
         {
-            //ItemInStove[0].stateOfPreparing = Item.StateOfPreparing.fried; <- вот так хотелось бы
-            if (ItemInStove[0].ItemName == Item.Name.Meat && _timerFlag == false) // костыль, переделать (Хотя может быть и не костыль....)
+            if (ItemInStove[0].ItemName == Item.Name.Meat && _timerFlag == false)
             {
                 _timer = 5;
-                _timerFlag = true;       
-                // ItemInStove[0] = _database.Items[1]; 
+                _timerFlag = true;
             }
 
             _isCooking = true;            
