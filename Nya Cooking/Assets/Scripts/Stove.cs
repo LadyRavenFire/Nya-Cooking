@@ -32,7 +32,7 @@ public class Stove : MonoBehaviour
         if (!IsEmpty && _isCooking == false)
         {
             //ItemInStove[0].stateOfPreparing = Item.StateOfPreparing.fried; <- вот так хотелось бы
-            if (ItemInStove[0].ItemId == 0 && _timerFlag == false) // костыль, переделать (Хотя может быть и не костыль....)
+            if (ItemInStove[0].ItemName == "Meat" && _timerFlag == false) // костыль, переделать (Хотя может быть и не костыль....)
             {
                 _timer = 5;
                 _timerFlag = true;       
@@ -45,8 +45,10 @@ public class Stove : MonoBehaviour
         PreparingTimer();
     }
 
-    void DeleteItem(int id)
+    void DeleteItem(int index)
     {
+        ItemInStove[index] = new Item();
+        /*
         for (int i = 0; i < ItemInStove.Count; i++)
         {
             if (ItemInStove[i].ItemId == id)
@@ -55,6 +57,7 @@ public class Stove : MonoBehaviour
                 break;
             }
         }
+        */
 
         IsEmpty = true;
         _isCooking = false;
@@ -83,14 +86,14 @@ public class Stove : MonoBehaviour
         {
             inventory.AddItemFromOther(ItemInStove[0]);
             print("Vz9l item iz pechki!");
-            DeleteItem(1);
+            DeleteItem(0);
             //_isCooking = false;
         }
     }
 
     void Prepare()
     {
-        if (ItemInStove[0].ItemId == 0)
+        if (ItemInStove[0].ItemName == "Meat")
         {
             ItemInStove[0].stateOfPreparing = Item.StateOfPreparing.fried;
             ItemInStove[0].UpdateTexture();

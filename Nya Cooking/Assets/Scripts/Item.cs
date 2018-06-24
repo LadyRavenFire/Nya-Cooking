@@ -6,7 +6,6 @@ using UnityEngine;
 public class Item
 {
     public string ItemName; // название
-    public int ItemId; // id
     public Texture2D ItemIcon; // иконка
     public string TexturePath;
     public StateOfPreparing stateOfPreparing; // состояние приготовленности
@@ -37,10 +36,9 @@ public class Item
         Forcemeat //фарш
     }
 
-    public Item(string name, int id, StateOfIncision incision, StateOfPreparing preparing, bool breading)
+    public Item(string name, StateOfIncision incision, StateOfPreparing preparing, bool breading)
     {
         ItemName = name;
-        ItemId = id;
         TexturePath = "ItemIcons/" + this.ToString();
         ItemIcon = Resources.Load<Texture2D>(TexturePath); //загружаем иконку по названию предмета
         stateOfPreparing = preparing;

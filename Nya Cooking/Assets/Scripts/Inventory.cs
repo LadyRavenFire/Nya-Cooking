@@ -68,7 +68,7 @@ public class Inventory : MonoBehaviour
                             _draggingItem = true;
                             _prevIndex = index;
                             _draggedItem = Slots[index];
-                            inventory[index] = new Item();
+                            RemoveItem(index);
                         }
 
                         if (e.type == EventType.MouseUp && _draggingItem)
@@ -115,8 +115,11 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    void RemoveItem(int id)
+    void RemoveItem(int index)
     {
+        inventory[index] = new Item();
+
+        /*
         for (int i = 0; i < inventory.Count; i++)
         {
             if (inventory[i].ItemId == id)
@@ -125,6 +128,7 @@ public class Inventory : MonoBehaviour
                 break;
             }
         }
+        */
     }
 
     public void AddItem(int id)
@@ -167,6 +171,7 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    /*
     bool InventoryContains(int id)
     {
         bool result = false;
@@ -180,4 +185,5 @@ public class Inventory : MonoBehaviour
         }
         return result;
     }
+    */
 }
