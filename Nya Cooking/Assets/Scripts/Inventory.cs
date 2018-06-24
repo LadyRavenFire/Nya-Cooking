@@ -5,24 +5,22 @@ using UnityEngine;
 // next 9 lesson
 public class Inventory : MonoBehaviour
 {
-    public int SlotsX, SlotsY; // количество слотов инвентаря в длинну и высоту
+    private int SlotsX, SlotsY; // количество слотов инвентаря в длинну и высоту
     public GUISkin Skin; // скин инвентаря (ака текстурка)
-    public List<Item> inventory = new List<Item>(); 
-    public List<Item> Slots = new List<Item>();
+    private List<Item> Slots = new List<Item>(); 
     private ItemDataBase _database;
-    public Stove stove; 
+    public Stove stove;
 
     private bool _draggingItem;
     private Item _draggedItem;
     private int _prevIndex;
 
-
     void Start()
     {
         for (int i = 0; i < (SlotsX*SlotsY); i++) 
         {
+            // Slots.Add(new Item());
             Slots.Add(new Item());
-            inventory.Add(new Item());
         }
 
         _database = GameObject.FindGameObjectWithTag("ItemDataBase").GetComponent<ItemDataBase>(); // тут и строкой ниже ищем по тегу база данных и печка и добавляем объекты в таблицу
@@ -30,9 +28,9 @@ public class Inventory : MonoBehaviour
         AddItem(0);
         AddItem(0);
 
-        print(inventory[0].ItemName);
-        print(inventory[0].TexturePath);
-        print(inventory[0].ItemIcon == null);
+        print(Slots[0].ItemName);
+        print(Slots[0].TexturePath);
+        print(Slots[0].ItemIcon == null);
 
         //RemoveItem(0);
     }
@@ -57,24 +55,24 @@ public class Inventory : MonoBehaviour
             {
                 Rect slotRect = new Rect(x * 60, y * 60, 50, 50); // функция отрисовки ячеек инвентаря
                 GUI.Box(slotRect, "", Skin.GetStyle("Slot")); // функция отрисовки ячеек инвентаря
-                Slots[index] = inventory[index]; 
-                if (Slots[index].ItemName != null)
+                var temp = Slots[index];
+                if (temp.ItemName != null)
                 {
-                    GUI.DrawTexture(slotRect, Slots[index].ItemIcon); // функция отрисовки предметов в инвентаре
+                    GUI.DrawTexture(slotRect, temp.ItemIcon); // функция отрисовки предметов в инвентаре
                     if (slotRect.Contains(e.mousePosition))
                     {
                         if (e.button == 0 && e.type == EventType.MouseDrag && !_draggingItem) 
                         {
                             _draggingItem = true;
                             _prevIndex = index;
-                            _draggedItem = Slots[index];
+                            _draggedItem = temp;
                             RemoveItem(index);
                         }
 
                         if (e.type == EventType.MouseUp && _draggingItem)
                         {
-                            inventory[_prevIndex] = inventory[index];
-                            inventory[index] = _draggedItem;
+                            Slots[_prevIndex] = Slots[index];
+                            Slots[index] = _draggedItem;
                             _draggingItem = false;
                             _draggedItem = null;
                         }
@@ -86,7 +84,7 @@ public class Inventory : MonoBehaviour
                     {
                         if (e.type == EventType.MouseUp && _draggingItem)
                         {
-                            inventory[index] = _draggedItem;
+                            Slots[index] = _draggedItem;
                             _draggingItem = false;
                             _draggedItem = null;
                         }
@@ -109,7 +107,7 @@ public class Inventory : MonoBehaviour
         }
         if (e.type == EventType.mouseUp && _draggingItem)
         {
-            inventory[_prevIndex] = _draggedItem;
+            Slots[_prevIndex] = _draggedItem;
             _draggingItem = false;
             _draggedItem = null;
         }
@@ -117,14 +115,14 @@ public class Inventory : MonoBehaviour
 
     void RemoveItem(int index)
     {
-        inventory[index] = new Item();
+        Slots[index] = new Item();
 
         /*
-        for (int i = 0; i < inventory.Count; i++)
+        for (int i = 0; i < slots.Count; i++)
         {
-            if (inventory[i].ItemId == id)
+            if (slots[i].ItemId == id)
             {
-                inventory[i] = new Item();
+                slots[i] = new Item();
                 break;
             }
         }
@@ -133,24 +131,24 @@ public class Inventory : MonoBehaviour
 
     public void AddItem(int id)
     {
-        for (int i = 0; i < inventory.Count; i++)
+        for (int i = 0; i < Slots.Count; i++)
         {
-            if (inventory[i].ItemName == null)
+            if (Slots[i].ItemName == null)
             {
-                inventory[i] = _database.Generate(Item.Name.Meat, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw, false);
+                Slots[i] = _database.Generate(Item.Name.Meat, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw, false);
                 break;
             }
         }
 
-        /*for (int i = 0; i < inventory.Count; i++)
+        /*for (int i = 0; i < slots.Count; i++)
         {
-            if (inventory[i].ItemName == null)
+            if (slots[i].ItemName == null)
             {
                 for (int j = 0; j < _database.Items.Count; j++)
                 {
                     if (_database.Items[j].ItemId == id)
                     {
-                        inventory[i] = _database.Items[j];
+                        slots[i] = _database.Items[j];
                     }
                 }
                 break;
@@ -160,12 +158,12 @@ public class Inventory : MonoBehaviour
 
     public void AddItemFromOther(Item item)
     {
-        for (int i = 0; i < inventory.Count; i++)
+        for (int i = 0; i < Slots.Count; i++)
         {
-            if (inventory[i].ItemName == null)
+            if (Slots[i].ItemName == null)
             {
                 // for (int j = 0; j < _database.Items.Count; j++)
-                    inventory[i] = item;
+                    Slots[i] = item;
                 break;
             }
         }
@@ -175,9 +173,9 @@ public class Inventory : MonoBehaviour
     bool InventoryContains(int id)
     {
         bool result = false;
-        for (int i = 0; i < inventory.Count; i++)
+        for (int i = 0; i < slots.Count; i++)
         {
-            if (inventory[id].ItemId == id)
+            if (slots[id].ItemId == id)
             {
                 result = true;
                 break;
