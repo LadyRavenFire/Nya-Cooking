@@ -24,10 +24,16 @@ public class Inventory : MonoBehaviour
             Slots.Add(new Item());
             inventory.Add(new Item());
         }
+
         _database = GameObject.FindGameObjectWithTag("ItemDataBase").GetComponent<ItemDataBase>(); // тут и строкой ниже ищем по тегу база данных и печка и добавляем объекты в таблицу
         stove = GameObject.FindGameObjectWithTag("Stove").GetComponent<Stove>(); // тут кст могут быть ошибки, если печек будет много, нужно подумать как улучшить
         AddItem(0);
         AddItem(0);
+
+        print(inventory[0].ItemName);
+        print(inventory[0].TexturePath);
+        print(inventory[0].ItemIcon == null);
+
         //RemoveItem(0);
     }
 
@@ -93,6 +99,8 @@ public class Inventory : MonoBehaviour
 
         if (e.type == EventType.mouseUp && _draggingItem && stove.IsEnterCollider)
         {
+            print("Adding item to stove");
+            
             stove.AddItem(_draggedItem);
             stove.IsEmpty = false;
             _draggingItem = false;
@@ -125,6 +133,15 @@ public class Inventory : MonoBehaviour
         {
             if (inventory[i].ItemName == null)
             {
+                inventory[i] = _database.Generate(Item.Name.Meat, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw, false);
+                break;
+            }
+        }
+
+        /*for (int i = 0; i < inventory.Count; i++)
+        {
+            if (inventory[i].ItemName == null)
+            {
                 for (int j = 0; j < _database.Items.Count; j++)
                 {
                     if (_database.Items[j].ItemId == id)
@@ -134,7 +151,7 @@ public class Inventory : MonoBehaviour
                 }
                 break;
             }
-        }
+        }*/
     }
 
     public void AddItemFromOther(Item item)
@@ -143,10 +160,8 @@ public class Inventory : MonoBehaviour
         {
             if (inventory[i].ItemName == null)
             {
-                for (int j = 0; j < _database.Items.Count; j++)
-                {
+                // for (int j = 0; j < _database.Items.Count; j++)
                     inventory[i] = item;
-                }
                 break;
             }
         }

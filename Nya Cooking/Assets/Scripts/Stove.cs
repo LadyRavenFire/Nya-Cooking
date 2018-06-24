@@ -15,6 +15,8 @@ public class Stove : MonoBehaviour
 
     void Start()
     {
+        print("Stove created");
+
         ItemInStove.Add(new Item());
         IsEnterCollider = false;
         IsEmpty = true;
@@ -29,7 +31,7 @@ public class Stove : MonoBehaviour
     {
         if (!IsEmpty && _isCooking == false)
         {
-            //ItemInStove[0].stateOfPreparing = Item.StateOfPreparing.Fried; <- вот так хотелось бы
+            //ItemInStove[0].stateOfPreparing = Item.StateOfPreparing.fried; <- вот так хотелось бы
             if (ItemInStove[0].ItemId == 0 && _timerFlag == false) // костыль, переделать (Хотя может быть и не костыль....)
             {
                 _timer = 5;
@@ -90,7 +92,9 @@ public class Stove : MonoBehaviour
     {
         if (ItemInStove[0].ItemId == 0)
         {
-            ItemInStove[0] = _database.Items[1];           
+            ItemInStove[0].stateOfPreparing = Item.StateOfPreparing.fried;
+            ItemInStove[0].UpdateTexture();
+            // ItemInStove[0] = _database.Items[1];           
             print("Eda prigotovilas`");
         }
         _timerFlag = false;
