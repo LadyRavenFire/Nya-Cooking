@@ -5,6 +5,7 @@ using UnityEngine;
 // next 9 lesson
 public class Inventory : MonoBehaviour
 {
+    [SerializeField]
     private int SlotsX, SlotsY; // количество слотов инвентаря в длинну и высоту
     public GUISkin Skin; // скин инвентаря (ака текстурка)
     private List<Item> Slots = new List<Item>(); 
@@ -19,20 +20,13 @@ public class Inventory : MonoBehaviour
     {
         for (int i = 0; i < (SlotsX*SlotsY); i++) 
         {
-            // Slots.Add(new Item());
-            Slots.Add(new Item());
+            Slots.Add(null);
         }
 
         _database = GameObject.FindGameObjectWithTag("ItemDataBase").GetComponent<ItemDataBase>(); // тут и строкой ниже ищем по тегу база данных и печка и добавляем объекты в таблицу
         stove = GameObject.FindGameObjectWithTag("Stove").GetComponent<Stove>(); // тут кст могут быть ошибки, если печек будет много, нужно подумать как улучшить
-        AddItem(0);
-        AddItem(0);
-
-        print(Slots[0].ItemName);
-        print(Slots[0].TexturePath);
-        print(Slots[0].ItemIcon == null);
-
-        //RemoveItem(0);
+        AddItem(Item.Name.Meat, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw, false);
+        AddItem(Item.Name.Meat, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw, false);
     }
 
     void OnGUI()
@@ -56,7 +50,7 @@ public class Inventory : MonoBehaviour
                 Rect slotRect = new Rect(x * 60, y * 60, 50, 50); // функция отрисовки ячеек инвентаря
                 GUI.Box(slotRect, "", Skin.GetStyle("Slot")); // функция отрисовки ячеек инвентаря
                 var temp = Slots[index];
-                if (temp.ItemName != null)
+                if (temp != null)
                 {
                     GUI.DrawTexture(slotRect, temp.ItemIcon); // функция отрисовки предметов в инвентаре
                     if (slotRect.Contains(e.mousePosition))
@@ -115,73 +109,30 @@ public class Inventory : MonoBehaviour
 
     void RemoveItem(int index)
     {
-        Slots[index] = new Item();
-
-        /*
-        for (int i = 0; i < slots.Count; i++)
-        {
-            if (slots[i].ItemId == id)
-            {
-                slots[i] = new Item();
-                break;
-            }
-        }
-        */
+        Slots[index] = null;
     }
 
-    public void AddItem(int id)
+    public void AddItem(Item.Name name, Item.StateOfIncision stateOfIncision, Item.StateOfPreparing stateOfPreparing, bool isBreaded)
     {
         for (int i = 0; i < Slots.Count; i++)
         {
-            if (Slots[i].ItemName == null)
+            if (Slots[i] == null)
             {
-                Slots[i] = _database.Generate(Item.Name.Meat, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw, false);
+                Slots[i] = _database.Generate(name, stateOfIncision, stateOfPreparing, isBreaded);
                 break;
             }
         }
-
-        /*for (int i = 0; i < slots.Count; i++)
-        {
-            if (slots[i].ItemName == null)
-            {
-                for (int j = 0; j < _database.Items.Count; j++)
-                {
-                    if (_database.Items[j].ItemId == id)
-                    {
-                        slots[i] = _database.Items[j];
-                    }
-                }
-                break;
-            }
-        }*/
     }
 
-    public void AddItemFromOther(Item item)
+    public void AddItem(Item item)
     {
         for (int i = 0; i < Slots.Count; i++)
         {
-            if (Slots[i].ItemName == null)
+            if (Slots[i] == null)
             {
-                // for (int j = 0; j < _database.Items.Count; j++)
-                    Slots[i] = item;
+                Slots[i] = item;
                 break;
             }
         }
     }
-
-    /*
-    bool InventoryContains(int id)
-    {
-        bool result = false;
-        for (int i = 0; i < slots.Count; i++)
-        {
-            if (slots[id].ItemId == id)
-            {
-                result = true;
-                break;
-            }
-        }
-        return result;
-    }
-    */
 }

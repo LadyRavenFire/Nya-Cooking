@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class Item
 {
-    public string ItemName; // название
+    public Name ItemName; // название
     public Texture2D ItemIcon; // иконка
     public string TexturePath;
     public StateOfPreparing stateOfPreparing; // состояние приготовленности
@@ -36,7 +36,7 @@ public class Item
         Forcemeat //фарш
     }
 
-    public Item(string name, StateOfIncision incision, StateOfPreparing preparing, bool breading)
+    public Item(Name name, StateOfIncision incision, StateOfPreparing preparing, bool breading)
     {
         ItemName = name;
         TexturePath = "ItemIcons/" + this.ToString();
@@ -60,7 +60,7 @@ public class Item
     public override string ToString()
     {
         if (stateOfPreparing == StateOfPreparing.Raw)
-            return ItemName;
+            return ItemName.ToString("F");
 
         return ItemName + "_" + stateOfPreparing.ToString("F");
     }

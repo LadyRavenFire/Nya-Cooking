@@ -17,7 +17,7 @@ public class Stove : MonoBehaviour
     {
         print("Stove created");
 
-        ItemInStove.Add(new Item());
+        ItemInStove.Add(null);
         IsEnterCollider = false;
         IsEmpty = true;
         _isCooking = false;
@@ -32,7 +32,7 @@ public class Stove : MonoBehaviour
         if (!IsEmpty && _isCooking == false)
         {
             //ItemInStove[0].stateOfPreparing = Item.StateOfPreparing.fried; <- вот так хотелось бы
-            if (ItemInStove[0].ItemName == "Meat" && _timerFlag == false) // костыль, переделать (Хотя может быть и не костыль....)
+            if (ItemInStove[0].ItemName == Item.Name.Meat && _timerFlag == false) // костыль, переделать (Хотя может быть и не костыль....)
             {
                 _timer = 5;
                 _timerFlag = true;       
@@ -47,17 +47,7 @@ public class Stove : MonoBehaviour
 
     void DeleteItem(int index)
     {
-        ItemInStove[index] = new Item();
-        /*
-        for (int i = 0; i < ItemInStove.Count; i++)
-        {
-            if (ItemInStove[i].ItemId == id)
-            {
-                ItemInStove[i] = new Item();
-                break;
-            }
-        }
-        */
+        ItemInStove[index] = null;
 
         IsEmpty = true;
         _isCooking = false;
@@ -84,7 +74,7 @@ public class Stove : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && _isCooking)
         {
-            inventory.AddItemFromOther(ItemInStove[0]);
+            inventory.AddItem(ItemInStove[0]);
             print("Vz9l item iz pechki!");
             DeleteItem(0);
             //_isCooking = false;
@@ -93,7 +83,7 @@ public class Stove : MonoBehaviour
 
     void Prepare()
     {
-        if (ItemInStove[0].ItemName == "Meat")
+        if (ItemInStove[0].ItemName == Item.Name.Meat)
         {
             ItemInStove[0].stateOfPreparing = Item.StateOfPreparing.fried;
             ItemInStove[0].UpdateTexture();
