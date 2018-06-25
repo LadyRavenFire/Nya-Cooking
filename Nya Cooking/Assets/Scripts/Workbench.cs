@@ -11,7 +11,7 @@ public class Workbench : MonoBehaviour {
     [SerializeField]
     private int SlotsInWorkbench = 5;
 
-    void Start ()
+    void Start()
     {
         for (int i = 0; i < SlotsInWorkbench; i++)
         {
@@ -20,6 +20,10 @@ public class Workbench : MonoBehaviour {
         IsEnterCollider = false;
         IsEmpty = true;
         _inventory = GameObject.FindGameObjectWithTag("Inventory").GetComponent<Inventory>();
+    }
+
+    void Update()
+    {
     }
 
     void OnMouseEnter()
@@ -64,13 +68,12 @@ public class Workbench : MonoBehaviour {
             }
         }
 
-        if (!flag)
+        if (flag)
         {
             IsEmpty = true;
             print("Pechka pysta, milord");
         }
-
-        if (flag)
+        else
         {
             print("V pechke stoto ostalos` moi gospodin");            
         }

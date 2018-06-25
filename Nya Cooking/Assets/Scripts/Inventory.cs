@@ -94,7 +94,7 @@ public class Inventory : MonoBehaviour
             }
         }
 
-        if (e.type == EventType.mouseUp && _draggingItem && _stove.IsEnterCollider)
+        if (e.type == EventType.MouseUp && _draggingItem && _stove.IsEnterCollider)
         {
             if (_stove.IsEmpty)
             {
@@ -105,7 +105,7 @@ public class Inventory : MonoBehaviour
             }
         }
 
-        if (e.type == EventType.mouseUp && _draggingItem && _workbench.IsEnterCollider)
+        if (e.type == EventType.MouseUp && _draggingItem && _workbench.IsEnterCollider)
         {
             if (_workbench.IsPlace())
             {
@@ -116,7 +116,7 @@ public class Inventory : MonoBehaviour
             }
         }
 
-        if (e.type == EventType.mouseUp && _draggingItem)
+        if (e.type == EventType.MouseUp && _draggingItem)
         {
             _slots[_prevIndex] = _draggedItem;
             _draggingItem = false;
