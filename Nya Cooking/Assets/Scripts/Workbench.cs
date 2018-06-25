@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -39,17 +40,17 @@ public class Workbench : MonoBehaviour {
 
     public void AddItem(Item item)
     {
-        print("Start call add");
+//        print("Start call add");
         for (int i = 0; i < _itemInWorkbench.Count; i++)
         {
             if (_itemInWorkbench[i] == null)
             {
                 _itemInWorkbench[i] = item;
-                print(_itemInWorkbench[i].ItemName);
+//                print(_itemInWorkbench[i].ItemName);
                 if (IsEmpty)
                 {
                     IsEmpty = false;
-                    print("V pechky sto to polozili");
+//                    print("V pechky sto to polozili");
                 }
                 break;
             }
@@ -72,7 +73,7 @@ public class Workbench : MonoBehaviour {
         if (flag)
         {
             IsEmpty = true;
-            print("Pechka pysta, milord");
+//            print("Pechka pysta, milord");
         }
         else
         {
@@ -86,6 +87,13 @@ public class Workbench : MonoBehaviour {
         {
             CreateNewProduct();
         }
+    }
+
+    
+    class Receipe
+    {
+        public List<Item> Ingridients { get; set; }
+        public Item Result { get; set; }
     }
 
     class IngridientFound
@@ -108,71 +116,125 @@ public class Workbench : MonoBehaviour {
             return false;
         }
     }
+    class ReceipeFound
+    {
+        public List<IngridientFound> IngridientFounds { get; set; }
+        public Item Result { get; set; }
+        public bool IsFound { get; set; }
+    }
 
     void CreateNewProduct()
     {
         if (!IsEmpty)
         {
-            List<Item> receipe = new List<Item>()
+            var db = GameObject.FindGameObjectWithTag("ItemDataBase").GetComponent<ItemDataBase>();
+
+            // Рецепты выносятся в отдельный глобальный объект
+            Receipe receipe1 = new Receipe()
             {
-                new Item
+                Ingridients = new List<Item>()
                 {
-                    ItemName = Item.Name.Meat,
-                    stateOfPreparing = Item.StateOfPreparing.Raw,
-                    stateOfIncision = Item.StateOfIncision.Whole,
-                    Breading = false
+                    new Item
+                    {
+                        ItemName = Item.Name.Meat,
+                        stateOfPreparing = Item.StateOfPreparing.Raw,
+                        stateOfIncision = Item.StateOfIncision.Whole,
+                        Breading = false
+                    },
+                    new Item
+                    {
+                        ItemName = Item.Name.Bread,
+                        stateOfPreparing = Item.StateOfPreparing.Raw,
+                        stateOfIncision = Item.StateOfIncision.Whole,
+                        Breading = false
+                    }
                 },
-                new Item
+                Result = db.Generate(Item.Name.Sandwich, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw, false)
+
+            };
+            Receipe receipe2 = new Receipe()
+            {
+                Ingridients = new List<Item>()
                 {
-                    ItemName = Item.Name.Bread,
-                    stateOfPreparing = Item.StateOfPreparing.Raw,
-                    stateOfIncision = Item.StateOfIncision.Whole,
-                    Breading = false
-                }
+                    new Item
+                    {
+                        ItemName = Item.Name.Meat,
+                        stateOfPreparing = Item.StateOfPreparing.Raw,
+                        stateOfIncision = Item.StateOfIncision.Whole,
+                        Breading = false
+                    },
+                    new Item
+                    {
+                        ItemName = Item.Name.Meat,
+                        stateOfPreparing = Item.StateOfPreparing.Raw,
+                        stateOfIncision = Item.StateOfIncision.Whole,
+                        Breading = false
+                    }
+                },
+                Result = db.Generate(Item.Name.Meat, Item.StateOfIncision.Whole, Item.StateOfPreparing.Fried, false)
             };
 
-            List<IngridientFound> receipeFound = receipe.Select(x => new IngridientFound
+
+            List<Receipe> receipes = new List<Receipe>(){ receipe1, receipe2 };
+
+            // Все что ниже, должно остаться в этом методе
+
+            List<ReceipeFound> receipeFounds = receipes.Select(x => new ReceipeFound
             {
-                Item = x,
-                IsFound = false
+                IngridientFounds = x.Ingridients.Select(y => new IngridientFound{Item = y}).ToList(),
+                Result = x.Result
             }).ToList();
 
-            var items = new List<Item>(_itemInWorkbench.Where(x => x != null).ToList());
-            foreach (var rec in receipeFound)
+            foreach (var receipeFound in receipeFounds)
             {
-                var toDelete = new List<Item>();
-                foreach (var item in items)
+                var items = new List<Item>(_itemInWorkbench.Where(x => x != null).ToList());
+                print("items = " + String.Join(", ", items.Select(x => x.ItemName.ToString("F")).ToArray()));
+                foreach (var rec in receipeFound.IngridientFounds)
                 {
-                    if (rec != null && (rec.Check(item) && !rec.IsFound))
+                    print("looking for... " + rec.Item.ItemName.ToString("F"));
+                    var toDelete = new List<Item>();
+                    foreach (var item in items)
                     {
-                        if (item != null)
+                        if (rec.Check(item) && !rec.IsFound)
                         {
                             print("Find " + item.ItemName.ToString("F"));
                             rec.IsFound = true;
                             toDelete.Add(item);
                         }
                     }
+
+                    print("toDelete = "  + String.Join(", ", toDelete.Select(x => x.ItemName.ToString("F")).ToArray()));
+                    foreach (var item in toDelete)
+                    {
+                        items.Remove(item);
+                    }
+                    print("items = " + String.Join(", ", items.Select(x => x.ItemName.ToString("F")).ToArray()));
                 }
-                print("toDelete = " + toDelete.Count);
-                foreach (var item in toDelete)
+
+//                print(items.Any() + " " + receipeFound.IngridientFounds.Any(x => !x.IsFound));
+                print(items.Count);
+
+                if (items.Any() || receipeFound.IngridientFounds.Any(x => !x.IsFound))
                 {
-                    items.Remove(item);
+                    print("vsyakofign9 " + receipeFound.Result.ItemName.ToString("F"));
                 }
-                print("items = " + items.Count);
+                else
+                {
+                    print("found " + receipeFound.Result.ItemName.ToString("F"));
+                    receipeFound.IsFound = true;
+                }
             }
 
-            print(items.Any() + " " + receipeFound.Any(x => !x.IsFound));
-            print(items.Count);
-
-            if (items.Any() || receipeFound.Any(x => !x.IsFound))
+            if (receipeFounds.Count(x => !x.IsFound) == receipeFounds.Count)
             {
-                print("vsyakofign9");
+                print("no correct receipes!");
                 _inventory.AddItem(Item.Name.Ubisoft, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw, false);
             }
             else
             {
-                print("byter");
-                _inventory.AddItem(Item.Name.Sandwich, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw, false);
+                var found = receipeFounds.First(x => x.IsFound);
+                print("result " + found.Result.ToString());
+                _inventory.AddItem(found.Result);
             }
 
             for (int i = 0; i < _itemInWorkbench.Count; i++)
@@ -232,12 +294,12 @@ public class Workbench : MonoBehaviour {
 
     public bool IsPlace()
     {
-        print("start call isplace");
+//        print("start call isplace");
         for (int i = 0; i < _itemInWorkbench.Count; i++)
         {
             if (_itemInWorkbench[i] == null)
             {
-                print("Est` mesto");
+//                print("Est` mesto");
                 return true;
             }
         }

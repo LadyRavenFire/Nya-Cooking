@@ -29,7 +29,8 @@ public class Inventory : MonoBehaviour
         _workbench = GameObject.FindGameObjectWithTag("Workbench").GetComponent<Workbench>();
 
         AddItem(Item.Name.Meat, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw, false);
-        print(_slots[0].TexturePath);
+//        print(_slots[0].TexturePath);
+        AddItem(Item.Name.Meat, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw, false);
         AddItem(Item.Name.Meat, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw, false);
         AddItem(Item.Name.Bread, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw, false);
     }
@@ -109,7 +110,7 @@ public class Inventory : MonoBehaviour
         {
             if (_workbench.IsPlace())
             {
-                print("Adding item to workbench");
+//                print("Adding item to workbench");
                 _workbench.AddItem(_draggedItem);
                 _draggingItem = false;
                 _draggedItem = null;
