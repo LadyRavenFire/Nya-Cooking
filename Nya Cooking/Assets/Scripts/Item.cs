@@ -41,11 +41,12 @@ public class Item
     public Item(Name name, StateOfIncision incision, StateOfPreparing preparing, bool breading)
     {
         ItemName = name;
-        TexturePath = "ItemIcons/" + this.ToString();
-        ItemIcon = Resources.Load<Texture2D>(TexturePath); //загружаем иконку по названию предмета
         stateOfPreparing = preparing;
         stateOfIncision = incision;       
         Breading = breading;
+
+        TexturePath = "ItemIcons/" + this.ToString();
+        ItemIcon = Resources.Load<Texture2D>(TexturePath); //загружаем иконку по названию предмета
     }
 
     public Item()
