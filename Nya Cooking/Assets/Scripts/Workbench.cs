@@ -179,41 +179,64 @@ public class Workbench : MonoBehaviour {
 
             // Все что ниже, должно остаться в этом методе
 
+            // Создаем структуру рецепт - был ли рецепт найден
             List<ReceipeFound> receipeFounds = receipes.Select(x => new ReceipeFound
             {
-                IngridientFounds = x.Ingridients.Select(y => new IngridientFound{Item = y}).ToList(),
+                // у каждого рецепта есть список ингридиентов - и был ли этот ингридиент найден
+                IngridientFounds = x.Ingridients.Select(y => 
+                    new IngridientFound
+                    {
+                        // сохраняем ингридиент
+                        Item = y,
+                        // ингридиент еще не был найден
+                        IsFound = false
+                    }).ToList(),
+                // рецепт еще не был найден
+                IsFound = false,
+                // какое блюдо будет в результате рецепта
                 Result = x.Result
             }).ToList();
 
+            // для каждого рецепта в списке рецептов...
             foreach (var receipeFound in receipeFounds)
             {
+                // сохраняем элементы из воркбенча в отдельный список для удобной работы
+                // в дальнейшем именно этот список мы будем называть элементами воркбенча
+                // в каждой отдельной итерации
                 var items = new List<Item>(_itemInWorkbench.Where(x => x != null).ToList());
-                print("items = " + String.Join(", ", items.Select(x => x.ItemName.ToString("F")).ToArray()));
+
+                // для каждого ингридиента в рецепте...
                 foreach (var rec in receipeFound.IngridientFounds)
                 {
-                    print("looking for... " + rec.Item.ItemName.ToString("F"));
+                    // создаем список найденных ингридиентов для удаления из общего списка жлементов,
+                    // чтобы не мешались при проверках
                     var toDelete = new List<Item>();
+                    // для каждого элемента на воркбенче...
                     foreach (var item in items)
                     {
+                        // проверяем совпадает ли ингридиент из рецепта с элементом на воркбенче
                         if (rec.Check(item) && !rec.IsFound)
                         {
-                            print("Find " + item.ItemName.ToString("F"));
+                            // если совпал...
+
+                            // помечаем ингридиент из рецепта, как найденный
                             rec.IsFound = true;
+                            // помечаем, что нужно удалить этот элемент с воркбенча, потому что
+                            // мы его уже нашли и не нужно его дальше учитывать
                             toDelete.Add(item);
                         }
                     }
 
-                    print("toDelete = "  + String.Join(", ", toDelete.Select(x => x.ItemName.ToString("F")).ToArray()));
+                    // удаляем все найденные элементы из списка воркбенча
                     foreach (var item in toDelete)
                     {
                         items.Remove(item);
                     }
-                    print("items = " + String.Join(", ", items.Select(x => x.ItemName.ToString("F")).ToArray()));
                 }
 
-//                print(items.Any() + " " + receipeFound.IngridientFounds.Any(x => !x.IsFound));
-                print(items.Count);
-
+                // Если остались неиспользованные элементы на воркбенче или
+                // есть хотя бы один не найденный ингридиент в рецепте,
+                // то - юбисофт вторгается в наш мир
                 if (items.Any() || receipeFound.IngridientFounds.Any(x => !x.IsFound))
                 {
                     print("vsyakofign9 " + receipeFound.Result.ItemName.ToString("F"));
@@ -221,22 +244,36 @@ public class Workbench : MonoBehaviour {
                 else
                 {
                     print("found " + receipeFound.Result.ItemName.ToString("F"));
+
+                    // иначе помечаем рецепт как найденный
                     receipeFound.IsFound = true;
                 }
             }
 
+            // После того, как мы пробежались по всем рецептам и нашли или нет подходящие, проверяем...
+
+            // если кол-во ненайденных рецепт == кол-ву рецептов в целом, то...
             if (receipeFounds.Count(x => !x.IsFound) == receipeFounds.Count)
             {
                 print("no correct receipes!");
+
+                // значит, нет ни одного найденного рецепта и... 
+                // мы добавляем фигню в инвентарь
                 _inventory.AddItem(Item.Name.Ubisoft, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw, false);
             }
             else
             {
+                // иначе...
+
+                // если найденных рецептов несколько, то берем только первый из найденных
                 var found = receipeFounds.First(x => x.IsFound);
                 print("result " + found.Result.ToString());
+
+                // и добавляем в инвентарь результат работы рецепта
                 _inventory.AddItem(found.Result);
             }
 
+            // очищаем воркбенч
             for (int i = 0; i < _itemInWorkbench.Count; i++)
             {
                 if(_itemInWorkbench[i] != null)
