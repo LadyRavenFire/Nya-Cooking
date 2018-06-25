@@ -8,9 +8,10 @@ public class Inventory : MonoBehaviour
     [SerializeField]
     private int SlotsX =5 , SlotsY = 1; // количество слотов инвентаря в длинну и высоту
     public GUISkin Skin; // скин инвентаря (ака текстурка)
-    private List<Item> Slots = new List<Item>(); 
+    private readonly List<Item> _slots = new List<Item>(); 
     private ItemDataBase _database;
-    public Stove Stove;
+    private Stove _stove;
+    private Workbench _workbench;
 
     private bool _draggingItem;
     private Item _draggedItem;
@@ -20,13 +21,16 @@ public class Inventory : MonoBehaviour
     {
         for (int i = 0; i < (SlotsX*SlotsY); i++) 
         {
-            Slots.Add(null);
+            _slots.Add(null);
         }
 
-        _database = GameObject.FindGameObjectWithTag("ItemDataBase").GetComponent<ItemDataBase>(); // тут и строкой ниже ищем по тегу база данных и печка и добавляем объекты в таблицу
-        Stove = GameObject.FindGameObjectWithTag("Stove").GetComponent<Stove>(); // тут кст могут быть ошибки, если печек будет много, нужно подумать как улучшить
+        _database = GameObject.FindGameObjectWithTag("ItemDataBase").GetComponent<ItemDataBase>();
+        _stove = GameObject.FindGameObjectWithTag("Stove").GetComponent<Stove>();
+        _workbench = GameObject.FindGameObjectWithTag("Workbench").GetComponent<Workbench>();
+
         AddItem(Item.Name.Meat, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw, false);
         AddItem(Item.Name.Meat, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw, false);
+        AddItem(Item.Name.Bread, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw, false);
     }
 
     void OnGUI()
@@ -49,7 +53,7 @@ public class Inventory : MonoBehaviour
             {
                 Rect slotRect = new Rect(x * 60, y * 60, 50, 50); // функция отрисовки ячеек инвентаря
                 GUI.Box(slotRect, "", Skin.GetStyle("Slot")); // функция отрисовки ячеек инвентаря
-                var temp = Slots[index];
+                var temp = _slots[index];
                 if (temp != null)
                 {
                     GUI.DrawTexture(slotRect, temp.ItemIcon); // функция отрисовки предметов в инвентаре
@@ -65,8 +69,8 @@ public class Inventory : MonoBehaviour
 
                         if (e.type == EventType.MouseUp && _draggingItem)
                         {
-                            Slots[_prevIndex] = Slots[index];
-                            Slots[index] = _draggedItem;
+                            _slots[_prevIndex] = _slots[index];
+                            _slots[index] = _draggedItem;
                             _draggingItem = false;
                             _draggedItem = null;
                         }
@@ -78,7 +82,7 @@ public class Inventory : MonoBehaviour
                     {
                         if (e.type == EventType.MouseUp && _draggingItem)
                         {
-                            Slots[index] = _draggedItem;
+                            _slots[index] = _draggedItem;
                             _draggingItem = false;
                             _draggedItem = null;
                         }
@@ -89,19 +93,31 @@ public class Inventory : MonoBehaviour
             }
         }
 
-        if (e.type == EventType.mouseUp && _draggingItem && Stove.IsEnterCollider)
+        if (e.type == EventType.mouseUp && _draggingItem && _stove.IsEnterCollider)
         {
-            print("Adding item to stove");
-            
-            Stove.AddItem(_draggedItem);
-            Stove.IsEmpty = false;
-            _draggingItem = false;
-            _draggedItem = null;
-
+            if (_stove.IsEmpty)
+            {
+                print("Adding item to stove");
+                _stove.AddItem(_draggedItem);
+                _draggingItem = false;
+                _draggedItem = null;
+            }
         }
+
+        if (e.type == EventType.mouseUp && _draggingItem && _workbench.IsEnterCollider)
+        {
+            if (_workbench.IsPlace())
+            {
+                print("Adding item to workbench");
+                _workbench.AddItem(_draggedItem);
+                _draggingItem = false;
+                _draggedItem = null;
+            }
+        }
+
         if (e.type == EventType.mouseUp && _draggingItem)
         {
-            Slots[_prevIndex] = _draggedItem;
+            _slots[_prevIndex] = _draggedItem;
             _draggingItem = false;
             _draggedItem = null;
         }
@@ -109,16 +125,16 @@ public class Inventory : MonoBehaviour
 
     void RemoveItem(int index)
     {
-        Slots[index] = null;
+        _slots[index] = null;
     }
 
     public void AddItem(Item.Name name, Item.StateOfIncision stateOfIncision, Item.StateOfPreparing stateOfPreparing, bool isBreaded)
     {
-        for (int i = 0; i < Slots.Count; i++)
+        for (int i = 0; i < _slots.Count; i++)
         {
-            if (Slots[i] == null)
+            if (_slots[i] == null)
             {
-                Slots[i] = _database.Generate(name, stateOfIncision, stateOfPreparing, isBreaded);
+                _slots[i] = _database.Generate(name, stateOfIncision, stateOfPreparing, isBreaded);
                 break;
             }
         }
@@ -126,11 +142,11 @@ public class Inventory : MonoBehaviour
 
     public void AddItem(Item item)
     {
-        for (int i = 0; i < Slots.Count; i++)
+        for (int i = 0; i < _slots.Count; i++)
         {
-            if (Slots[i] == null)
+            if (_slots[i] == null)
             {
-                Slots[i] = item;
+                _slots[i] = item;
                 break;
             }
         }

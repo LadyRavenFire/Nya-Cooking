@@ -14,8 +14,6 @@ public class Stove : MonoBehaviour
 
     void Start()
     {
-        print("Stove created");
-
         ItemInStove.Add(null);
         IsEnterCollider = false;
         IsEmpty = true;
@@ -34,7 +32,6 @@ public class Stove : MonoBehaviour
                 _timer = 5;
                 _timerFlag = true;
             }
-
             _isCooking = true;            
             print("EDA V NYTRI!!!");
         }
@@ -44,26 +41,25 @@ public class Stove : MonoBehaviour
     void DeleteItem(int index)
     {
         ItemInStove[index] = null;
-
         IsEmpty = true;
         _isCooking = false;
+        _timerFlag = false;
     }
 
     public void AddItem(Item item)
     {
         ItemInStove[0] = item;
+        IsEmpty = false;
     }
 
     void OnMouseEnter()
     {
         IsEnterCollider = true;
-       // print("In PECHKA!!! YEAAACH!!!");
     }
 
     void OnMouseExit()
     {
         IsEnterCollider = false;
-       // print("Out of PECHKA!!! NOOOOO!!!");
     }
 
     void OnMouseOver()
@@ -73,7 +69,6 @@ public class Stove : MonoBehaviour
             Inventory.AddItem(ItemInStove[0]);
             print("Vz9l item iz pechki!");
             DeleteItem(0);
-            //_isCooking = false;
         }
     }
 
@@ -82,8 +77,7 @@ public class Stove : MonoBehaviour
         if (ItemInStove[0].ItemName == Item.Name.Meat)
         {
             ItemInStove[0].stateOfPreparing = Item.StateOfPreparing.Fried;
-            ItemInStove[0].UpdateTexture();
-            // ItemInStove[0] = _database.Items[1];           
+            ItemInStove[0].UpdateTexture();        
             print("Eda prigotovilas`");
         }
         _timerFlag = false;

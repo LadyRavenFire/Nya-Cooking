@@ -15,7 +15,9 @@ public class Item
     public enum Name
     {
         Meat, // Мясо
-        Bread // Хлеб
+        Bread, // Хлеб
+        Sandwich, // Бутер
+        Ubisoft
     }
     public enum StateOfPreparing
     {
@@ -60,7 +62,7 @@ public class Item
     public sealed override string ToString()
     {
         if (stateOfPreparing == StateOfPreparing.Raw)
-            return ItemName.ToString("F");
+             return ItemName.ToString("F");
 
         return ItemName + "_" + stateOfPreparing.ToString("F");
     }
