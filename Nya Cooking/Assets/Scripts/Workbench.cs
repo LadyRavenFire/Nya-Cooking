@@ -3,22 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Workbench : MonoBehaviour {
-
-    public List<Item> ItemInWorkbench = new List<Item>();
+  
+    private readonly List<Item> _itemInWorkbench = new List<Item>();
     public bool IsEnterCollider;
     public bool IsEmpty;
-    public Inventory Inventory;
-    public int SlotsInWorkbench;
+    private Inventory _inventory;
+    [SerializeField]
+    private int SlotsInWorkbench = 5;
 
     void Start ()
     {
         for (int i = 0; i < SlotsInWorkbench; i++)
         {
-            ItemInWorkbench.Add(null);
+            _itemInWorkbench.Add(null);
         }
         IsEnterCollider = false;
         IsEmpty = true;
-        Inventory = GameObject.FindGameObjectWithTag("Inventory").GetComponent<Inventory>();
+        _inventory = GameObject.FindGameObjectWithTag("Inventory").GetComponent<Inventory>();
     }
 
     void OnMouseEnter()
@@ -34,12 +35,12 @@ public class Workbench : MonoBehaviour {
     public void AddItem(Item item)
     {
         print("Start call add");
-        for (int i = 0; i < ItemInWorkbench.Count; i++)
+        for (int i = 0; i < _itemInWorkbench.Count; i++)
         {
-            if (ItemInWorkbench[i] == null)
+            if (_itemInWorkbench[i] == null)
             {
-                ItemInWorkbench[i] = item;
-                print(ItemInWorkbench[i].ItemName);
+                _itemInWorkbench[i] = item;
+                print(_itemInWorkbench[i].ItemName);
                 if (IsEmpty)
                 {
                     IsEmpty = false;
@@ -52,13 +53,14 @@ public class Workbench : MonoBehaviour {
 
     void DeleteItem(int index)
     {
-        ItemInWorkbench[index] = null;
+        _itemInWorkbench[index] = null;
         bool flag = false;
-        for (int i = 0; i < ItemInWorkbench.Count; i++)
+        for (int i = 0; i < _itemInWorkbench.Count; i++)
         {
-            if (ItemInWorkbench != null)
+            if (_itemInWorkbench != null)
             {
                 flag = true;
+                //print(_itemInWorkbench[i].ItemName);
             }
         }
 
@@ -70,7 +72,7 @@ public class Workbench : MonoBehaviour {
 
         if (flag)
         {
-            print("V pechke stoto ostalos` moi gospodin");
+            print("V pechke stoto ostalos` moi gospodin");            
         }
     }
 
@@ -86,57 +88,56 @@ public class Workbench : MonoBehaviour {
     {
         if (!IsEmpty)
         {
-            int IsBread = SlotsInWorkbench + 1;
-            int IsMeat = SlotsInWorkbench + 1;
-            for (int i = 0; i < ItemInWorkbench.Count; i++)
+            int isBread = SlotsInWorkbench + 1;
+            int isMeat = SlotsInWorkbench + 1;
+            for (int i = 0; i < _itemInWorkbench.Count; i++)
             {
-                if (ItemInWorkbench[i] != null)
+                if (_itemInWorkbench[i] != null)
                 {
-                    if (ItemInWorkbench[i].ItemName == Item.Name.Bread)
+                    if (_itemInWorkbench[i].ItemName == Item.Name.Bread)
                     {
-                        IsBread = i;
+                        isBread = i;
                         print("Find Bread");
                         break;
                     }
                 }
             }
-            for (int i = 0; i < ItemInWorkbench.Count; i++)
+            for (int i = 0; i < _itemInWorkbench.Count; i++)
             {
-                if (ItemInWorkbench[i] != null)
+                if (_itemInWorkbench[i] != null)
                 {
-                    if (ItemInWorkbench[i].ItemName == Item.Name.Meat)
+                    if (_itemInWorkbench[i].ItemName == Item.Name.Meat)
                     {
-                        IsMeat = i;
+                        isMeat = i;
                         print("Find Meat");
                         break;
                     }
                 }
             }
 
-            if (IsMeat !=SlotsInWorkbench + 1 && IsBread != SlotsInWorkbench + 1)
+            if (isMeat !=SlotsInWorkbench + 1 && isBread != SlotsInWorkbench + 1)
             {
                 print("Lol");
-                Inventory.AddItem(Item.Name.Sandwich, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw, false);
-                DeleteItem(IsMeat);
-                DeleteItem(IsBread);
+                _inventory.AddItem(Item.Name.Sandwich, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw, false);
+                DeleteItem(isMeat);
+                DeleteItem(isBread);
             }
             else
             {
                 print("Lol");
-                Inventory.AddItem(Item.Name.Ubisoft, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw, false);
-                DeleteItem(IsMeat);
-                DeleteItem(IsBread);
+                _inventory.AddItem(Item.Name.Ubisoft, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw, false);
+                DeleteItem(isMeat);
+                DeleteItem(isBread);
             }
-
         }
     }
 
     public bool IsPlace()
     {
         print("start call isplace");
-        for (int i = 0; i < ItemInWorkbench.Count; i++)
+        for (int i = 0; i < _itemInWorkbench.Count; i++)
         {
-            if (ItemInWorkbench[i] == null)
+            if (_itemInWorkbench[i] == null)
             {
                 print("Est` mesto");
                 return true;
