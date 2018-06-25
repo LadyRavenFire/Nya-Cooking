@@ -20,7 +20,7 @@ public class Item
     public enum StateOfPreparing
     {
         Raw, // сырое (стартовое)
-        fried, // пожаренное
+        Fried, // пожаренное
         Burnt, // пережаренное
         Cooked, // сваренное
         Baked, // запеченное
@@ -57,7 +57,7 @@ public class Item
         ItemIcon = Resources.Load<Texture2D>(TexturePath); //загружаем иконку по названию предмета
     }
 
-    public override string ToString()
+    public sealed override string ToString()
     {
         if (stateOfPreparing == StateOfPreparing.Raw)
             return ItemName.ToString("F");

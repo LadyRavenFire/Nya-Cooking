@@ -6,11 +6,11 @@ using UnityEngine;
 public class Inventory : MonoBehaviour
 {
     [SerializeField]
-    private int SlotsX, SlotsY; // количество слотов инвентаря в длинну и высоту
+    private int SlotsX =5 , SlotsY = 1; // количество слотов инвентаря в длинну и высоту
     public GUISkin Skin; // скин инвентаря (ака текстурка)
     private List<Item> Slots = new List<Item>(); 
     private ItemDataBase _database;
-    public Stove stove;
+    public Stove Stove;
 
     private bool _draggingItem;
     private Item _draggedItem;
@@ -24,7 +24,7 @@ public class Inventory : MonoBehaviour
         }
 
         _database = GameObject.FindGameObjectWithTag("ItemDataBase").GetComponent<ItemDataBase>(); // тут и строкой ниже ищем по тегу база данных и печка и добавляем объекты в таблицу
-        stove = GameObject.FindGameObjectWithTag("Stove").GetComponent<Stove>(); // тут кст могут быть ошибки, если печек будет много, нужно подумать как улучшить
+        Stove = GameObject.FindGameObjectWithTag("Stove").GetComponent<Stove>(); // тут кст могут быть ошибки, если печек будет много, нужно подумать как улучшить
         AddItem(Item.Name.Meat, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw, false);
         AddItem(Item.Name.Meat, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw, false);
     }
@@ -89,12 +89,12 @@ public class Inventory : MonoBehaviour
             }
         }
 
-        if (e.type == EventType.mouseUp && _draggingItem && stove.IsEnterCollider)
+        if (e.type == EventType.mouseUp && _draggingItem && Stove.IsEnterCollider)
         {
             print("Adding item to stove");
             
-            stove.AddItem(_draggedItem);
-            stove.IsEmpty = false;
+            Stove.AddItem(_draggedItem);
+            Stove.IsEmpty = false;
             _draggingItem = false;
             _draggedItem = null;
 

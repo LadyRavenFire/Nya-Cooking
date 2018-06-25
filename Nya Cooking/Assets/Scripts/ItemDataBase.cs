@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ItemDataBase : MonoBehaviour
 {
-    public Item Generate(Item.Name name, Item.StateOfIncision stateOfIncision, Item.StateOfPreparing stateOfPreparing, bool isBreaded)
+    public Item Generate(Item.Name itemName, Item.StateOfIncision stateOfIncision, Item.StateOfPreparing stateOfPreparing, bool isBreaded)
     {
-        return new Item(name, stateOfIncision, stateOfPreparing, isBreaded);
+        return new Item(itemName, stateOfIncision, stateOfPreparing, isBreaded);
     }
 }
