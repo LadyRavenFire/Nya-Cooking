@@ -5,30 +5,28 @@ using UnityEngine;
 // next 9 lesson
 public class Inventory : MonoBehaviour
 {
-    public int SlotsX, SlotsY; // количество слотов инвентаря в длинну и высоту
+    [SerializeField]
+    private int SlotsX, SlotsY; // количество слотов инвентаря в длинну и высоту
     public GUISkin Skin; // скин инвентаря (ака текстурка)
-    public List<Item> inventory = new List<Item>(); 
-    public List<Item> Slots = new List<Item>();
+    private List<Item> Slots = new List<Item>(); 
     private ItemDataBase _database;
-    public Stove stove; 
+    public Stove stove;
 
     private bool _draggingItem;
     private Item _draggedItem;
     private int _prevIndex;
 
-
     void Start()
     {
         for (int i = 0; i < (SlotsX*SlotsY); i++) 
         {
-            Slots.Add(new Item());
-            inventory.Add(new Item());
+            Slots.Add(null);
         }
+
         _database = GameObject.FindGameObjectWithTag("ItemDataBase").GetComponent<ItemDataBase>(); // тут и строкой ниже ищем по тегу база данных и печка и добавляем объекты в таблицу
         stove = GameObject.FindGameObjectWithTag("Stove").GetComponent<Stove>(); // тут кст могут быть ошибки, если печек будет много, нужно подумать как улучшить
-        AddItem(0);
-        AddItem(0);
-        //RemoveItem(0);
+        AddItem(Item.Name.Meat, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw, false);
+        AddItem(Item.Name.Meat, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw, false);
     }
 
     void OnGUI()
@@ -51,24 +49,24 @@ public class Inventory : MonoBehaviour
             {
                 Rect slotRect = new Rect(x * 60, y * 60, 50, 50); // функция отрисовки ячеек инвентаря
                 GUI.Box(slotRect, "", Skin.GetStyle("Slot")); // функция отрисовки ячеек инвентаря
-                Slots[index] = inventory[index]; 
-                if (Slots[index].ItemName != null)
+                var temp = Slots[index];
+                if (temp != null)
                 {
-                    GUI.DrawTexture(slotRect, Slots[index].ItemIcon); // функция отрисовки предметов в инвентаре
+                    GUI.DrawTexture(slotRect, temp.ItemIcon); // функция отрисовки предметов в инвентаре
                     if (slotRect.Contains(e.mousePosition))
                     {
                         if (e.button == 0 && e.type == EventType.MouseDrag && !_draggingItem) 
                         {
                             _draggingItem = true;
                             _prevIndex = index;
-                            _draggedItem = Slots[index];
-                            inventory[index] = new Item();
+                            _draggedItem = temp;
+                            RemoveItem(index);
                         }
 
                         if (e.type == EventType.MouseUp && _draggingItem)
                         {
-                            inventory[_prevIndex] = inventory[index];
-                            inventory[index] = _draggedItem;
+                            Slots[_prevIndex] = Slots[index];
+                            Slots[index] = _draggedItem;
                             _draggingItem = false;
                             _draggedItem = null;
                         }
@@ -80,7 +78,7 @@ public class Inventory : MonoBehaviour
                     {
                         if (e.type == EventType.MouseUp && _draggingItem)
                         {
-                            inventory[index] = _draggedItem;
+                            Slots[index] = _draggedItem;
                             _draggingItem = false;
                             _draggedItem = null;
                         }
@@ -93,75 +91,48 @@ public class Inventory : MonoBehaviour
 
         if (e.type == EventType.mouseUp && _draggingItem && stove.IsEnterCollider)
         {
+            print("Adding item to stove");
+            
             stove.AddItem(_draggedItem);
+            stove.IsEmpty = false;
             _draggingItem = false;
             _draggedItem = null;
 
         }
         if (e.type == EventType.mouseUp && _draggingItem)
         {
-            inventory[_prevIndex] = _draggedItem;
+            Slots[_prevIndex] = _draggedItem;
             _draggingItem = false;
             _draggedItem = null;
         }
     }
 
-    void RemoveItem(int id)
+    void RemoveItem(int index)
     {
-        for (int i = 0; i < inventory.Count; i++)
+        Slots[index] = null;
+    }
+
+    public void AddItem(Item.Name name, Item.StateOfIncision stateOfIncision, Item.StateOfPreparing stateOfPreparing, bool isBreaded)
+    {
+        for (int i = 0; i < Slots.Count; i++)
         {
-            if (inventory[i].ItemId == id)
+            if (Slots[i] == null)
             {
-                inventory[i] = new Item();
+                Slots[i] = _database.Generate(name, stateOfIncision, stateOfPreparing, isBreaded);
                 break;
             }
         }
     }
 
-    public void AddItem(int id)
+    public void AddItem(Item item)
     {
-        for (int i = 0; i < inventory.Count; i++)
+        for (int i = 0; i < Slots.Count; i++)
         {
-            if (inventory[i].ItemName == null)
+            if (Slots[i] == null)
             {
-                for (int j = 0; j < _database.Items.Count; j++)
-                {
-                    if (_database.Items[j].ItemId == id)
-                    {
-                        inventory[i] = _database.Items[j];
-                    }
-                }
+                Slots[i] = item;
                 break;
             }
         }
-    }
-
-    public void AddItemFromOther(Item item)
-    {
-        for (int i = 0; i < inventory.Count; i++)
-        {
-            if (inventory[i].ItemName == null)
-            {
-                for (int j = 0; j < _database.Items.Count; j++)
-                {
-                    inventory[i] = item;
-                }
-                break;
-            }
-        }
-    }
-
-    bool InventoryContains(int id)
-    {
-        bool result = false;
-        for (int i = 0; i < inventory.Count; i++)
-        {
-            if (inventory[id].ItemId == id)
-            {
-                result = true;
-                break;
-            }
-        }
-        return result;
     }
 }

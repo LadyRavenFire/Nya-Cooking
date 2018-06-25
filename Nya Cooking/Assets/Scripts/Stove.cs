@@ -9,42 +9,44 @@ public class Stove : MonoBehaviour
     public bool IsEmpty;
     private bool _isCooking;
     public Inventory inventory;
-    private ItemDataBase _database;
+    private float _timer;
+    private bool _timerFlag;
 
     void Start()
     {
-        ItemInStove.Add(new Item());
+        print("Stove created");
+
+        ItemInStove.Add(null);
         IsEnterCollider = false;
         IsEmpty = true;
         _isCooking = false;
         inventory = GameObject.FindGameObjectWithTag("Inventory").GetComponent<Inventory>();
-        _database = GameObject.FindGameObjectWithTag("ItemDataBase").GetComponent<ItemDataBase>();
+        _timer = 0;
+        _timerFlag = false;
     }
 
     void Update()
     {
-        if (ItemInStove[0].ItemName != null && _isCooking == false)
+        if (!IsEmpty && _isCooking == false)
         {
-            ItemInStove[0].stateOfPreparing = Item.StateOfPreparing.Fried;
-            if (ItemInStove[0].ItemId == 0) // костыль, переделать 
+            if (ItemInStove[0].ItemName == Item.Name.Meat && _timerFlag == false)
             {
-                ItemInStove[0] = _database.Items[1]; // вот тут жопка сама, если просто поменять текстуру предмета - то она поменяется у всех предметов данного вида!
+                _timer = 5;
+                _timerFlag = true;
             }
-            _isCooking = true;
+
+            _isCooking = true;            
             print("EDA V NYTRI!!!");
         }
+        PreparingTimer();
     }
 
-    void DeleteItem(int id)
+    void DeleteItem(int index)
     {
-        for (int i = 0; i < ItemInStove.Count; i++)
-        {
-            if (ItemInStove[i].ItemId == id)
-            {
-                ItemInStove[i] = new Item();
-                break;
-            }
-        }
+        ItemInStove[index] = null;
+
+        IsEmpty = true;
+        _isCooking = false;
     }
 
     public void AddItem(Item item)
@@ -68,9 +70,39 @@ public class Stove : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && _isCooking)
         {
-            inventory.AddItemFromOther(ItemInStove[0]);
+            inventory.AddItem(ItemInStove[0]);
             print("Vz9l item iz pechki!");
-            DeleteItem(1);
+            DeleteItem(0);
+            //_isCooking = false;
+        }
+    }
+
+    void Prepare()
+    {
+        if (ItemInStove[0].ItemName == Item.Name.Meat)
+        {
+            ItemInStove[0].stateOfPreparing = Item.StateOfPreparing.fried;
+            ItemInStove[0].UpdateTexture();
+            // ItemInStove[0] = _database.Items[1];           
+            print("Eda prigotovilas`");
+        }
+        _timerFlag = false;
+        _timer = 0;
+    }
+
+    void PreparingTimer()
+    {
+        if (_isCooking && _timerFlag)
+        {
+            if (_timer > 0)
+            {
+                _timer-= Time.deltaTime;
+            }
+
+            if (_timer < 0)
+            {
+                Prepare();
+            }
         }
     }
 }

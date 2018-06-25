@@ -139,7 +139,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af10ee464fc851b4199d4df6ed89da26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Items: []
 --- !u!4 &424973940
 Transform:
   m_ObjectHideFlags: 0
@@ -183,8 +182,6 @@ MonoBehaviour:
   SlotsX: 5
   SlotsY: 1
   Skin: {fileID: 11400000, guid: 3d22b835af06592438a1dab2cb4dc677, type: 2}
-  inventory: []
-  Slots: []
   stove: {fileID: 0}
 --- !u!4 &1390379451
 Transform:
@@ -311,6 +308,7 @@ MonoBehaviour:
   ItemInStove: []
   IsEnterCollider: 0
   IsEmpty: 0
+  inventory: {fileID: 0}
 --- !u!61 &2145118707
 BoxCollider2D:
   m_ObjectHideFlags: 0
