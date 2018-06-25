@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Workbench : MonoBehaviour {
@@ -64,7 +65,7 @@ public class Workbench : MonoBehaviour {
             if (_itemInWorkbench != null)
             {
                 flag = true;
-                print(i);
+//                print(i);
             }
         }
 
@@ -87,55 +88,175 @@ public class Workbench : MonoBehaviour {
         }
     }
 
+    class IngridientFound
+    {
+        public Item Item;
+        public bool IsFound;
+
+        public bool Check(Item item2)
+        {
+            if (this.Item == null && item2 == null) return true;
+            if (this.Item == null && item2 != null) return false;
+            if (this.Item != null && item2 == null) return false;
+
+            if (this.Item.ItemName == item2.ItemName
+                && this.Item.stateOfIncision == item2.stateOfIncision
+                && this.Item.stateOfPreparing == item2.stateOfPreparing
+                && this.Item.Breading == item2.Breading)
+                return true;
+
+            return false;
+        }
+
+        /*static public bool operator==(IngridientFound item1, Item item2)
+        {
+            if (item1 == null && item2 == null) return true;
+            if (item1 == null && item2 != null) return false;
+            if (item1 != null && item2 == null) return false;
+
+            if (item1.Item.ItemName == item2.ItemName
+                && item1.Item.stateOfIncision == item2.stateOfIncision
+                && item1.Item.stateOfPreparing == item2.stateOfPreparing
+                && item1.Item.Breading == item2.Breading)
+                return true;
+
+            return false;
+        }
+
+        static public bool operator ==(Item item2, IngridientFound item1)
+        {
+            return item1 == item2;
+        }
+
+        static public bool operator!=(IngridientFound item1, Item item2)
+        {
+            return !(item1 == item2);
+        }
+
+        static public bool operator !=(Item item2, IngridientFound item1)
+        {
+            return item1 != item2;
+        }*/
+    }
+
     void CreateNewProduct()
     {
         if (!IsEmpty)
         {
-            int isBread = SlotsInWorkbench + 1;
-            int isMeat = SlotsInWorkbench + 1;
-            for (int i = 0; i < _itemInWorkbench.Count; i++)
+            List<Item> receipe = new List<Item>()
             {
-                if (_itemInWorkbench[i] != null)
+                new Item
                 {
-                    if (_itemInWorkbench[i].ItemName == Item.Name.Bread)
+                    ItemName = Item.Name.Meat,
+                    stateOfPreparing = Item.StateOfPreparing.Raw,
+                    stateOfIncision = Item.StateOfIncision.Whole,
+                    Breading = false
+                },
+                new Item
+                {
+                    ItemName = Item.Name.Bread,
+                    stateOfPreparing = Item.StateOfPreparing.Raw,
+                    stateOfIncision = Item.StateOfIncision.Whole,
+                    Breading = false
+                }
+            };
+
+            List<IngridientFound> receipeFound = receipe.Select(x => new IngridientFound
+            {
+                Item = x,
+                IsFound = false
+            }).ToList();
+
+            var items = new List<Item>(_itemInWorkbench.Where(x => x != null).ToList());
+            foreach (var rec in receipeFound)
+            {
+                var toDelete = new List<Item>();
+                foreach (var item in items)
+                {
+                    if (rec != null && (rec.Check(item) && !rec.IsFound))
                     {
-                        isBread = i;
-                        print("Find Bread");
-                        break;
+                        if (item != null)
+                        {
+                            print("Find " + item.ItemName.ToString("F"));
+                            rec.IsFound = true;
+                            toDelete.Add(item);
+                        }
                     }
                 }
-            }
-            for (int i = 0; i < _itemInWorkbench.Count; i++)
-            {
-                if (_itemInWorkbench[i] != null)
+                print("toDelete = " + toDelete.Count);
+                foreach (var item in toDelete)
                 {
-                    if (_itemInWorkbench[i].ItemName == Item.Name.Meat)
-                    {
-                        isMeat = i;
-                        print("Find Meat");
-                        break;
-                    }
+                    items.Remove(item);
                 }
+                print("items = " + items.Count);
             }
 
-            if (isMeat !=SlotsInWorkbench + 1 && isBread != SlotsInWorkbench + 1)
-            {
-                print("byter");
-                _inventory.AddItem(Item.Name.Sandwich, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw, false);
-                for (int i = 0; i < _itemInWorkbench.Count; i++)
-                {
-                    DeleteItem(i);
-                }
-            }
-            else
+            print(items.Any() + " " + receipeFound.Any(x => !x.IsFound));
+            print(items.Count);
+
+            if (items.Any() || receipeFound.Any(x => !x.IsFound))
             {
                 print("vsyakofign9");
                 _inventory.AddItem(Item.Name.Ubisoft, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw, false);
-                for (int i = 0; i < _itemInWorkbench.Count; i++)
-                {
-                    DeleteItem(i);
-                }
             }
+            else
+            {
+                print("byter");
+                _inventory.AddItem(Item.Name.Sandwich, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw, false);
+            }
+
+            for (int i = 0; i < _itemInWorkbench.Count; i++)
+            {
+                if(_itemInWorkbench[i] != null)
+                    DeleteItem(i);
+            }
+
+
+            //            int isBread = SlotsInWorkbench + 1;
+            //            int isMeat = SlotsInWorkbench + 1;
+            //            for (int i = 0; i < _itemInWorkbench.Count; i++)
+            //            {
+            //                if (_itemInWorkbench[i] != null)
+            //                {
+            //                    if (_itemInWorkbench[i].ItemName == Item.Name.Bread)
+            //                    {
+            //                        isBread = i;
+            //                        print("Find Bread");
+            //                        break;
+            //                    }
+            //                }
+            //            }
+            //            for (int i = 0; i < _itemInWorkbench.Count; i++)
+            //            {
+            //                if (_itemInWorkbench[i] != null)
+            //                {
+            //                    if (_itemInWorkbench[i].ItemName == Item.Name.Meat)
+            //                    {
+            //                        isMeat = i;
+            //                        print("Find Meat");
+            //                        break;
+            //                    }
+            //                }
+            //            }
+            //
+            //            if (isMeat !=SlotsInWorkbench + 1 && isBread != SlotsInWorkbench + 1)
+            //            {
+            //                print("byter");
+            //                _inventory.AddItem(Item.Name.Sandwich, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw, false);
+            //                for (int i = 0; i < _itemInWorkbench.Count; i++)
+            //                {
+            //                    DeleteItem(i);
+            //                }
+            //            }
+            //            else
+            //            {
+            //                print("vsyakofign9");
+            //                _inventory.AddItem(Item.Name.Ubisoft, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw, false);
+            //                for (int i = 0; i < _itemInWorkbench.Count; i++)
+            //                {
+            //                    DeleteItem(i);
+            //                }
+            //            }
         }
     }
 
