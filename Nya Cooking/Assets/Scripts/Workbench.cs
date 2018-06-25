@@ -107,36 +107,6 @@ public class Workbench : MonoBehaviour {
 
             return false;
         }
-
-        /*static public bool operator==(IngridientFound item1, Item item2)
-        {
-            if (item1 == null && item2 == null) return true;
-            if (item1 == null && item2 != null) return false;
-            if (item1 != null && item2 == null) return false;
-
-            if (item1.Item.ItemName == item2.ItemName
-                && item1.Item.stateOfIncision == item2.stateOfIncision
-                && item1.Item.stateOfPreparing == item2.stateOfPreparing
-                && item1.Item.Breading == item2.Breading)
-                return true;
-
-            return false;
-        }
-
-        static public bool operator ==(Item item2, IngridientFound item1)
-        {
-            return item1 == item2;
-        }
-
-        static public bool operator!=(IngridientFound item1, Item item2)
-        {
-            return !(item1 == item2);
-        }
-
-        static public bool operator !=(Item item2, IngridientFound item1)
-        {
-            return item1 != item2;
-        }*/
     }
 
     void CreateNewProduct()
