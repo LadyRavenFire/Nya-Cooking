@@ -29,6 +29,7 @@ public class Inventory : MonoBehaviour
         _workbench = GameObject.FindGameObjectWithTag("Workbench").GetComponent<Workbench>();
 
         AddItem(Item.Name.Meat, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw, false);
+        print(_slots[0].TexturePath);
         AddItem(Item.Name.Meat, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw, false);
         AddItem(Item.Name.Bread, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw, false);
     }

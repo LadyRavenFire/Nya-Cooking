@@ -60,7 +60,7 @@ public class Workbench : MonoBehaviour {
             if (_itemInWorkbench != null)
             {
                 flag = true;
-                //print(_itemInWorkbench[i].ItemName);
+                print(i);
             }
         }
 
@@ -117,17 +117,21 @@ public class Workbench : MonoBehaviour {
 
             if (isMeat !=SlotsInWorkbench + 1 && isBread != SlotsInWorkbench + 1)
             {
-                print("Lol");
+                print("byter");
                 _inventory.AddItem(Item.Name.Sandwich, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw, false);
-                DeleteItem(isMeat);
-                DeleteItem(isBread);
+                for (int i = 0; i < _itemInWorkbench.Count; i++)
+                {
+                    DeleteItem(i);
+                }
             }
             else
             {
-                print("Lol");
+                print("vsyakofign9");
                 _inventory.AddItem(Item.Name.Ubisoft, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw, false);
-                DeleteItem(isMeat);
-                DeleteItem(isBread);
+                for (int i = 0; i < _itemInWorkbench.Count; i++)
+                {
+                    DeleteItem(i);
+                }
             }
         }
     }
