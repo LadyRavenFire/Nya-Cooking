@@ -61,9 +61,9 @@ public class Item
 
     public sealed override string ToString()
     {
-        if (stateOfPreparing == StateOfPreparing.Raw)
-             return ItemName.ToString("F");
+        /*if (stateOfPreparing == StateOfPreparing.Raw)
+             return ItemName.ToString("F");*/
 
-        return ItemName + "_" + stateOfPreparing.ToString("F");
+        return ItemName + "_" + stateOfPreparing.ToString("F") + "_" + stateOfIncision.ToString("F");
     }
 }
