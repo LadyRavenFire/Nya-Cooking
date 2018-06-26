@@ -295,6 +295,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _slotsInRepository: 100
   _typeOfThingsOfRepository: Bread
+  _slotsCount: 100
+  _storedItemType: 0
 --- !u!65 &1109281098
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -435,6 +437,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _slotsInRepository: 100
   _typeOfThingsOfRepository: Meat
+  _slotsCount: 100
+  _storedItemType: 0
 --- !u!65 &1288314928
 BoxCollider:
   m_ObjectHideFlags: 0
