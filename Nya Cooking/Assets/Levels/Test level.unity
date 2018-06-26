@@ -297,6 +297,7 @@ MonoBehaviour:
   _typeOfThingsOfRepository: Bread
   _slotsCount: 100
   _storedItemType: 0
+  _storedItemType: 1
 --- !u!65 &1109281098
 BoxCollider:
   m_ObjectHideFlags: 0
