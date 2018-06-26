@@ -24,10 +24,6 @@ public class Workbench : MonoBehaviour {
         _inventory = GameObject.FindGameObjectWithTag("Inventory").GetComponent<Inventory>();
     }
 
-    void Update()
-    {
-    }
-
     void OnMouseEnter()
     {
         IsEnterCollider = true;
@@ -40,17 +36,14 @@ public class Workbench : MonoBehaviour {
 
     public void AddItem(Item item)
     {
-//        print("Start call add");
         for (int i = 0; i < _itemInWorkbench.Count; i++)
         {
             if (_itemInWorkbench[i] == null)
             {
                 _itemInWorkbench[i] = item;
-//                print(_itemInWorkbench[i].ItemName);
                 if (IsEmpty)
                 {
                     IsEmpty = false;
-//                    print("V pechky sto to polozili");
                 }
                 break;
             }
@@ -66,14 +59,12 @@ public class Workbench : MonoBehaviour {
             if (_itemInWorkbench != null)
             {
                 flag = true;
-//                print(i);
             }
         }
 
         if (flag)
         {
             IsEmpty = true;
-//            print("Pechka pysta, milord");
         }
         else
         {
@@ -87,13 +78,6 @@ public class Workbench : MonoBehaviour {
         {
             CreateNewProduct();
         }
-    }
-
-    
-    class Receipe
-    {
-        public List<Item> Ingridients { get; set; }
-        public Item Result { get; set; }
     }
 
     class IngridientFound
@@ -127,60 +111,11 @@ public class Workbench : MonoBehaviour {
     {
         if (!IsEmpty)
         {
-            var db = GameObject.FindGameObjectWithTag("ItemDataBase").GetComponent<ItemDataBase>();
-
-            // Рецепты выносятся в отдельный глобальный объект
-            Receipe receipe1 = new Receipe()
-            {
-                Ingridients = new List<Item>()
-                {
-                    new Item
-                    {
-                        ItemName = Item.Name.Meat,
-                        stateOfPreparing = Item.StateOfPreparing.Raw,
-                        stateOfIncision = Item.StateOfIncision.Whole,
-                        Breading = false
-                    },
-                    new Item
-                    {
-                        ItemName = Item.Name.Bread,
-                        stateOfPreparing = Item.StateOfPreparing.Raw,
-                        stateOfIncision = Item.StateOfIncision.Whole,
-                        Breading = false
-                    }
-                },
-                Result = db.Generate(Item.Name.Sandwich, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw, false)
-
-            };
-            Receipe receipe2 = new Receipe()
-            {
-                Ingridients = new List<Item>()
-                {
-                    new Item
-                    {
-                        ItemName = Item.Name.Meat,
-                        stateOfPreparing = Item.StateOfPreparing.Raw,
-                        stateOfIncision = Item.StateOfIncision.Whole,
-                        Breading = false
-                    },
-                    new Item
-                    {
-                        ItemName = Item.Name.Meat,
-                        stateOfPreparing = Item.StateOfPreparing.Raw,
-                        stateOfIncision = Item.StateOfIncision.Whole,
-                        Breading = false
-                    }
-                },
-                Result = db.Generate(Item.Name.Meat, Item.StateOfIncision.Whole, Item.StateOfPreparing.Fried, false)
-            };
-
-
-            List<Receipe> receipes = new List<Receipe>(){ receipe1, receipe2 };
-
-            // Все что ниже, должно остаться в этом методе
+            var receipe = GameObject.FindGameObjectWithTag("Recipes").GetComponent<Recipes>();
+            var recipes = receipe.Receipes;     
 
             // Создаем структуру рецепт - был ли рецепт найден
-            List<ReceipeFound> receipeFounds = receipes.Select(x => new ReceipeFound
+            List<ReceipeFound> receipeFounds = recipes.Select(x => new ReceipeFound
             {
                 // у каждого рецепта есть список ингридиентов - и был ли этот ингридиент найден
                 IngridientFounds = x.Ingridients.Select(y => 
@@ -279,64 +214,15 @@ public class Workbench : MonoBehaviour {
                 if(_itemInWorkbench[i] != null)
                     DeleteItem(i);
             }
-
-
-            //            int isBread = SlotsInWorkbench + 1;
-            //            int isMeat = SlotsInWorkbench + 1;
-            //            for (int i = 0; i < _itemInWorkbench.Count; i++)
-            //            {
-            //                if (_itemInWorkbench[i] != null)
-            //                {
-            //                    if (_itemInWorkbench[i].ItemName == Item.Name.Bread)
-            //                    {
-            //                        isBread = i;
-            //                        print("Find Bread");
-            //                        break;
-            //                    }
-            //                }
-            //            }
-            //            for (int i = 0; i < _itemInWorkbench.Count; i++)
-            //            {
-            //                if (_itemInWorkbench[i] != null)
-            //                {
-            //                    if (_itemInWorkbench[i].ItemName == Item.Name.Meat)
-            //                    {
-            //                        isMeat = i;
-            //                        print("Find Meat");
-            //                        break;
-            //                    }
-            //                }
-            //            }
-            //
-            //            if (isMeat !=SlotsInWorkbench + 1 && isBread != SlotsInWorkbench + 1)
-            //            {
-            //                print("byter");
-            //                _inventory.AddItem(Item.Name.Sandwich, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw, false);
-            //                for (int i = 0; i < _itemInWorkbench.Count; i++)
-            //                {
-            //                    DeleteItem(i);
-            //                }
-            //            }
-            //            else
-            //            {
-            //                print("vsyakofign9");
-            //                _inventory.AddItem(Item.Name.Ubisoft, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw, false);
-            //                for (int i = 0; i < _itemInWorkbench.Count; i++)
-            //                {
-            //                    DeleteItem(i);
-            //                }
-            //            }
         }
     }
 
     public bool IsPlace()
     {
-//        print("start call isplace");
         for (int i = 0; i < _itemInWorkbench.Count; i++)
         {
             if (_itemInWorkbench[i] == null)
             {
-//                print("Est` mesto");
                 return true;
             }
         }

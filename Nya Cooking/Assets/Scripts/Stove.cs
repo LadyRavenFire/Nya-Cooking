@@ -8,7 +8,7 @@ public class Stove : MonoBehaviour
     public bool IsEnterCollider;
     public bool IsEmpty;
     private bool _isCooking;
-    public Inventory Inventory;
+    private Inventory _inventory;
     private float _timer;
     private bool _timerFlag;
 
@@ -18,7 +18,7 @@ public class Stove : MonoBehaviour
         IsEnterCollider = false;
         IsEmpty = true;
         _isCooking = false;
-        Inventory = GameObject.FindGameObjectWithTag("Inventory").GetComponent<Inventory>();
+        _inventory = GameObject.FindGameObjectWithTag("Inventory").GetComponent<Inventory>();
         _timer = 0;
         _timerFlag = false;
     }
@@ -66,7 +66,7 @@ public class Stove : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && _isCooking)
         {
-            Inventory.AddItem(_itemInStove[0]);
+            _inventory.AddItem(_itemInStove[0]);
             print("Vz9l item iz pechki!");
             DeleteItem(0);
         }
