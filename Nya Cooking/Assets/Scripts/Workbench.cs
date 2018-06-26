@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Workbench : MonoBehaviour {
   
-    private readonly List<Item> _itemInWorkbench = new List<Item>();
+    private Item[] _itemInWorkbench;
     public bool IsEnterCollider;
     public bool IsEmpty;
     private Inventory _inventory;
@@ -15,9 +15,10 @@ public class Workbench : MonoBehaviour {
 
     void Start()
     {
+        _itemInWorkbench = new Item[SlotsInWorkbench];
         for (int i = 0; i < SlotsInWorkbench; i++)
         {
-            _itemInWorkbench.Add(null);
+            _itemInWorkbench[i] = null;
         }
         IsEnterCollider = false;
         IsEmpty = true;
@@ -36,7 +37,7 @@ public class Workbench : MonoBehaviour {
 
     public void AddItem(Item item)
     {
-        for (int i = 0; i < _itemInWorkbench.Count; i++)
+        for (int i = 0; i < _itemInWorkbench.Length; i++)
         {
             if (_itemInWorkbench[i] == null)
             {
@@ -54,7 +55,7 @@ public class Workbench : MonoBehaviour {
     {
         _itemInWorkbench[index] = null;
         bool flag = false;
-        for (int i = 0; i < _itemInWorkbench.Count; i++)
+        for (int i = 0; i < _itemInWorkbench.Length; i++)
         {
             if (_itemInWorkbench != null)
             {
@@ -194,7 +195,7 @@ public class Workbench : MonoBehaviour {
             }
 
             // очищаем воркбенч
-            for (int i = 0; i < _itemInWorkbench.Count; i++)
+            for (int i = 0; i < _itemInWorkbench.Length; i++)
             {
                 if(_itemInWorkbench[i] != null)
                     DeleteItem(i);
@@ -204,7 +205,7 @@ public class Workbench : MonoBehaviour {
 
     public bool IsPlace()
     {
-        for (int i = 0; i < _itemInWorkbench.Count; i++)
+        for (int i = 0; i < _itemInWorkbench.Length; i++)
         {
             if (_itemInWorkbench[i] == null)
             {

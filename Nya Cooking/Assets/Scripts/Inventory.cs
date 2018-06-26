@@ -8,7 +8,7 @@ public class Inventory : MonoBehaviour
     [SerializeField]
     private int SlotsX =5 , SlotsY = 1; // количество слотов инвентаря в длинну и высоту
     public GUISkin Skin; // скин инвентаря (ака текстурка)
-    private readonly List<Item> _slots = new List<Item>(); 
+    private Item[] _slots; 
     private ItemDataBase _database;
     private Stove _stove;
     private Workbench _workbench;
@@ -20,9 +20,10 @@ public class Inventory : MonoBehaviour
 
     void Start()
     {
+        _slots = new Item[SlotsX*SlotsY];
         for (int i = 0; i < (SlotsX*SlotsY); i++) 
         {
-            _slots.Add(null);
+            _slots[i] = null;
         }
 
         _database = GameObject.FindGameObjectWithTag("ItemDataBase").GetComponent<ItemDataBase>();
@@ -137,7 +138,7 @@ public class Inventory : MonoBehaviour
 
     public void AddItem(Item.Name name, Item.StateOfIncision stateOfIncision, Item.StateOfPreparing stateOfPreparing, bool isBreaded)
     {
-        for (int i = 0; i < _slots.Count; i++)
+        for (int i = 0; i < _slots.Length; i++)
         {
             if (_slots[i] == null)
             {
@@ -149,7 +150,7 @@ public class Inventory : MonoBehaviour
 
     public void AddItem(Item item)
     {
-        for (int i = 0; i < _slots.Count; i++)
+        for (int i = 0; i < _slots.Length; i++)
         {
             if (_slots[i] == null)
             {

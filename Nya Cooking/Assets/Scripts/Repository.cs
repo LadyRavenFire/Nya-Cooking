@@ -2,23 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Repository : MonoBehaviour {
+public class Repository : MonoBehaviour
+{
+    [SerializeField] private int _slotsCount = 100;
 
-    private readonly List<Item> _items = new List<Item>();
+    private Item[] _items;
     private Inventory _inventory;
     private ItemDataBase _db;
     private bool _isEmpty;
-    [SerializeField] private int _slotsCount = 100;
+    
     [SerializeField] private Item.Name _storedItemType = Item.Name.Meat;
 
     void Start ()
     {
+        _items = new Item[_slotsCount];
         _inventory = GameObject.FindGameObjectWithTag("Inventory").GetComponent<Inventory>();
         _db = GameObject.FindGameObjectWithTag("ItemDataBase").GetComponent<ItemDataBase>();
         _isEmpty = true;
         for (int i = 0; i < _slotsCount; i++)
         {
-            _items.Add(null);
+            _items[i] = null;
         }
         
         AddtoRepository(3,_storedItemType); //test    
@@ -26,7 +29,7 @@ public class Repository : MonoBehaviour {
 
     public void AddtoRepository(int quantity, Item.Name type)
     {        
-        for (int i = 0; i < _items.Count; i++)
+        for (int i = 0; i < _items.Length; i++)
         {
             if (_items[i] == null)
             {
@@ -45,7 +48,7 @@ public class Repository : MonoBehaviour {
 
     void AddFromRepository()
     {
-        for (int i = 0; i < _items.Count; i++)
+        for (int i = 0; i < _items.Length; i++)
         {
             if (_items[i] != null)
             {
@@ -60,7 +63,7 @@ public class Repository : MonoBehaviour {
     void IsRepositoryEmpty()
     {
         _isEmpty = true;
-        for (int i = 0; i < _items.Count; i++)
+        for (int i = 0; i < _items.Length; i++)
         {
             if (_items[i] != null)
             {
