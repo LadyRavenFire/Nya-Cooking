@@ -7,8 +7,7 @@ public class Repository : MonoBehaviour {
     private readonly List<Item> _itemInRepository = new List<Item>();
     private Inventory _inventory;
     private ItemDataBase _db;
-    private Item _item;
-    public bool IsEmpty;
+    private bool _isEmpty;
     [SerializeField] private int _slotsInRepository = 100;
     [SerializeField] private string _typeOfThingsOfRepository = "Meat";
 
@@ -16,7 +15,7 @@ public class Repository : MonoBehaviour {
     {
         _inventory = GameObject.FindGameObjectWithTag("Inventory").GetComponent<Inventory>();
         _db = GameObject.FindGameObjectWithTag("ItemDataBase").GetComponent<ItemDataBase>();
-        IsEmpty = true;
+        _isEmpty = true;
         for (int i = 0; i < _slotsInRepository; i++)
         {
             _itemInRepository.Add(null);
@@ -26,18 +25,17 @@ public class Repository : MonoBehaviour {
 	}
 
     public void AddtoRepository(int quantity, string type)
-    {
-        var itemtoadd = SearchForProduct(type);
+    {        
         for (int i = 0; i < _itemInRepository.Count; i++)
         {
             if (_itemInRepository[i] == null)
             {
                 if (quantity > 0)
                 {
-                    _itemInRepository[i] = itemtoadd;
-                    if (IsEmpty)
+                    _itemInRepository[i] = SearchForProduct(type);
+                    if (_isEmpty)
                     {
-                        IsEmpty = false;
+                        _isEmpty = false;
                     }
                     quantity--;
                 }            
@@ -75,12 +73,12 @@ public class Repository : MonoBehaviour {
 
     void IsRepositoryEmpty()
     {
-        IsEmpty = true;
+        _isEmpty = true;
         for (int i = 0; i < _itemInRepository.Count; i++)
         {
             if (_itemInRepository[i] != null)
             {
-                IsEmpty = false;
+                _isEmpty = false;
                 break;
             }
         }        
@@ -88,10 +86,9 @@ public class Repository : MonoBehaviour {
 
     void OnMouseOver()
     {
-        if (Input.GetMouseButtonDown(0) && !IsEmpty)
+        if (Input.GetMouseButtonDown(0) && !_isEmpty)
         {
             AddFromRepository();
         }
     }
-
 }

@@ -8,6 +8,8 @@ TagManager:
   - Stove
   - Inventory
   - Workbench
+  - Recipes
+  - Garbage
   layers:
   - Default
   - TransparentFX

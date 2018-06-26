@@ -12,6 +12,7 @@ public class Inventory : MonoBehaviour
     private ItemDataBase _database;
     private Stove _stove;
     private Workbench _workbench;
+    private Garbage _garbage;
 
     private bool _draggingItem;
     private Item _draggedItem;
@@ -27,6 +28,7 @@ public class Inventory : MonoBehaviour
         _database = GameObject.FindGameObjectWithTag("ItemDataBase").GetComponent<ItemDataBase>();
         _stove = GameObject.FindGameObjectWithTag("Stove").GetComponent<Stove>();
         _workbench = GameObject.FindGameObjectWithTag("Workbench").GetComponent<Workbench>();
+        _garbage = GameObject.FindGameObjectWithTag("Garbage").GetComponent<Garbage>();
 
         //AddItem(Item.Name.Meat, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw, false);
         //AddItem(Item.Name.Meat, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw, false);
@@ -112,6 +114,12 @@ public class Inventory : MonoBehaviour
                 _draggingItem = false;
                 _draggedItem = null;
             }
+        }
+
+        if (e.type == EventType.MouseUp && _draggingItem && _garbage.IsEnterCollider)
+        {
+                _draggingItem = false;
+                _draggedItem = null;
         }
 
         if (e.type == EventType.MouseUp && _draggingItem)
