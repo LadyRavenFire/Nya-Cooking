@@ -10,7 +10,7 @@ public class Item
     public string TexturePath;
     public StateOfPreparing stateOfPreparing; // состояние приготовленности
     public StateOfIncision stateOfIncision; // состояние предварителности??? 
-    public bool Breading; // запанированно (???)
+    public bool IsBreaded; // запанированно (???)
 
     public enum Name
     {
@@ -38,12 +38,12 @@ public class Item
         Forcemeat //фарш
     }
 
-    public Item(Name name, StateOfIncision incision, StateOfPreparing preparing, bool breading)
+    public Item(Name name, StateOfIncision incision, StateOfPreparing preparing, bool isBreaded)
     {
         ItemName = name;
         stateOfPreparing = preparing;
         stateOfIncision = incision;       
-        Breading = breading;
+        IsBreaded = isBreaded;
 
         TexturePath = "ItemIcons/" + this.ToString();
         ItemIcon = Resources.Load<Texture2D>(TexturePath); //загружаем иконку по названию предмета
@@ -80,7 +80,7 @@ public class Item
         return (item1.ItemName == item2.ItemName
                 && item1.stateOfIncision == item2.stateOfIncision
                 && item1.stateOfPreparing == item2.stateOfPreparing
-                && item1.Breading == item2.Breading);
+                && item1.IsBreaded == item2.IsBreaded);
     } 
 
     static public bool operator !=(Item item1, Item item2) 
@@ -95,7 +95,7 @@ public class Item
         return !(item1.ItemName == item2.ItemName
                 && item1.stateOfIncision == item2.stateOfIncision
                 && item1.stateOfPreparing == item2.stateOfPreparing
-                && item1.Breading == item2.Breading);
+                && item1.IsBreaded == item2.IsBreaded);
     }
 
     public override bool Equals(object item)
@@ -107,6 +107,6 @@ public class Item
         return (ItemName == item2.ItemName
                 && stateOfIncision == item2.stateOfIncision
                 && stateOfPreparing == item2.stateOfPreparing
-                && Breading == item2.Breading);
+                && IsBreaded == item2.IsBreaded);
     }
 }

@@ -5,20 +5,22 @@ using System.Linq;
 using UnityEngine;
 
 public class Workbench : MonoBehaviour {
-  
-    private Item[] _itemInWorkbench;
+
+    [SerializeField]
+    private int _slotsCount = 5;
+    private Item[] _items;
+
     public bool IsEnterCollider;
     public bool IsEmpty;
+
     private Inventory _inventory;
-    [SerializeField]
-    private int SlotsInWorkbench = 5;
 
     void Start()
     {
-        _itemInWorkbench = new Item[SlotsInWorkbench];
-        for (int i = 0; i < SlotsInWorkbench; i++)
+        _items = new Item[_slotsCount];
+        for (int i = 0; i < _slotsCount; i++)
         {
-            _itemInWorkbench[i] = null;
+            _items[i] = null;
         }
         IsEnterCollider = false;
         IsEmpty = true;
@@ -37,11 +39,11 @@ public class Workbench : MonoBehaviour {
 
     public void AddItem(Item item)
     {
-        for (int i = 0; i < _itemInWorkbench.Length; i++)
+        for (int i = 0; i < _items.Length; i++)
         {
-            if (_itemInWorkbench[i] == null)
+            if (_items[i] == null)
             {
-                _itemInWorkbench[i] = item;
+                _items[i] = item;
                 if (IsEmpty)
                 {
                     IsEmpty = false;
@@ -53,11 +55,11 @@ public class Workbench : MonoBehaviour {
 
     void DeleteItem(int index)
     {
-        _itemInWorkbench[index] = null;
+        _items[index] = null;
         bool flag = false;
-        for (int i = 0; i < _itemInWorkbench.Length; i++)
+        for (int i = 0; i < _items.Length; i++)
         {
-            if (_itemInWorkbench != null)
+            if (_items != null)
             {
                 flag = true;
             }
@@ -124,7 +126,7 @@ public class Workbench : MonoBehaviour {
                 // сохраняем элементы из воркбенча в отдельный список для удобной работы
                 // в дальнейшем именно этот список мы будем называть элементами воркбенча
                 // в каждой отдельной итерации
-                var items = new List<Item>(_itemInWorkbench.Where(x => x != null).ToList());
+                var items = new List<Item>(_items.Where(x => x != null).ToList());
 
                 // для каждого ингридиента в рецепте...
                 foreach (var rec in receipeFound.IngridientFounds)
@@ -195,9 +197,9 @@ public class Workbench : MonoBehaviour {
             }
 
             // очищаем воркбенч
-            for (int i = 0; i < _itemInWorkbench.Length; i++)
+            for (int i = 0; i < _items.Length; i++)
             {
-                if(_itemInWorkbench[i] != null)
+                if(_items[i] != null)
                     DeleteItem(i);
             }
         }
@@ -205,9 +207,9 @@ public class Workbench : MonoBehaviour {
 
     public bool IsPlace()
     {
-        for (int i = 0; i < _itemInWorkbench.Length; i++)
+        for (int i = 0; i < _items.Length; i++)
         {
-            if (_itemInWorkbench[i] == null)
+            if (_items[i] == null)
             {
                 return true;
             }

@@ -6,17 +6,19 @@ using UnityEngine;
 public class Inventory : MonoBehaviour
 {
     [SerializeField]
-    private int SlotsX =5 , SlotsY = 1; // количество слотов инвентаря в длинну и высоту
+    private int SlotsX = 5 , SlotsY = 1; // количество слотов инвентаря в длинну и высоту
+    private Item[] _slots;
+
     public GUISkin Skin; // скин инвентаря (ака текстурка)
-    private Item[] _slots; 
+
+    private bool _isItemDragged;
+    private Item _draggedItem;
+    private int _prevIndex;
+
     private ItemDataBase _database;
     private Stove _stove;
     private Workbench _workbench;
     private Garbage _garbage;
-
-    private bool _draggingItem;
-    private Item _draggedItem;
-    private int _prevIndex;
 
     void Start()
     {
@@ -41,7 +43,7 @@ public class Inventory : MonoBehaviour
     {
         GUI.skin = Skin;
         DrawInventory();
-        if (_draggingItem)
+        if (_isItemDragged)
         {
             GUI.DrawTexture(new Rect(Event.current.mousePosition.x, Event.current.mousePosition.y, 50, 50), _draggedItem.ItemIcon);
         }
@@ -63,19 +65,19 @@ public class Inventory : MonoBehaviour
                     GUI.DrawTexture(slotRect, temp.ItemIcon); // функция отрисовки предметов в инвентаре
                     if (slotRect.Contains(e.mousePosition))
                     {
-                        if (e.button == 0 && e.type == EventType.MouseDrag && !_draggingItem) 
+                        if (e.button == 0 && e.type == EventType.MouseDrag && !_isItemDragged) 
                         {
-                            _draggingItem = true;
+                            _isItemDragged = true;
                             _prevIndex = index;
                             _draggedItem = temp;
                             RemoveItem(index);
                         }
 
-                        if (e.type == EventType.MouseUp && _draggingItem)
+                        if (e.type == EventType.MouseUp && _isItemDragged)
                         {
                             _slots[_prevIndex] = _slots[index];
                             _slots[index] = _draggedItem;
-                            _draggingItem = false;
+                            _isItemDragged = false;
                             _draggedItem = null;
                         }
                     }
@@ -84,10 +86,10 @@ public class Inventory : MonoBehaviour
                 {
                     if (slotRect.Contains(e.mousePosition))
                     {
-                        if (e.type == EventType.MouseUp && _draggingItem)
+                        if (e.type == EventType.MouseUp && _isItemDragged)
                         {
                             _slots[index] = _draggedItem;
-                            _draggingItem = false;
+                            _isItemDragged = false;
                             _draggedItem = null;
                         }
                     }
@@ -97,36 +99,36 @@ public class Inventory : MonoBehaviour
             }
         }
 
-        if (e.type == EventType.MouseUp && _draggingItem && _stove.IsEnterCollider)
+        if (e.type == EventType.MouseUp && _isItemDragged && _stove.IsEnterCollider)
         {
             if (_stove.IsEmpty)
             {
                 _stove.AddItem(_draggedItem);
-                _draggingItem = false;
+                _isItemDragged = false;
                 _draggedItem = null;
             }
         }
 
-        if (e.type == EventType.MouseUp && _draggingItem && _workbench.IsEnterCollider)
+        if (e.type == EventType.MouseUp && _isItemDragged && _workbench.IsEnterCollider)
         {
             if (_workbench.IsPlace())
             {
                 _workbench.AddItem(_draggedItem);
-                _draggingItem = false;
+                _isItemDragged = false;
                 _draggedItem = null;
             }
         }
 
-        if (e.type == EventType.MouseUp && _draggingItem && _garbage.IsEnterCollider)
+        if (e.type == EventType.MouseUp && _isItemDragged && _garbage.IsEnterCollider)
         {
-                _draggingItem = false;
+                _isItemDragged = false;
                 _draggedItem = null;
         }
 
-        if (e.type == EventType.MouseUp && _draggingItem)
+        if (e.type == EventType.MouseUp && _isItemDragged)
         {
             _slots[_prevIndex] = _draggedItem;
-            _draggingItem = false;
+            _isItemDragged = false;
             _draggedItem = null;
         }
     }

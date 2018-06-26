@@ -4,17 +4,19 @@ using UnityEngine;
 
 public class Stove : MonoBehaviour
 {
-    private readonly List<Item> _itemInStove = new List<Item>();
+    private readonly List<Item> _items = new List<Item>();
+
     public bool IsEnterCollider;
     public bool IsEmpty;
     private bool _isCooking;
-    private Inventory _inventory;
     private float _timer;
     private bool _timerFlag;
 
+    private Inventory _inventory;
+
     void Start()
     {
-        _itemInStove.Add(null);
+        _items.Add(null);
         IsEnterCollider = false;
         IsEmpty = true;
         _isCooking = false;
@@ -27,7 +29,7 @@ public class Stove : MonoBehaviour
     {
         if (!IsEmpty && _isCooking == false)
         {
-            if (_itemInStove[0].ItemName == Item.Name.Meat && _timerFlag == false)
+            if (_items[0].ItemName == Item.Name.Meat && _timerFlag == false)
             {
                 _timer = 5;
                 _timerFlag = true;
@@ -40,7 +42,7 @@ public class Stove : MonoBehaviour
 
     void DeleteItem(int index)
     {
-        _itemInStove[index] = null;
+        _items[index] = null;
         IsEmpty = true;
         _isCooking = false;
         _timerFlag = false;
@@ -48,7 +50,7 @@ public class Stove : MonoBehaviour
 
     public void AddItem(Item item)
     {
-        _itemInStove[0] = item;
+        _items[0] = item;
         IsEmpty = false;
     }
 
@@ -66,7 +68,7 @@ public class Stove : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && _isCooking)
         {
-            _inventory.AddItem(_itemInStove[0]);
+            _inventory.AddItem(_items[0]);
             print("Vz9l item iz pechki!");
             DeleteItem(0);
         }
@@ -74,10 +76,10 @@ public class Stove : MonoBehaviour
 
     void Prepare()
     {
-        if (_itemInStove[0].ItemName == Item.Name.Meat)
+        if (_items[0].ItemName == Item.Name.Meat)
         {
-            _itemInStove[0].stateOfPreparing = Item.StateOfPreparing.Fried;
-            _itemInStove[0].UpdateTexture();        
+            _items[0].stateOfPreparing = Item.StateOfPreparing.Fried;
+            _items[0].UpdateTexture();        
             print("Eda prigotovilas`");
         }
         _timerFlag = false;

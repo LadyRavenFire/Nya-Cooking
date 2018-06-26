@@ -21,14 +21,14 @@ public class Recipes : MonoBehaviour
                     ItemName = Item.Name.Meat,
                     stateOfPreparing = Item.StateOfPreparing.Raw,
                     stateOfIncision = Item.StateOfIncision.Whole,
-                    Breading = false
+                    IsBreaded = false
                 },
                 new Item
                 {
                     ItemName = Item.Name.Bread,
                     stateOfPreparing = Item.StateOfPreparing.Raw,
                     stateOfIncision = Item.StateOfIncision.Whole,
-                    Breading = false
+                    IsBreaded = false
                 }
             },
             Result = _db.Generate(Item.Name.Sandwich, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw, false)
@@ -43,14 +43,14 @@ public class Recipes : MonoBehaviour
                     ItemName = Item.Name.Meat,
                     stateOfPreparing = Item.StateOfPreparing.Raw,
                     stateOfIncision = Item.StateOfIncision.Whole,
-                    Breading = false
+                    IsBreaded = false
                 },
                 new Item
                 {
                     ItemName = Item.Name.Meat,
                     stateOfPreparing = Item.StateOfPreparing.Raw,
                     stateOfIncision = Item.StateOfIncision.Whole,
-                    Breading = false
+                    IsBreaded = false
                 }
             },
             Result = _db.Generate(Item.Name.Meat, Item.StateOfIncision.Whole, Item.StateOfPreparing.Fried, false)

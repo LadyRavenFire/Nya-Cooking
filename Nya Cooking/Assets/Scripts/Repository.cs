@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class Repository : MonoBehaviour
 {
-    [SerializeField] private int _slotsCount = 100;
-
+    [SerializeField]
+    private int _slotsCount = 100;
     private Item[] _items;
+    
+    private bool _isEmpty;
+
     private Inventory _inventory;
     private ItemDataBase _db;
-    private bool _isEmpty;
-    
+
     [SerializeField] private Item.Name _storedItemType = Item.Name.Meat;
 
     void Start ()
