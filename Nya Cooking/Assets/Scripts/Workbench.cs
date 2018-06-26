@@ -84,21 +84,6 @@ public class Workbench : MonoBehaviour {
     {
         public Item Item;
         public bool IsFound;
-
-        public bool Check(Item item2)
-        {
-            if (this.Item == null && item2 == null) return true;
-            if (this.Item == null && item2 != null) return false;
-            if (this.Item != null && item2 == null) return false;
-
-            if (this.Item.ItemName == item2.ItemName
-                && this.Item.stateOfIncision == item2.stateOfIncision
-                && this.Item.stateOfPreparing == item2.stateOfPreparing
-                && this.Item.Breading == item2.Breading)
-                return true;
-
-            return false;
-        }
     }
     class ReceipeFound
     {
@@ -150,7 +135,7 @@ public class Workbench : MonoBehaviour {
                     foreach (var item in items)
                     {
                         // проверяем совпадает ли ингридиент из рецепта с элементом на воркбенче
-                        if (rec.Check(item) && !rec.IsFound)
+                        if (rec.Item == item && !rec.IsFound)
                         {
                             // если совпал...
 

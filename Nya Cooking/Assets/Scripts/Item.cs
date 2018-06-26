@@ -67,4 +67,46 @@ public class Item
 
         return ItemName + "_" + stateOfPreparing.ToString("F") + "_" + stateOfIncision.ToString("F");
     }
+
+    static public bool operator==(Item item1, Item item2)
+    {
+        bool item1IsNull = object.ReferenceEquals(item1, null);
+        bool item2IsNull = object.ReferenceEquals(item2, null);
+
+        if (item1IsNull && item2IsNull) return true;
+        if (item1IsNull) return false;
+        if (item2IsNull) return false;
+
+        return (item1.ItemName == item2.ItemName
+                && item1.stateOfIncision == item2.stateOfIncision
+                && item1.stateOfPreparing == item2.stateOfPreparing
+                && item1.Breading == item2.Breading);
+    } 
+
+    static public bool operator !=(Item item1, Item item2) 
+    {
+        bool item1IsNull = object.ReferenceEquals(item1, null);
+        bool item2IsNull = object.ReferenceEquals(item2, null);
+
+        if (item1IsNull && item2IsNull) return false;
+        if (item1IsNull) return true;
+        if (item2IsNull) return true;
+
+        return !(item1.ItemName == item2.ItemName
+                && item1.stateOfIncision == item2.stateOfIncision
+                && item1.stateOfPreparing == item2.stateOfPreparing
+                && item1.Breading == item2.Breading);
+    }
+
+    public override bool Equals(object item)
+    {
+        if (!(item is Item)) return false;
+
+        var item2 = item as Item;
+
+        return (ItemName == item2.ItemName
+                && stateOfIncision == item2.stateOfIncision
+                && stateOfPreparing == item2.stateOfPreparing
+                && Breading == item2.Breading);
+    }
 }
