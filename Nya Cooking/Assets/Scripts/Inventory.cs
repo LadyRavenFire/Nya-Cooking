@@ -55,7 +55,8 @@ public class Inventory : MonoBehaviour
         {
             for (int x = 0; x < SlotsX; x++)
             {
-                Rect slotRect = new Rect(((Screen.width/5) + x * 80), ((Screen.height-(Screen.height/8)) + (y * 80)) , 70 , 70 ); // функция отрисовки ячеек инвентаря
+                Rect slotRect = new Rect(((Screen.width / 5) + x * 80), ((Screen.height - (Screen.height / 8)) + (y * 80)), 70, 70); // функция отрисовки ячеек инвентаря
+               
                 GUI.Box(slotRect, "", Skin.GetStyle("Slot")); // функция отрисовки ячеек инвентаря
                 var temp = _slots[index];
                 if (temp != null)
@@ -92,7 +93,6 @@ public class Inventory : MonoBehaviour
                         }
                     }
                 }
-
                 index++;
             }
         }
