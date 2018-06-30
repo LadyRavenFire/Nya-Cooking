@@ -8,13 +8,19 @@ public class AspectRatio : MonoBehaviour {
 
     void Start()
     {
+        ChangeSize();
+    }
+
+    void ChangeSize()
+    {
         float windowAspect = (float)Screen.width / (float)Screen.height;
         float scaleHeight = windowAspect / targetAspect;
         Camera camera = GetComponent<Camera>();
-
         if (scaleHeight < 1.0f)
         {
             camera.orthographicSize = camera.orthographicSize / scaleHeight;
         }
+
     }
+
 }
