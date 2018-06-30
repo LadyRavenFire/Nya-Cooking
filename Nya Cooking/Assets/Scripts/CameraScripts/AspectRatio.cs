@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+//This is the script for the resising. (if resolution is not like in the unity) 
+//вроде работает
+/// u will hate my perfect english
 public class AspectRatio : MonoBehaviour {
-
-    public float targetAspect;
+    //is is heigh/weight of aspect that we want. 16/9 == 1.78 
+    [SerializeField] private float _targetAspect = 1.78f;
 
     void Start()
     {
@@ -14,11 +16,11 @@ public class AspectRatio : MonoBehaviour {
     void ChangeSize()
     {
         float windowAspect = (float)Screen.width / (float)Screen.height;
-        float scaleHeight = windowAspect / targetAspect;
+        float scaleAspect = windowAspect / _targetAspect;
         Camera camera = GetComponent<Camera>();
-        if (scaleHeight < 1.0f)
+        if (scaleAspect < 1.0f)
         {
-            camera.orthographicSize = camera.orthographicSize / scaleHeight;
+            camera.orthographicSize = camera.orthographicSize / scaleAspect;
         }
 
     }

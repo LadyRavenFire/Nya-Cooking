@@ -55,6 +55,7 @@ public class Inventory : MonoBehaviour
         {
             for (int x = 0; x < SlotsX; x++)
             {
+                //пытаюсь оптимизировать под разные разешения, что бы инвентарь подстраивался и всегда был по середине и не мелким и не большим. Пока идет так себе.
                 Rect slotRect = new Rect(((Screen.width / 5) + x * 80), ((Screen.height - (Screen.height / 8)) + (y * 80)), 70, 70); // функция отрисовки ячеек инвентаря
                
                 GUI.Box(slotRect, "", Skin.GetStyle("Slot")); // функция отрисовки ячеек инвентаря
