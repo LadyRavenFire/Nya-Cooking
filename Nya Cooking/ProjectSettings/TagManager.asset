@@ -10,6 +10,7 @@ TagManager:
   - Workbench
   - Recipes
   - Garbage
+  - LevelManager
   layers:
   - Default
   - TransparentFX

@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Analytics;
+
 // comment at 8 lesson - drop outside
 // next 9 lesson
 public class Inventory : MonoBehaviour
@@ -33,10 +35,6 @@ public class Inventory : MonoBehaviour
         _workbench = GameObject.FindGameObjectWithTag("Workbench").GetComponent<Workbench>();
         _garbage = GameObject.FindGameObjectWithTag("Garbage").GetComponent<Garbage>();
 
-        //AddItem(Item.Name.Meat, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw, false);
-        //AddItem(Item.Name.Meat, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw, false);
-        //AddItem(Item.Name.Meat, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw, false);
-        //AddItem(Item.Name.Bread, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw, false);
     }
 
     void OnGUI()
@@ -57,7 +55,7 @@ public class Inventory : MonoBehaviour
         {
             for (int x = 0; x < SlotsX; x++)
             {
-                Rect slotRect = new Rect(x * 60, y * 60, 50, 50); // функция отрисовки ячеек инвентаря
+                Rect slotRect = new Rect(300 + x * 80 , Screen.height - 80 + y * 80 , 70 , 70 ); // функция отрисовки ячеек инвентаря
                 GUI.Box(slotRect, "", Skin.GetStyle("Slot")); // функция отрисовки ячеек инвентаря
                 var temp = _slots[index];
                 if (temp != null)
