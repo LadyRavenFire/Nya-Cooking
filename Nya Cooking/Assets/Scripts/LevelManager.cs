@@ -25,8 +25,8 @@ public class LevelManager : MonoBehaviour
     private enum Room
     {
         Kitchen,
-        Gosti,
-        Sklad,
+        GuestRoom,
+        Storage,
         MyRoom
     }
 
@@ -34,8 +34,8 @@ public class LevelManager : MonoBehaviour
     {
         CameraRoom(_room);
         //Сюда подцепляем кнопки и ждем клика, заодно говорим, какой ивент случится при клике на кнопку.
-        _leftButton.onClick.AddListener(TaskOnClickLeft);
-        _rightButton.onClick.AddListener(TaskOnClickRight);
+        _leftButton.onClick.AddListener(LeftButton_Click);
+        _rightButton.onClick.AddListener(RightButton_Click);
     }
 
     void Update()
@@ -50,7 +50,7 @@ public class LevelManager : MonoBehaviour
         _textComponent.text = "Money: " + _money.ToString();
     }
     //ивент на левую кнопку мыши
-    void TaskOnClickLeft()
+    void LeftButton_Click()
     {
         //Debug.Log("You have clicked the button left!");
         if (_room == Room.Kitchen)
@@ -61,17 +61,17 @@ public class LevelManager : MonoBehaviour
         }
         if (_room == Room.MyRoom)
         {
-            _room = Room.Sklad;
+            _room = Room.Storage;
             CameraRoom(_room);
             return;
         }
-        if (_room == Room.Sklad)
+        if (_room == Room.Storage)
         {
-            _room = Room.Gosti;
+            _room = Room.GuestRoom;
             CameraRoom(_room);
             return;
         }
-        if (_room == Room.Gosti)
+        if (_room == Room.GuestRoom)
         {
             _room = Room.Kitchen;
             CameraRoom(_room);
@@ -79,7 +79,7 @@ public class LevelManager : MonoBehaviour
         
     }
     //ивент на правую кнопку мыши
-    void TaskOnClickRight()
+    void RightButton_Click()
     {
         //Debug.Log("You have clicked the button right!");
         if (_room == Room.MyRoom)
@@ -90,17 +90,17 @@ public class LevelManager : MonoBehaviour
         }
         if (_room == Room.Kitchen)
         {
-            _room = Room.Gosti;
+            _room = Room.GuestRoom;
             CameraRoom(_room);
             return;
         }
-        if (_room == Room.Gosti)
+        if (_room == Room.GuestRoom)
         {
-            _room = Room.Sklad;
+            _room = Room.Storage;
             CameraRoom(_room);
             return;
         }
-        if (_room == Room.Sklad)
+        if (_room == Room.Storage)
         {
             _room = Room.MyRoom;
             CameraRoom(_room);
@@ -131,7 +131,7 @@ public class LevelManager : MonoBehaviour
             audio = _camera4.GetComponent<AudioListener>();
             audio.enabled = false;
         }
-        if (newRoom == Room.Gosti)
+        if (newRoom == Room.GuestRoom)
         {
             _camera1.enabled = false;
             var audio = _camera1.GetComponent<AudioListener>();
@@ -146,7 +146,7 @@ public class LevelManager : MonoBehaviour
             audio = _camera4.GetComponent<AudioListener>();
             audio.enabled = false;
         }
-        if (newRoom == Room.Sklad)
+        if (newRoom == Room.Storage)
         {
             _camera1.enabled = false;
             var audio = _camera1.GetComponent<AudioListener>();
