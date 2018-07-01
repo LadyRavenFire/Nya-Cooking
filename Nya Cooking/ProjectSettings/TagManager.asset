@@ -12,6 +12,8 @@ TagManager:
   - Garbage
   - LevelManager
   - MoneyText
+  - PauseMenuButton
+  - PauseMenu
   layers:
   - Default
   - TransparentFX

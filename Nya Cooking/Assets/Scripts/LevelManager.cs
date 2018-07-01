@@ -6,11 +6,20 @@ public class LevelManager : MonoBehaviour
 {
     [SerializeField] private int _money = 0;
     private Text _textComponent;
+    private Button _pauseMenuButton;
+    private GameObject _pauseComponent;
+    private Button _resumeGameButton;
 
     void Start()
     {
         //А тут ищем по тегу
         _textComponent = GameObject.FindGameObjectWithTag("MoneyText").GetComponent<Text>();
+        _pauseMenuButton = GameObject.FindGameObjectWithTag("PauseMenuButton").GetComponent<Button>();
+        _pauseComponent = GameObject.FindGameObjectWithTag("PauseMenu");
+        _resumeGameButton = GameObject.Find("ResumeButton").GetComponent<Button>();
+        _pauseComponent.SetActive(false);
+        _pauseMenuButton.onClick.AddListener(PauseGame);
+        _resumeGameButton.onClick.AddListener(ResumeGame);
     }
 
 
@@ -19,6 +28,18 @@ public class LevelManager : MonoBehaviour
         //просто увеличиваем деньги каждый кадр и выводим их на верх
         _money++;
         UpdateMoney();
+    }
+
+    void ResumeGame()
+    {
+        _pauseComponent.SetActive(false);
+        Time.timeScale = 1f;
+    }
+    void PauseGame()
+    {
+        //timescale паузит игру, тоесть паузит все кроме того,что делается в update и gui
+        Time.timeScale = 0f;
+        _pauseComponent.SetActive(true);
     }
 
     void AddMoney(int money)
