@@ -45,6 +45,16 @@ public class LevelManager : MonoBehaviour
         UpdateMoney();
     }
 
+    void AddMoney(int money)
+    {
+        _money += money;
+    }
+
+    void RemoveMoney(int money)
+    {
+        _money -= money;
+    }
+
     void UpdateMoney()
     {
         _textComponent.text = "Money: " + _money.ToString();
