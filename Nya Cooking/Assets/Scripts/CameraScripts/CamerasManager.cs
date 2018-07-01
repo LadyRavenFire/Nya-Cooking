@@ -11,12 +11,14 @@ using UnityEngine.UI;
 
 public class CamerasManager : MonoBehaviour {
 
-    [SerializeField] private Button _leftButton;
-    [SerializeField] private Button _rightButton;
-    [SerializeField] private Camera _kitchenCamera;
-    [SerializeField] private Camera _guestRoomCamera;
-    [SerializeField] private Camera _storageCamera;
-    [SerializeField] private Camera _myRoomCamera;
+    private Button _leftButton;
+    private Button _rightButton;
+
+    private Camera _kitchenCamera;
+    private Camera _guestRoomCamera;
+    private Camera _storageCamera;
+    private Camera _myRoomCamera;
+
     [SerializeField] private Room _room;
 
     //тут будут номера комнат храниться, в которых может быть игрок. Удобно и можно расширять в зависимости от ивентов(для ивентов?).
@@ -30,6 +32,15 @@ public class CamerasManager : MonoBehaviour {
 
     void Start()
     {
+        //тут пример поиска по имени
+        _leftButton = GameObject.Find("LeftChangeCameraButton").GetComponent<Button>();
+        _rightButton = GameObject.Find("RightChangeCameraButton").GetComponent<Button>();
+
+        _kitchenCamera = GameObject.Find("KitchenCamera").GetComponent<Camera>();
+        _guestRoomCamera = GameObject.Find("GuestRoomCamera").GetComponent<Camera>();
+        _storageCamera = GameObject.Find("StorageCamera").GetComponent<Camera>();
+        _myRoomCamera = GameObject.Find("MyRoomCamera").GetComponent<Camera>();
+
         CameraRoom(_room);
         //Сюда подцепляем кнопки и ждем клика, заодно говорим, какой ивент случится при клике на кнопку.
         _leftButton.onClick.AddListener(TaskOnClickLeft);

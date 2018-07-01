@@ -11,6 +11,7 @@ TagManager:
   - Recipes
   - Garbage
   - LevelManager
+  - MoneyText
   layers:
   - Default
   - TransparentFX

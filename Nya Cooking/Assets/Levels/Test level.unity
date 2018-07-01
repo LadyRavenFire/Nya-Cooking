@@ -369,7 +369,7 @@ GameObject:
   - component: {fileID: 315963705}
   - component: {fileID: 315963704}
   m_Layer: 5
-  m_Name: Left
+  m_Name: LeftChangeCameraButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1093,7 +1093,7 @@ GameObject:
   - component: {fileID: 1242396327}
   m_Layer: 0
   m_Name: LevelManager
-  m_TagString: Untagged
+  m_TagString: LevelManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1110,7 +1110,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _money: 0
-  _textComponent: {fileID: 1338298037}
 --- !u!4 &1242396328
 Transform:
   m_ObjectHideFlags: 0
@@ -1310,7 +1309,7 @@ GameObject:
   - component: {fileID: 1338298037}
   m_Layer: 5
   m_Name: Money
-  m_TagString: Untagged
+  m_TagString: MoneyText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1595,7 +1594,7 @@ GameObject:
   - component: {fileID: 1535150617}
   - component: {fileID: 1535150616}
   m_Layer: 5
-  m_Name: Right
+  m_Name: RightChangeCameraButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2348,12 +2347,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3e3772595880d54e8c9695f15016a29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _leftButton: {fileID: 315963704}
-  _rightButton: {fileID: 1535150616}
-  _kitchenCamera: {fileID: 1955487496}
-  _guestRoomCamera: {fileID: 903413368}
-  _storageCamera: {fileID: 57953462}
-  _myRoomCamera: {fileID: 1412365529}
   _room: 0
 --- !u!1 &2094925022
 GameObject:
