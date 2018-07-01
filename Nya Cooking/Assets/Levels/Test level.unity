@@ -202,7 +202,7 @@ GameObject:
   - component: {fileID: 57953460}
   - component: {fileID: 57953459}
   m_Layer: 0
-  m_Name: Main Camera3
+  m_Name: StorageCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -806,7 +806,7 @@ GameObject:
   - component: {fileID: 903413366}
   - component: {fileID: 903413365}
   m_Layer: 0
-  m_Name: Main Camera2
+  m_Name: GuestRoomCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1111,13 +1111,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _money: 0
   _textComponent: {fileID: 1338298037}
-  _leftButton: {fileID: 315963704}
-  _rightButton: {fileID: 1535150616}
-  _camera1: {fileID: 1955487496}
-  _camera2: {fileID: 903413368}
-  _camera3: {fileID: 57953462}
-  _camera4: {fileID: 1412365529}
-  _room: 0
 --- !u!4 &1242396328
 Transform:
   m_ObjectHideFlags: 0
@@ -1435,7 +1428,7 @@ GameObject:
   - component: {fileID: 1412365527}
   - component: {fileID: 1412365526}
   m_Layer: 0
-  m_Name: Main Camera4
+  m_Name: MyRoomCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2119,7 +2112,7 @@ GameObject:
   - component: {fileID: 1955487494}
   - component: {fileID: 1955487499}
   m_Layer: 0
-  m_Name: Main Camera1
+  m_Name: KitchenCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2319,6 +2312,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 2060901846}
+  - component: {fileID: 2060901847}
   m_Layer: 0
   m_Name: Cameras
   m_TagString: Untagged
@@ -2343,6 +2337,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2060901847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2060901845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3e3772595880d54e8c9695f15016a29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _leftButton: {fileID: 315963704}
+  _rightButton: {fileID: 1535150616}
+  _kitchenCamera: {fileID: 1955487496}
+  _guestRoomCamera: {fileID: 903413368}
+  _storageCamera: {fileID: 57953462}
+  _myRoomCamera: {fileID: 1412365529}
+  _room: 0
 --- !u!1 &2094925022
 GameObject:
   m_ObjectHideFlags: 0
