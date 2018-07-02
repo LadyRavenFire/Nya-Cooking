@@ -19,7 +19,6 @@ public class Inventory : MonoBehaviour
     private Workbench _workbench;
     private Garbage _garbage;
 
-    public GameObject image;
     void Start()
     {
         _slots = new Item[SlotsX*SlotsY];
@@ -54,10 +53,9 @@ public class Inventory : MonoBehaviour
             for (int x = 0; x < SlotsX; x++)
             {
                 //пытаюсь оптимизировать под разные разешения, что бы инвентарь подстраивался и всегда был по середине и не мелким и не большим. Пока идет так себе.
-                //Rect slotRect = new Rect(((Screen.width / 5) + x * 80), ((Screen.height - (Screen.height / 8)) + (y * 80)), 70, 70); // функция отрисовки ячеек инвентаря
-               
+                //Rect slotRect = new Rect(((Screen.width / 5) + x * 80), ((Screen.height - (Screen.height / 8)) + (y * 80)), 70, 70); // функция отрисовки ячеек инвентаря               
                 //GUI.Box(slotRect, "", Skin.GetStyle("Slot")); // функция отрисовки ячеек инвентаря
-                var obj = image;
+                var obj = GameObject.Find("Image" + x);
                 var rectransform = obj.GetComponent<RectTransform>();
                 Rect obj2 = new Rect(obj.transform.position.x + rectransform.rect.width/20 , Screen.height - obj.transform.position.y + rectransform.rect.height/20, rectransform.rect.width - rectransform.rect.width/10, rectransform.rect.height - rectransform.rect.height/10);
                 var temp = _slots[index];
