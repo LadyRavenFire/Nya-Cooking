@@ -40,7 +40,14 @@ public class Inventory : MonoBehaviour
         DrawInventory();
         if (_isItemDragged)
         {
-            GUI.DrawTexture(new Rect(Event.current.mousePosition.x, Event.current.mousePosition.y, 50, 50), _draggedItem.ItemIcon);
+            var obj = GameObject.Find("Image0");
+            var rectransform = obj.GetComponent<RectTransform>();
+            GUI.DrawTexture(
+                new Rect(Event.current.mousePosition.x, 
+                         Event.current.mousePosition.y, 
+                         rectransform.rect.width - rectransform.rect.width / 10, 
+                         rectransform.rect.height - rectransform.rect.height / 10), 
+                _draggedItem.ItemIcon);
         }
     }
 
@@ -57,7 +64,10 @@ public class Inventory : MonoBehaviour
                 //GUI.Box(slotRect, "", Skin.GetStyle("Slot")); // функция отрисовки ячеек инвентаря
                 var obj = GameObject.Find("Image" + x);
                 var rectransform = obj.GetComponent<RectTransform>();
-                Rect obj2 = new Rect(obj.transform.position.x + rectransform.rect.width/20 , Screen.height - obj.transform.position.y + rectransform.rect.height/20, rectransform.rect.width - rectransform.rect.width/10, rectransform.rect.height - rectransform.rect.height/10);
+                Rect obj2 = new Rect(obj.transform.position.x + rectransform.rect.width/20,
+                                     Screen.height - obj.transform.position.y + rectransform.rect.height/20,
+                                     rectransform.rect.width - rectransform.rect.width/10,
+                                     rectransform.rect.height - rectransform.rect.height/10);
                 var temp = _slots[index];
                 if (temp != null)
                 {
