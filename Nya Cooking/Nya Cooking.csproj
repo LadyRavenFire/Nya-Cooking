@@ -301,15 +301,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\CameraScripts\AspectRatio.cs" />
-    <Compile Include="Assets\Scripts\Garbage.cs" />
-    <Compile Include="Assets\Scripts\Inventory.cs" />
-    <Compile Include="Assets\Scripts\Item.cs" />
-    <Compile Include="Assets\Scripts\ItemDataBase.cs" />
-    <Compile Include="Assets\Scripts\LevelManager.cs" />
-    <Compile Include="Assets\Scripts\Recipes.cs" />
-    <Compile Include="Assets\Scripts\Repository.cs" />
-    <Compile Include="Assets\Scripts\Stove.cs" />
-    <Compile Include="Assets\Scripts\Workbench.cs" />
+    <Compile Include="Assets\Scripts\CameraScripts\CamerasManager.cs" />
+    <Compile Include="Assets\Scripts\GameObjects\Garbage.cs" />
+    <Compile Include="Assets\Scripts\GameObjects\Repository.cs" />
+    <Compile Include="Assets\Scripts\GameObjects\Stove.cs" />
+    <Compile Include="Assets\Scripts\GameObjects\Visitor.cs" />
+    <Compile Include="Assets\Scripts\GameObjects\Workbench.cs" />
+    <Compile Include="Assets\Scripts\MainMenu\MainMenu.cs" />
+    <Compile Include="Assets\Scripts\Managers\Inventory.cs" />
+    <Compile Include="Assets\Scripts\Managers\Item.cs" />
+    <Compile Include="Assets\Scripts\Managers\ItemDataBase.cs" />
+    <Compile Include="Assets\Scripts\Managers\LevelManager.cs" />
+    <Compile Include="Assets\Scripts\Managers\Recipes.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="C:\Users\Strider\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Resources\Styles\Main_Dark.uss" />
