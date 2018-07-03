@@ -1,6 +1,4 @@
-﻿using System;
-using System.Runtime.InteropServices;
-using UnityEngine;
+﻿using UnityEngine;
 
 [System.Serializable]
 public class Item
@@ -26,7 +24,7 @@ public class Item
         Burnt, // пережаренное
         Cooked, // сваренное
         Baked, // запеченное
-        Stew // тушеное
+        Stew // тушеное // <- нафиг с пляжа
     }
 
     public enum StateOfIncision

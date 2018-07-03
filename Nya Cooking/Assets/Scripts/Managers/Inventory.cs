@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Analytics;
+﻿using UnityEngine;
 
 // comment at 8 lesson - drop outside
 // next 9 lesson
@@ -43,7 +40,14 @@ public class Inventory : MonoBehaviour
         DrawInventory();
         if (_isItemDragged)
         {
-            GUI.DrawTexture(new Rect(Event.current.mousePosition.x, Event.current.mousePosition.y, 50, 50), _draggedItem.ItemIcon);
+            var obj = GameObject.Find("Image0");
+            var rectransform = obj.GetComponent<RectTransform>();
+            GUI.DrawTexture(
+                new Rect(Event.current.mousePosition.x, 
+                         Event.current.mousePosition.y, 
+                         rectransform.rect.width - rectransform.rect.width / 10, 
+                         rectransform.rect.height - rectransform.rect.height / 10), 
+                _draggedItem.ItemIcon);
         }
     }
 
@@ -56,14 +60,19 @@ public class Inventory : MonoBehaviour
             for (int x = 0; x < SlotsX; x++)
             {
                 //пытаюсь оптимизировать под разные разешения, что бы инвентарь подстраивался и всегда был по середине и не мелким и не большим. Пока идет так себе.
-                Rect slotRect = new Rect(((Screen.width / 5) + x * 80), ((Screen.height - (Screen.height / 8)) + (y * 80)), 70, 70); // функция отрисовки ячеек инвентаря
-               
-                GUI.Box(slotRect, "", Skin.GetStyle("Slot")); // функция отрисовки ячеек инвентаря
+                //Rect slotRect = new Rect(((Screen.width / 5) + x * 80), ((Screen.height - (Screen.height / 8)) + (y * 80)), 70, 70); // функция отрисовки ячеек инвентаря               
+                //GUI.Box(slotRect, "", Skin.GetStyle("Slot")); // функция отрисовки ячеек инвентаря
+                var obj = GameObject.Find("Image" + x);
+                var rectransform = obj.GetComponent<RectTransform>();
+                Rect obj2 = new Rect(obj.transform.position.x + rectransform.rect.width/20,
+                                     Screen.height - obj.transform.position.y + rectransform.rect.height/20,
+                                     rectransform.rect.width - rectransform.rect.width/10,
+                                     rectransform.rect.height - rectransform.rect.height/10);
                 var temp = _slots[index];
                 if (temp != null)
                 {
-                    GUI.DrawTexture(slotRect, temp.ItemIcon); // функция отрисовки предметов в инвентаре
-                    if (slotRect.Contains(e.mousePosition))
+                    GUI.DrawTexture(obj2, temp.ItemIcon); // функция отрисовки предметов в инвентаре
+                    if (obj2.Contains(e.mousePosition))
                     {
                         if (e.button == 0 && e.type == EventType.MouseDrag && !_isItemDragged) 
                         {
@@ -84,7 +93,7 @@ public class Inventory : MonoBehaviour
                 }
                 else
                 {
-                    if (slotRect.Contains(e.mousePosition))
+                    if (obj2.Contains(e.mousePosition))
                     {
                         if (e.type == EventType.MouseUp && _isItemDragged)
                         {

@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class Stove : MonoBehaviour
@@ -35,7 +34,7 @@ public class Stove : MonoBehaviour
                 _timerFlag = true;
             }
             _isCooking = true;            
-            print("EDA V NYTRI!!!");
+            //print("EDA V NYTRI!!!");
         }
         PreparingTimer();
     }
@@ -69,7 +68,7 @@ public class Stove : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && _isCooking)
         {
             _inventory.AddItem(_items[0]);
-            print("Vz9l item iz pechki!");
+            //print("Vz9l item iz pechki!");
             DeleteItem(0);
         }
     }
@@ -80,7 +79,7 @@ public class Stove : MonoBehaviour
         {
             _items[0].stateOfPreparing = Item.StateOfPreparing.Fried;
             _items[0].UpdateTexture();        
-            print("Eda prigotovilas`");
+            //print("Eda prigotovilas`");
         }
         _timerFlag = false;
         _timer = 0;

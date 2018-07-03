@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 //This is the script for the resising. (if resolution is not like in the unity) 
 //вроде работает
 /// u will hate my perfect english
