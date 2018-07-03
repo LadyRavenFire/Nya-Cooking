@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class Item
 {
-    public Name ItemName; // название
+    public readonly Name ItemName; // название
     public Texture2D ItemIcon; // иконка
     public string TexturePath;
     public StateOfPreparing stateOfPreparing; // состояние приготовленности
@@ -45,13 +45,7 @@ public class Item
         stateOfIncision = incision;       
         IsBreaded = isBreaded;
 
-        TexturePath = "ItemIcons/" + this.ToString();
-        ItemIcon = Resources.Load<Texture2D>(TexturePath); //загружаем иконку по названию предмета
-    }
-
-    public Item()
-    {
-
+        UpdateTexture();
     }
 
     public void UpdateTexture()
@@ -62,13 +56,10 @@ public class Item
 
     public sealed override string ToString()
     {
-        /*if (stateOfPreparing == StateOfPreparing.Raw)
-             return ItemName.ToString("F");*/
-
         return ItemName + "_" + stateOfPreparing.ToString("F") + "_" + stateOfIncision.ToString("F");
     }
 
-    static public bool operator==(Item item1, Item item2)
+    public static bool operator==(Item item1, Item item2)
     {
         bool item1IsNull = object.ReferenceEquals(item1, null);
         bool item2IsNull = object.ReferenceEquals(item2, null);
@@ -83,7 +74,7 @@ public class Item
                 && item1.IsBreaded == item2.IsBreaded);
     } 
 
-    static public bool operator !=(Item item1, Item item2) 
+    public static bool operator !=(Item item1, Item item2) 
     {
         bool item1IsNull = object.ReferenceEquals(item1, null);
         bool item2IsNull = object.ReferenceEquals(item2, null);
@@ -108,5 +99,10 @@ public class Item
                 && stateOfIncision == item2.stateOfIncision
                 && stateOfPreparing == item2.stateOfPreparing
                 && IsBreaded == item2.IsBreaded);
+    }
+
+    public override int GetHashCode()
+    {
+        return ItemName.ToString("F").GetHashCode();
     }
 }

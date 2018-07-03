@@ -16,20 +16,14 @@ public class Recipes : MonoBehaviour
         {
             Ingridients = new List<Item>()
             {
-                new Item
-                {
-                    ItemName = Item.Name.Meat,
-                    stateOfPreparing = Item.StateOfPreparing.Raw,
-                    stateOfIncision = Item.StateOfIncision.Whole,
-                    IsBreaded = false
-                },
-                new Item
-                {
-                    ItemName = Item.Name.Bread,
-                    stateOfPreparing = Item.StateOfPreparing.Raw,
-                    stateOfIncision = Item.StateOfIncision.Whole,
-                    IsBreaded = false
-                }
+                new Item(Item.Name.Meat,
+                        Item.StateOfIncision.Whole,
+                        Item.StateOfPreparing.Raw,
+                        false),
+                new Item(Item.Name.Bread,
+                        Item.StateOfIncision.Whole,
+                        Item.StateOfPreparing.Raw,
+                        false),
             },
             Result = _db.Generate(Item.Name.Sandwich, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw, false)
 
@@ -38,20 +32,14 @@ public class Recipes : MonoBehaviour
         {
             Ingridients = new List<Item>()
             {
-                new Item
-                {
-                    ItemName = Item.Name.Meat,
-                    stateOfPreparing = Item.StateOfPreparing.Raw,
-                    stateOfIncision = Item.StateOfIncision.Whole,
-                    IsBreaded = false
-                },
-                new Item
-                {
-                    ItemName = Item.Name.Meat,
-                    stateOfPreparing = Item.StateOfPreparing.Raw,
-                    stateOfIncision = Item.StateOfIncision.Whole,
-                    IsBreaded = false
-                }
+                new Item(Item.Name.Meat,
+                    Item.StateOfIncision.Whole,
+                    Item.StateOfPreparing.Raw,
+                    false),
+                new Item(Item.Name.Meat,
+                    Item.StateOfIncision.Whole,
+                    Item.StateOfPreparing.Raw,
+                    false)
             },
             Result = _db.Generate(Item.Name.Meat, Item.StateOfIncision.Whole, Item.StateOfPreparing.Fried, false)
         };
