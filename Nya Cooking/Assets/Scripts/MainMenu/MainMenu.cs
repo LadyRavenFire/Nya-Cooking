@@ -66,6 +66,8 @@ public class MainMenu : MonoBehaviour
         _quitButton.onClick.AddListener(QuitGame);
 
         //Кнопкам компании
+        _campaignNewGameButton.onClick.AddListener(CampaignNewGame);
+        _campaignContinueButton.onClick.AddListener(CampaignContinue);
         _campaignBackButton.onClick.AddListener(CampaignToMain);
 
         //Кнопкам бесконечной игры
@@ -116,6 +118,16 @@ public class MainMenu : MonoBehaviour
     {
         _settingsBasic.SetActive(false);
         _mainMenuBasic.SetActive(true);
+    }
+
+    void CampaignContinue()
+    {
+
+    }
+
+    void CampaignNewGame()
+    {
+
     }
 
     void EndlessNewGame()
