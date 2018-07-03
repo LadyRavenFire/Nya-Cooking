@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class LevelManager : MonoBehaviour
 {
     //[SerializeField] private int _money = 0;
-    private Text _textComponent;
+   // private Text _textComponent;
     private Button _pauseMenuButton;
     private GameObject _pauseComponent;
     private Button _resumeGameButton;
@@ -14,9 +14,10 @@ public class LevelManager : MonoBehaviour
     void Start()
     {
         //А тут ищем по тегу
-        _textComponent = GameObject.FindGameObjectWithTag("MoneyText").GetComponent<Text>();
-        _pauseMenuButton = GameObject.FindGameObjectWithTag("PauseMenuButton").GetComponent<Button>();
+        //_textComponent = GameObject.FindGameObjectWithTag("MoneyText").GetComponent<Text>();
         _pauseComponent = GameObject.FindGameObjectWithTag("PauseMenu");
+
+        _pauseMenuButton = GameObject.FindGameObjectWithTag("PauseMenuButton").GetComponent<Button>();
         _resumeGameButton = GameObject.Find("ResumeButton").GetComponent<Button>();
         _quitGameButton = GameObject.Find("QuitButton").GetComponent<Button>();
 
