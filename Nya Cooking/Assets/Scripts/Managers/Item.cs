@@ -24,7 +24,7 @@ public class Item
         Burnt, // пережаренное
         Cooked, // сваренное
         Baked, // запеченное
-        Stew // тушеное
+        Stew // тушеное // <- нафиг с пляжа
     }
 
     public enum StateOfIncision
