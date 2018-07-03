@@ -70,6 +70,7 @@ public class MainMenu : MonoBehaviour
 
         //Кнопкам бесконечной игры
         _endlessNewGameButton.onClick.AddListener(EndlessNewGame);
+        _endlessContinueButton.onClick.AddListener(EndlessContinue);
         _endlessBackButton.onClick.AddListener(EndlessToMain);
 
         //Кнопкам настроек игры
@@ -118,6 +119,12 @@ public class MainMenu : MonoBehaviour
     }
 
     void EndlessNewGame()
+    {
+        PlayerPrefs.SetInt("EndlessGameMoney", 0);
+        SceneManager.LoadScene("Test level");
+    }
+
+    void EndlessContinue()
     {
         SceneManager.LoadScene("Test level");
     }

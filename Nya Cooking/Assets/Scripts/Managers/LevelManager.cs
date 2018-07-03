@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour
 {
-    [SerializeField] private int _money = 0;
+    //[SerializeField] private int _money = 0;
     private Text _textComponent;
     private Button _pauseMenuButton;
     private GameObject _pauseComponent;
@@ -19,24 +19,26 @@ public class LevelManager : MonoBehaviour
         _pauseComponent = GameObject.FindGameObjectWithTag("PauseMenu");
         _resumeGameButton = GameObject.Find("ResumeButton").GetComponent<Button>();
         _quitGameButton = GameObject.Find("QuitButton").GetComponent<Button>();
-        _pauseComponent.SetActive(false);
+
         _pauseMenuButton.onClick.AddListener(PauseGame);
         _resumeGameButton.onClick.AddListener(ResumeGame);
         _quitGameButton.onClick.AddListener(QuitGame);
+
+        _pauseComponent.SetActive(false);
     }
 
 
     void Update()
     {
         //просто увеличиваем деньги каждый кадр и выводим их на верх
-        _money++;
-        UpdateMoney();
+        //_money++;
+        //UpdateMoney();
     }
 
     void QuitGame()
     {
         //перед выходом нужно сохранить все данные (наверное...)
-        SaveMoneyToData();
+        //SaveMoneyToData();
         Application.Quit();
     }
 
@@ -52,7 +54,7 @@ public class LevelManager : MonoBehaviour
         _pauseComponent.SetActive(true);
     }
 
-    void AddMoney(int money)
+   /* void AddMoney(int money)
     {
         _money += money;
     }
@@ -75,6 +77,6 @@ public class LevelManager : MonoBehaviour
     void UpdateMoney()
     {
         _textComponent.text = "Money: " + _money.ToString();
-    }
+    }*/
 
 }
