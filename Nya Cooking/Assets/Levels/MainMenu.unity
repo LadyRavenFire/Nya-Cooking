@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 36004630}
   - component: {fileID: 36004629}
   m_Layer: 5
-  m_Name: NewGameButton
+  m_Name: NewGameCampaignButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -384,7 +384,7 @@ GameObject:
   - component: {fileID: 510759914}
   - component: {fileID: 510759913}
   m_Layer: 5
-  m_Name: ContinueButton
+  m_Name: ContinueCampaignButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -754,7 +754,7 @@ GameObject:
   - component: {fileID: 629123808}
   - component: {fileID: 629123807}
   m_Layer: 5
-  m_Name: BackButton
+  m_Name: BackEndlessButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -943,7 +943,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &905648608
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1290,7 +1290,7 @@ GameObject:
   - component: {fileID: 1117506797}
   - component: {fileID: 1117506796}
   m_Layer: 5
-  m_Name: BackButton
+  m_Name: BackCampaignButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1456,7 +1456,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u0421ompany"
+  m_Text: Campaign
 --- !u!222 &1414834290
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1549,7 +1549,7 @@ GameObject:
   - component: {fileID: 1515519484}
   - component: {fileID: 1515519483}
   m_Layer: 5
-  m_Name: BackButton
+  m_Name: BackSettingsButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2017,7 +2017,7 @@ GameObject:
   - component: {fileID: 1749839988}
   - component: {fileID: 1749839987}
   m_Layer: 5
-  m_Name: ContinueButton
+  m_Name: ContinueEndlessButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2127,12 +2127,12 @@ GameObject:
   - component: {fileID: 1775740543}
   - component: {fileID: 1775740542}
   m_Layer: 5
-  m_Name: CompanyMenuBasic
+  m_Name: CampaignMenuBasic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1775740541
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2199,7 +2199,7 @@ GameObject:
   - component: {fileID: 1805058020}
   - component: {fileID: 1805058019}
   m_Layer: 5
-  m_Name: NewGameButton
+  m_Name: NewGameEndlessButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2314,7 +2314,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1869382420
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2552,7 +2552,7 @@ GameObject:
   - component: {fileID: 1992230791}
   - component: {fileID: 1992230790}
   m_Layer: 5
-  m_Name: CompanyButton
+  m_Name: CampaignButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
