@@ -94,14 +94,6 @@ public class MainMenu : MonoBehaviour
 
         });
 
-        _campaignNewGameButton.onClick.AddListener(() =>
-        {
-            // Here be dragons
-        });
-        _campaignContinueButton.onClick.AddListener(() =>
-        {
-            // Here be dragons
-        });
         _campaignBackButton.onClick.AddListener(() =>
         {
             _campaignMenuBasic.SetActive(false);
