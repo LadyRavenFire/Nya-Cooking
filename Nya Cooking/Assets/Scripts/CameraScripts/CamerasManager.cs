@@ -43,12 +43,12 @@ public class CamerasManager : MonoBehaviour {
 
         CameraRoom(_room);
         //Сюда подцепляем кнопки и ждем клика, заодно говорим, какой ивент случится при клике на кнопку.
-        _leftButton.onClick.AddListener(TaskOnClickLeft);
-        _rightButton.onClick.AddListener(TaskOnClickRight);
+        _leftButton.onClick.AddListener(LeftButton_Click);
+        _rightButton.onClick.AddListener(RightButton_Click);
     }
 
     //ивент на левую кнопку мыши
-    void TaskOnClickLeft()
+    void LeftButton_Click()
     {
         //Debug.Log("You have clicked the button left!");
         if (_room == Room.Kitchen)
@@ -77,7 +77,7 @@ public class CamerasManager : MonoBehaviour {
 
     }
     //ивент на правую кнопку мыши
-    void TaskOnClickRight()
+    void RightButton_Click()
     {
         //Debug.Log("You have clicked the button right!");
         if (_room == Room.MyRoom)
