@@ -84,6 +84,15 @@ public class MainMenu : MonoBehaviour
         });
 
         // Кнопкам компании
+        _campaignNewGameButton.onClick.AddListener(() =>
+        {
+
+        });
+
+        _campaignContinueButton.onClick.AddListener(() =>
+        {
+
+        });
 
         _campaignBackButton.onClick.AddListener(() =>
         {
@@ -100,6 +109,7 @@ public class MainMenu : MonoBehaviour
         });
         _endlessContinueButton.onClick.AddListener(() =>
         {
+            //print(PlayerPrefs.GetInt("EndlessGameMoney"));
             SceneManager.LoadScene("Test level");
         });
         _endlessBackButton.onClick.AddListener(() =>

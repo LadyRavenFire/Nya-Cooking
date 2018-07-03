@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class EndlessGameVariables : MonoBehaviour {
 
-    private int _money = 0;
+    private int _money;
     private Text _textComponent;
     private Button _menuButton;
 
@@ -25,17 +25,21 @@ public class EndlessGameVariables : MonoBehaviour {
 
     void LoadFromData()
     {
-        PlayerPrefs.GetInt("EndlessGameMoney", _money);
+        print(PlayerPrefs.GetInt("EndlessGameMoney"));
+        _money = PlayerPrefs.GetInt("EndlessGameMoney");
     }
 
     public void SaveToData()
     {
-        PlayerPrefs.SetInt("Money", _money);
+        PlayerPrefs.SetInt("EndlessGameMoney", _money);
     }
 
     void GoToMainMenu()
     {
         SaveToData();
+        print("Money save");
+        print(PlayerPrefs.GetInt("EndlessGameMoney"));
+        PlayerPrefs.Save();
         SceneManager.LoadScene("MainMenu");
     }
 
