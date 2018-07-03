@@ -57,93 +57,64 @@ public class MainMenu : MonoBehaviour
         //ищем кнопки настроек
         _settingsBackButton = GameObject.Find("BackSettingsButton").GetComponent<Button>();
 
+        //=======================================
+        //       Добавляем Listener кнопкам
+        //=======================================
 
-        //Добавляем Listner кнопкам
-        //Основного меню
-        _campaignButton.onClick.AddListener(MainToCampaign);
-        _endlessGameButton.onClick.AddListener(MainToEndless);
-        _settingsButton.onClick.AddListener(MainToSettings);
-        _quitButton.onClick.AddListener(QuitGame);
+        //            Основного меню
 
-        //Кнопкам компании
-        _campaignNewGameButton.onClick.AddListener(CampaignNewGame);
-        _campaignContinueButton.onClick.AddListener(CampaignContinue);
-        _campaignBackButton.onClick.AddListener(CampaignToMain);
+        _campaignButton.onClick.AddListener(() =>
+        {
+            _mainMenuBasic.SetActive(false);
+            _campaignMenuBasic.SetActive(true);
+        });
+        _endlessGameButton.onClick.AddListener(() =>
+        {
+            _mainMenuBasic.SetActive(false);
+            _endlessGameMenuBasic.SetActive(true);
+        });
+        _settingsButton.onClick.AddListener(() =>
+        {
+            _mainMenuBasic.SetActive(false);
+            _settingsBasic.SetActive(true);
+        });
+        _quitButton.onClick.AddListener(() =>
+        {
+            Application.Quit();
+        });
 
-        //Кнопкам бесконечной игры
-        _endlessNewGameButton.onClick.AddListener(EndlessNewGame);
-        _endlessContinueButton.onClick.AddListener(EndlessContinue);
-        _endlessBackButton.onClick.AddListener(EndlessToMain);
+        // Кнопкам компании
 
-        //Кнопкам настроек игры
-        _settingsBackButton.onClick.AddListener(SettingsToMain);
+        _campaignBackButton.onClick.AddListener(() =>
+        {
+            _campaignMenuBasic.SetActive(false);
+            _mainMenuBasic.SetActive(true);
+        });
 
-        //отключаем ненужные на старте панели
+        // Кнопкам бесконечной игры
+
+        _endlessNewGameButton.onClick.AddListener(() =>
+        {
+            SceneManager.LoadScene("Test level");
+        });
+        _endlessBackButton.onClick.AddListener(() =>
+        {
+            _endlessGameMenuBasic.SetActive(false);
+            _mainMenuBasic.SetActive(true);
+        });
+
+        // Кнопкам настроек игры
+
+        _settingsBackButton.onClick.AddListener(() =>
+        {
+            _settingsBasic.SetActive(false);
+            _mainMenuBasic.SetActive(true);
+        });
+
+        // отключаем ненужные на старте панели
+
         _campaignMenuBasic.SetActive(false);
         _endlessGameMenuBasic.SetActive(false);
         _settingsBasic.SetActive(false);
 	}
-
-    void MainToCampaign()
-    {
-        _mainMenuBasic.SetActive(false);
-        _campaignMenuBasic.SetActive(true);
-    }
-
-    void MainToEndless()
-    {
-        _mainMenuBasic.SetActive(false);
-        _endlessGameMenuBasic.SetActive(true);
-    }
-
-    void MainToSettings()
-    {
-        _mainMenuBasic.SetActive(false);
-        _settingsBasic.SetActive(true);
-    }
-
-    void CampaignToMain()
-    {
-        _campaignMenuBasic.SetActive(false);
-        _mainMenuBasic.SetActive(true);
-    }
-
-    void EndlessToMain()
-    {
-        _endlessGameMenuBasic.SetActive(false);
-        _mainMenuBasic.SetActive(true);
-    }
-
-    void SettingsToMain()
-    {
-        _settingsBasic.SetActive(false);
-        _mainMenuBasic.SetActive(true);
-    }
-
-    void CampaignContinue()
-    {
-
-    }
-
-    void CampaignNewGame()
-    {
-
-    }
-
-    void EndlessNewGame()
-    {
-        PlayerPrefs.SetInt("EndlessGameMoney", 0);
-        SceneManager.LoadScene("Test level");
-    }
-
-    void EndlessContinue()
-    {
-        SceneManager.LoadScene("Test level");
-    }
-
-    void QuitGame()
-    {
-        Application.Quit();
-    }
-
 }
