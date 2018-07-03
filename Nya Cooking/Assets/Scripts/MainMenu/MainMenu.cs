@@ -95,6 +95,11 @@ public class MainMenu : MonoBehaviour
 
         _endlessNewGameButton.onClick.AddListener(() =>
         {
+            PlayerPrefs.SetInt("EndlessGameMoney", 0);
+            SceneManager.LoadScene("Test level");
+        });
+        _endlessContinueButton.onClick.AddListener(() =>
+        {
             SceneManager.LoadScene("Test level");
         });
         _endlessBackButton.onClick.AddListener(() =>
