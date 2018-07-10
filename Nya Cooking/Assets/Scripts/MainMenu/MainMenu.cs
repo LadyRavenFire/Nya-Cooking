@@ -105,6 +105,8 @@ public class MainMenu : MonoBehaviour
         _endlessNewGameButton.onClick.AddListener(() =>
         {
             PlayerPrefs.SetInt("EndlessGameMoney", 0);
+            PlayerPrefs.SetInt("EndlessMeatInBox", 5);
+            PlayerPrefs.SetInt("EndlessBreadInBox", 5);
             SceneManager.LoadScene("Test level");
         });
         _endlessContinueButton.onClick.AddListener(() =>

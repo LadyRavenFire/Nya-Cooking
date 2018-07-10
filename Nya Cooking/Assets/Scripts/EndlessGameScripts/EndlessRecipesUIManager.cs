@@ -24,10 +24,12 @@ public class EndlessRecipesUIManager : MonoBehaviour
     void OpenRecipes()
     {
         _recipesScrollView.SetActive(true);
+        Time.timeScale = 0f;
     }
 
     void CloseRecipes()
     {
         _recipesScrollView.SetActive(false);
+        Time.timeScale = 1f;
     }
 }
