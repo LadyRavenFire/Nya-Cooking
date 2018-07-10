@@ -36,6 +36,11 @@ public class Stove : MonoBehaviour
             _isCooking = true;            
             //print("EDA V NYTRI!!!");
         }
+        
+    }
+
+    void FixedUpdate()
+    {
         PreparingTimer();
     }
 

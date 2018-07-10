@@ -26,7 +26,7 @@ public class Repository : MonoBehaviour
             _items[i] = null;
         }
         
-        AddtoRepository(3,_storedItemType); //test    
+        AddtoRepository(10,_storedItemType); //test    
 	}
 
     public void AddtoRepository(int quantity, Item.Name type)

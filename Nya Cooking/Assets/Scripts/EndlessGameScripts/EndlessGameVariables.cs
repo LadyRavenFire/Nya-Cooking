@@ -19,13 +19,13 @@ public class EndlessGameVariables : MonoBehaviour {
 
     void Update()
     {
-        _money++;
+        //_money++;
         UpdateMoney();
     }
 
     void LoadFromData()
     {
-        print(PlayerPrefs.GetInt("EndlessGameMoney"));
+        //print(PlayerPrefs.GetInt("EndlessGameMoney"));
         _money = PlayerPrefs.GetInt("EndlessGameMoney");
     }
 
@@ -46,6 +46,11 @@ public class EndlessGameVariables : MonoBehaviour {
     void UpdateMoney()
     {
         _textComponent.text = "Money: " + _money.ToString();
+    }
+
+    public void AddMoney(int moneyToAdd)
+    {
+        _money += moneyToAdd;
     }
 
 }

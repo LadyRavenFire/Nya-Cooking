@@ -19,6 +19,8 @@ public class Inventory : MonoBehaviour
     private Workbench _workbench;
     private Garbage _garbage;
 
+    private VisitorsBehaviour _visitorsBehaviour; //
+
     void Start()
     {
         _slots = new Item[SlotsX*SlotsY];
@@ -31,6 +33,8 @@ public class Inventory : MonoBehaviour
         _stove = GameObject.FindGameObjectWithTag("Stove").GetComponent<Stove>();
         _workbench = GameObject.FindGameObjectWithTag("Workbench").GetComponent<Workbench>();
         _garbage = GameObject.FindGameObjectWithTag("Garbage").GetComponent<Garbage>();
+
+        _visitorsBehaviour = GameObject.Find("mexican").GetComponent<VisitorsBehaviour>();//
 
     }
 
@@ -131,6 +135,13 @@ public class Inventory : MonoBehaviour
         {
                 _isItemDragged = false;
                 _draggedItem = null;
+        }
+
+        if (e.type == EventType.MouseUp && _isItemDragged && _visitorsBehaviour.IsEnterCollider && _visitorsBehaviour.IsClientIn)
+        {
+            _visitorsBehaviour.AddItem(_draggedItem);
+            _isItemDragged = false;
+            _draggedItem = null;
         }
 
         if (e.type == EventType.MouseUp && _isItemDragged)

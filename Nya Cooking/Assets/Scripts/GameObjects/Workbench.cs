@@ -98,7 +98,7 @@ public class Workbench : MonoBehaviour {
         if (!IsEmpty)
         {
             var receipe = GameObject.FindGameObjectWithTag("Recipes").GetComponent<Recipes>();
-            var recipes = receipe.Receipes;     
+            var recipes = receipe.Receipes;   
 
             // Создаем структуру рецепт - был ли рецепт найден
             List<ReceipeFound> receipeFounds = recipes.Select(x => new ReceipeFound
@@ -160,11 +160,11 @@ public class Workbench : MonoBehaviour {
                 // то - юбисофт вторгается в наш мир
                 if (items.Any() || receipeFound.IngridientFounds.Any(x => !x.IsFound))
                 {
-                    print("vsyakofign9 " + receipeFound.Result.ItemName.ToString("F"));
+                   // print("vsyakofign9 " + receipeFound.Result.ItemName.ToString("F"));
                 }
                 else
                 {
-                    print("found " + receipeFound.Result.ItemName.ToString("F"));
+                    //print("found " + receipeFound.Result.ItemName.ToString("F"));
 
                     // иначе помечаем рецепт как найденный
                     receipeFound.IsFound = true;
@@ -176,7 +176,7 @@ public class Workbench : MonoBehaviour {
             // если кол-во ненайденных рецепт == кол-ву рецептов в целом, то...
             if (receipeFounds.Count(x => !x.IsFound) == receipeFounds.Count)
             {
-                print("no correct receipes!");
+                //print("no correct receipes!");
 
                 // значит, нет ни одного найденного рецепта и... 
                 // мы добавляем фигню в инвентарь
