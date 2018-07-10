@@ -18,6 +18,9 @@ public class VisitorsBehaviourEndless : MonoBehaviour
     private bool _createdNewTimeToNextClient;
     private float _timeToNextClient;
 
+    //WARNING NEED TO CHANGE!!
+    public GameObject SpriteFood;
+
 
     // Use this for initialization
     void Start () {
@@ -27,6 +30,7 @@ public class VisitorsBehaviourEndless : MonoBehaviour
         IsClientIn = false;
         _isEmpty = true;
         _isWaiting = false;
+        SpriteFood.SetActive(false);
     }
 
     void FixedUpdate()
@@ -108,6 +112,12 @@ public class VisitorsBehaviourEndless : MonoBehaviour
         _itemNeed = recipes[number].Result;
         print(_itemNeed.ItemName.ToString() + _itemNeed.stateOfIncision.ToString() + _itemNeed.stateOfPreparing.ToString());
 
+        //warning need to change
+        SpriteFood.SetActive(true);
+        var sprite = SpriteFood.GetComponent<SpriteRenderer>();
+        
+        sprite.sprite = Resources.Load<Sprite>("ItemIcons/" + _itemNeed.ItemName + "_" + _itemNeed.stateOfPreparing.ToString("F") + "_" + _itemNeed.stateOfIncision.ToString("F"));
+        //warning need to change
     }
 
     void Paiment(int money) //need to be update to all versions of game
@@ -154,6 +164,7 @@ public class VisitorsBehaviourEndless : MonoBehaviour
         _itemNeed = null;
         _itemIn = null;
         Paiment(-10);
+        SpriteFood.SetActive(false);
     }
 
     void ClientExitGood()
@@ -165,6 +176,7 @@ public class VisitorsBehaviourEndless : MonoBehaviour
         _isEmpty = true;
         _itemNeed = null;
         _itemIn = null;
+        SpriteFood.SetActive(false);
     }
 
     void TextureAndCollider(bool trigger)
