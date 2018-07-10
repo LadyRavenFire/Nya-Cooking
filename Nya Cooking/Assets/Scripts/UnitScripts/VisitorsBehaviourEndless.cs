@@ -91,7 +91,7 @@ public class VisitorsBehaviourEndless : MonoBehaviour
     {
         if (_itemIn != null) return;
         _itemIn = item;
-        print("Че то отдал посетителю");
+        //print("Че то отдал посетителю");
         if (_isEmpty)
         {
             _isEmpty = false;
