@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
-using System;
 using Random = System.Random;
 
-public class VisitorsBehaviour : MonoBehaviour
+public class VisitorsBehaviourEndless : MonoBehaviour
 {
 
     private Item _itemNeed;
@@ -68,8 +67,6 @@ public class VisitorsBehaviour : MonoBehaviour
         {
             if (_itemNeed == _itemIn)
             {
-                _itemNeed = null;
-                IsEmpty = true;
                 ClientExitGood();
                 //gameObject.SetActive(false);
             }
@@ -121,15 +118,15 @@ public class VisitorsBehaviour : MonoBehaviour
 
     void WaitTimer()
     {
-            if (_waitTimer > 0)
-            {
-                _waitTimer -= Time.deltaTime;
-                //print("Client will go away frome: " + _waitTimer);
-            }
-            else
-            {
-                ClientExitBad();
-            }          
+        if (_waitTimer > 0)
+        {
+            _waitTimer -= Time.deltaTime;
+            //print("Client will go away frome: " + _waitTimer);
+        }
+        else
+        {
+            ClientExitBad();
+        }          
     }
 
     void WaitTimerCreate()
@@ -175,9 +172,5 @@ public class VisitorsBehaviour : MonoBehaviour
         collider2D.enabled = trigger;
         var Texture = gameObject.GetComponent<SpriteRenderer>();
         Texture.enabled = trigger;
-    }
-
-
-
-   
+    }  
 }

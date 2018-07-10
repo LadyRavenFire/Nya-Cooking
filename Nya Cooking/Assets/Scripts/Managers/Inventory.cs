@@ -19,7 +19,7 @@ public class Inventory : MonoBehaviour
     private Workbench _workbench;
     private Garbage _garbage;
 
-    private VisitorsBehaviour _visitorsBehaviour; //
+    private VisitorsBehaviourEndless _visitorsBehaviourEndless; //
 
     void Start()
     {
@@ -34,7 +34,7 @@ public class Inventory : MonoBehaviour
         _workbench = GameObject.FindGameObjectWithTag("Workbench").GetComponent<Workbench>();
         _garbage = GameObject.FindGameObjectWithTag("Garbage").GetComponent<Garbage>();
 
-        _visitorsBehaviour = GameObject.Find("mexican").GetComponent<VisitorsBehaviour>();//
+        _visitorsBehaviourEndless = GameObject.Find("mexican").GetComponent<VisitorsBehaviourEndless>();//
 
     }
 
@@ -137,9 +137,9 @@ public class Inventory : MonoBehaviour
                 _draggedItem = null;
         }
 
-        if (e.type == EventType.MouseUp && _isItemDragged && _visitorsBehaviour.IsEnterCollider && _visitorsBehaviour.IsClientIn)
+        if (e.type == EventType.MouseUp && _isItemDragged && _visitorsBehaviourEndless.IsEnterCollider && _visitorsBehaviourEndless.IsClientIn)
         {
-            _visitorsBehaviour.AddItem(_draggedItem);
+            _visitorsBehaviourEndless.AddItem(_draggedItem);
             _isItemDragged = false;
             _draggedItem = null;
         }
