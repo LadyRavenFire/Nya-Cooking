@@ -54,7 +54,7 @@ public class VisitorsBehaviourEndless : MonoBehaviour
             else
             {
                 var rnd = new Random();
-                var time = rnd.Next(10, 15);
+                var time = rnd.Next(5, 10);
                 _timeToNextClient = time;
                 _createdNewTimeToNextClient = true;
             }
@@ -110,10 +110,10 @@ public class VisitorsBehaviourEndless : MonoBehaviour
 
     }
 
-    void Paiment() //need to be update to all versions of game
+    void Paiment(int money) //need to be update to all versions of game
     {
         EndlessGameVariables levelManagerGameObject = GameObject.FindWithTag("LevelManager").GetComponent<EndlessGameVariables>();
-        levelManagerGameObject.AddMoney(100);
+        levelManagerGameObject.AddMoney(money);
     }
 
     void WaitTimer()
@@ -132,7 +132,7 @@ public class VisitorsBehaviourEndless : MonoBehaviour
     void WaitTimerCreate()
     {
         var rnd = new Random();
-        var time = rnd.Next(15, 20);
+        var time = rnd.Next(10, 20);
         _waitTimer = time;   
     }
 
@@ -153,12 +153,13 @@ public class VisitorsBehaviourEndless : MonoBehaviour
         _isEmpty = true;
         _itemNeed = null;
         _itemIn = null;
+        Paiment(-10);
     }
 
     void ClientExitGood()
     {
         _isWaiting = false;
-        Paiment();
+        Paiment(100);
         TextureAndCollider(false);
         IsClientIn = false;
         _isEmpty = true;

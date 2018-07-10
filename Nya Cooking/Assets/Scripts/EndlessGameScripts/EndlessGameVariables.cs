@@ -68,4 +68,9 @@ public class EndlessGameVariables : MonoBehaviour {
         _money += moneyToAdd;
     }
 
+    public int ReturnMoney()
+    {
+        return _money;
+    }
+
 }
