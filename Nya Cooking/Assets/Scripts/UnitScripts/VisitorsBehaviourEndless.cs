@@ -7,13 +7,13 @@ public class VisitorsBehaviourEndless : MonoBehaviour
     private Item _itemNeed;
     private Item _itemIn;
 
-    public bool IsEnterCollider;
-    public bool IsEmpty;
+    public bool IsEnterCollider; //
+    private bool _isEmpty;
 
     private float _waitTimer;
-    public bool IsWaiting;
+    private bool _isWaiting;
 
-    public bool IsClientIn;//need??
+    public bool IsClientIn;//
 
     private bool _createdNewTimeToNextClient;
     private float _timeToNextClient;
@@ -25,18 +25,18 @@ public class VisitorsBehaviourEndless : MonoBehaviour
         TextureAndCollider(false);
         _createdNewTimeToNextClient = false;
         IsClientIn = false;
-        IsEmpty = true;
-        IsWaiting = false;
+        _isEmpty = true;
+        _isWaiting = false;
     }
 
     void FixedUpdate()
     {
-        if (IsWaiting)
+        if (_isWaiting)
         {
             WaitTimer();
         }
 
-        if (!IsWaiting)
+        if (!_isWaiting)
         {
             if (_createdNewTimeToNextClient)
             {
@@ -63,7 +63,7 @@ public class VisitorsBehaviourEndless : MonoBehaviour
 
     void CheckTheProduct()
     {
-        if (!IsEmpty)
+        if (!_isEmpty)
         {
             if (_itemNeed == _itemIn)
             {
@@ -92,9 +92,9 @@ public class VisitorsBehaviourEndless : MonoBehaviour
         if (_itemIn != null) return;
         _itemIn = item;
         print("Че то отдал посетителю");
-        if (IsEmpty)
+        if (_isEmpty)
         {
-            IsEmpty = false;
+            _isEmpty = false;
         }
         CheckTheProduct();
     }
@@ -140,28 +140,28 @@ public class VisitorsBehaviourEndless : MonoBehaviour
     {
         NeedItemCreate();
         WaitTimerCreate();
-        IsWaiting = true;
+        _isWaiting = true;
         TextureAndCollider(true);
         IsClientIn = true;
     }
 
     void ClientExitBad()
     {
-        IsWaiting = false;
+        _isWaiting = false;
         TextureAndCollider(false);
         IsClientIn = false;
-        IsEmpty = true;
+        _isEmpty = true;
         _itemNeed = null;
         _itemIn = null;
     }
 
     void ClientExitGood()
     {
-        IsWaiting = false;
+        _isWaiting = false;
         Paiment();
         TextureAndCollider(false);
         IsClientIn = false;
-        IsEmpty = true;
+        _isEmpty = true;
         _itemNeed = null;
         _itemIn = null;
     }
