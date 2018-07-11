@@ -1,19 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+
+// Скрипт описывающий коробки с едой
 
 public class Repository : MonoBehaviour
 {
-    [SerializeField]
-    private int _slotsCount = 100;
-    private Item[] _items;
-    
-    private bool _isEmpty;
+
+    [SerializeField] private int _slotsCount = 100; // Максимальное количество предметов в коробке ///TODO определить максимальный объем
+    [SerializeField] private Item.Name _storedItemType = Item.Name.Meat; ///TODO решить нужно ли сделать поле readonly
+
+    private Item[] _items;   
+    private bool _isEmpty; 
 
     private Inventory _inventory;
     private ItemDataBase _db;
 
-    [SerializeField] private Item.Name _storedItemType = Item.Name.Meat;
+
 
     void Start ()
     {
@@ -21,11 +22,10 @@ public class Repository : MonoBehaviour
         _inventory = GameObject.FindGameObjectWithTag("Inventory").GetComponent<Inventory>();
         _db = GameObject.FindGameObjectWithTag("ItemDataBase").GetComponent<ItemDataBase>();
         _isEmpty = true;
-        for (int i = 0; i < _slotsCount; i++)
+        for (var i = 0; i < _slotsCount; i++)
         {
             _items[i] = null;
-        }
-        
+        }        
         //AddtoRepository(10,_storedItemType); //test    
 	}
 
@@ -64,16 +64,19 @@ public class Repository : MonoBehaviour
 
     void AddFromRepository()
     {
-        for (int i = 0; i < _items.Length; i++)
+        if (!_isEmpty)
         {
-            if (_items[i] != null)
+            for (int i = 0; i < _items.Length; i++)
             {
-                _inventory.AddItem(_items[i]);
-                _items[i] = null;
-                IsRepositoryEmpty();
-                break;
-            }          
-        }
+                if (_items[i] != null)
+                {
+                    _inventory.AddItem(_items[i]);
+                    _items[i] = null;
+                    IsRepositoryEmpty();
+                    break;
+                }
+            }
+        }      
     }
 
     void IsRepositoryEmpty()

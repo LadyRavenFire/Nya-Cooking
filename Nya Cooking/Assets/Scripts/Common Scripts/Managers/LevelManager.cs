@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+// Скрипт описывающий 2 кнопки паузного меню (продолжить, выход в меню) и кнопку вкл/выкл само меню
+// TODO улучшить работу за счет избавления от поиска по имени?
 
 public class LevelManager : MonoBehaviour
 {

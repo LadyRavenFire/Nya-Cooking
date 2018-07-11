@@ -1,13 +1,17 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+// Скрипт описывающий печку
+
 public class Stove : MonoBehaviour
 {
     private readonly List<Item> _items = new List<Item>();
 
     public bool IsEnterCollider;
     public bool IsEmpty;
+
     private bool _isCooking;
+
     private float _timer;
     private bool _timerFlag;
 
@@ -73,7 +77,6 @@ public class Stove : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && _isCooking)
         {
             _inventory.AddItem(_items[0]);
-            //print("Vz9l item iz pechki!");
             DeleteItem(0);
         }
     }
@@ -84,7 +87,6 @@ public class Stove : MonoBehaviour
         {
             _items[0].stateOfPreparing = Item.StateOfPreparing.Fried;
             _items[0].UpdateTexture();        
-            //print("Eda prigotovilas`");
         }
         _timerFlag = false;
         _timer = 0;
@@ -99,7 +101,7 @@ public class Stove : MonoBehaviour
                 _timer-= Time.deltaTime;
             }
 
-            if (_timer < 0)
+            if (_timer <= 0)
             {
                 Prepare();
             }

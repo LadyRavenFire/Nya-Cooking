@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 
+// Скрипт описывающий все характеристики предметов
+
 [System.Serializable]
 public class Item
 {

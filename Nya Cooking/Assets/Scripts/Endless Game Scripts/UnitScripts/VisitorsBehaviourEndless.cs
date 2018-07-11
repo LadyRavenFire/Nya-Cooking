@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using Random = System.Random;
 
+//Скрипт описывающий посетителей в первый день
+// TODO сделать зависимость выбора рецепта от номера прожитого дня
+// TODO решить что делать с временем ожидания клиента и с выбором времени его прихода
+
 public class VisitorsBehaviourEndless : MonoBehaviour
 {
 
@@ -13,13 +17,13 @@ public class VisitorsBehaviourEndless : MonoBehaviour
     private float _waitTimer;
     private bool _isWaiting;
 
-    public bool IsClientIn;//
+    public bool IsClientIn; //
 
     private bool _createdNewTimeToNextClient;
     private float _timeToNextClient;
 
     //WARNING NEED TO CHANGE!!
-    public GameObject SpriteFood;
+    public GameObject SpriteFood; /// TODO решить нужно ли переводить на загрузку по имени или лучше выносить объекты через инспектор
 
 
     // Use this for initialization
@@ -110,7 +114,7 @@ public class VisitorsBehaviourEndless : MonoBehaviour
         var rnd = new Random();
         var number = rnd.Next(0, recipes.Count);
         _itemNeed = recipes[number].Result;
-        print(_itemNeed.ItemName.ToString() + _itemNeed.stateOfIncision.ToString() + _itemNeed.stateOfPreparing.ToString());
+        //print(_itemNeed.ItemName.ToString() + _itemNeed.stateOfIncision.ToString() + _itemNeed.stateOfPreparing.ToString());
 
         //warning need to change
         SpriteFood.SetActive(true);
@@ -183,7 +187,7 @@ public class VisitorsBehaviourEndless : MonoBehaviour
     {       
         var collider2D = gameObject.GetComponent<Collider2D>();
         collider2D.enabled = trigger;
-        var Texture = gameObject.GetComponent<SpriteRenderer>();
-        Texture.enabled = trigger;
+        var texture = gameObject.GetComponent<SpriteRenderer>();
+        texture.enabled = trigger;
     }  
 }

@@ -2,6 +2,8 @@
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+// Скрипт описывающий работу кнопок и загрузок цен в главном меню 
+
 public class MainMenu : MonoBehaviour
 {
     //все панели меню
@@ -78,10 +80,7 @@ public class MainMenu : MonoBehaviour
             _mainMenuBasic.SetActive(false);
             _settingsBasic.SetActive(true);
         });
-        _quitButton.onClick.AddListener(() =>
-        {
-            Application.Quit();
-        });
+        _quitButton.onClick.AddListener(Application.Quit);
 
         // Кнопкам компании
         _campaignNewGameButton.onClick.AddListener(() =>
@@ -111,7 +110,6 @@ public class MainMenu : MonoBehaviour
         });
         _endlessContinueButton.onClick.AddListener(() =>
         {
-            //print(PlayerPrefs.GetInt("EndlessGameMoney"));
             SceneManager.LoadScene("Test level");
         });
         _endlessBackButton.onClick.AddListener(() =>

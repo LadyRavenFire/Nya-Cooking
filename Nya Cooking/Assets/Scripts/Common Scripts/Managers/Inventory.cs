@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 
-// comment at 8 lesson - drop outside
-// next 9 lesson
+// Этот скрипт описывает работу инвентаря
+
+// TODO улучшить работу перетаскивания предмета (предмет должен находиться центром прямо под пальцем)
+
 public class Inventory : MonoBehaviour
 {
     [SerializeField]

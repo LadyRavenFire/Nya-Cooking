@@ -2,6 +2,8 @@
 using UnityEngine.Experimental.UIElements;
 using Button = UnityEngine.UI.Button;
 
+// Скрипт описывающий меню рецептов в бесконечной игре
+
 public class EndlessRecipesUIManager : MonoBehaviour
 {
     private Button _recipes;

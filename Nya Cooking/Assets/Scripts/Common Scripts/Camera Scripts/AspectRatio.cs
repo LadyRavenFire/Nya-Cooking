@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
+
 //This is the script for the resising. (if resolution is not like in the unity) 
-//вроде работает
-/// u will hate my perfect english
+// Этот скрипт приводит разрешение к нужному, если оно не соответствует нужному
+
+// TODO оптимизация работы данного скрипта
 public class AspectRatio : MonoBehaviour {
     //is is heigh/weight of aspect that we want. 16/9 == 1.78 
     [SerializeField] private float _targetAspect = 1.78f;

@@ -2,10 +2,12 @@
 using System.Linq;
 using UnityEngine;
 
+// Скрипт описывающий работу верстака
+
 public class Workbench : MonoBehaviour {
 
-    [SerializeField]
-    private int _slotsCount = 5;
+
+    [SerializeField] private int _slotsCount = 5; ///TODO решить делать ли поле readonly
     private Item[] _items;
 
     public bool IsEnterCollider;

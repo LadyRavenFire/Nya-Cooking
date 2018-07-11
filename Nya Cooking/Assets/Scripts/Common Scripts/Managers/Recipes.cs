@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+// Скрипт содержит в себе все рецепты
+
 public class Recipes : MonoBehaviour
 {
 

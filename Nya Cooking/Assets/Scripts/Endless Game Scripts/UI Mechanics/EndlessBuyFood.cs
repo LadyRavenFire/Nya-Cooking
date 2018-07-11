@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+// скрипт описывающий покупку еды в бесконечной игре
+// TODO изменить процесс закупки еды, если это действительно требуется
+
 public class EndlessBuyFood : MonoBehaviour
 {
     private GameObject _buyMenuPanel;
@@ -37,8 +40,8 @@ public class EndlessBuyFood : MonoBehaviour
         var endlessGameVariables = GameObject.Find("LevelManager").GetComponent<EndlessGameVariables>();
         if (endlessGameVariables.ReturnMoney() > 0)
         {
-            var _repositoryWithBread = GameObject.Find("BoxWithBread").GetComponent<Repository>();
-            _repositoryWithBread.AddtoRepository(1, Item.Name.Bread);
+            var repositoryWithBread = GameObject.Find("BoxWithBread").GetComponent<Repository>();
+            repositoryWithBread.AddtoRepository(1, Item.Name.Bread);
             endlessGameVariables.AddMoney(-40);
         }     
     }
@@ -48,8 +51,8 @@ public class EndlessBuyFood : MonoBehaviour
         var endlessGameVariables = GameObject.Find("LevelManager").GetComponent<EndlessGameVariables>();
         if (endlessGameVariables.ReturnMoney() > 0)
         {
-            var _repositoryWithBread = GameObject.Find("BoxWithMeat").GetComponent<Repository>();
-            _repositoryWithBread.AddtoRepository(1, Item.Name.Meat);
+            var repositoryWithMeat = GameObject.Find("BoxWithMeat").GetComponent<Repository>();
+            repositoryWithMeat.AddtoRepository(1, Item.Name.Meat);
             endlessGameVariables.AddMoney(-40);
         }
     }

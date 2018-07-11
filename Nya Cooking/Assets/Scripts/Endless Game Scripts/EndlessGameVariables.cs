@@ -2,6 +2,8 @@
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+// Система Save Load в бесконечной игре
+
 public class EndlessGameVariables : MonoBehaviour {
 
     private int _money;
