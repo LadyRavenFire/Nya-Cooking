@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 // Этот скрипт описывает работу инвентаря
 
@@ -21,7 +22,7 @@ public class Inventory : MonoBehaviour
     private Workbench _workbench;
     private Garbage _garbage;
 
-    private VisitorsBehaviourEndless _visitorsBehaviourEndless; //
+    private readonly List<VisitorsBehaviourEndless> _visitorsBehaviourEndless = new List<VisitorsBehaviourEndless>(); // TODO реализовать работу с множеством посетителей!!!
 
     void Start()
     {
@@ -36,7 +37,14 @@ public class Inventory : MonoBehaviour
         _workbench = GameObject.FindGameObjectWithTag("Workbench").GetComponent<Workbench>();
         _garbage = GameObject.FindGameObjectWithTag("Garbage").GetComponent<Garbage>();
 
-        _visitorsBehaviourEndless = GameObject.Find("mexican").GetComponent<VisitorsBehaviourEndless>();//
+        if (GameObject.Find("mexicans") != null)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                _visitorsBehaviourEndless.Add(GameObject.Find("mexican"+i).GetComponent<VisitorsBehaviourEndless>());//
+            }            
+        }
+        
 
     }
 
@@ -139,12 +147,20 @@ public class Inventory : MonoBehaviour
                 _draggedItem = null;
         }
 
-        if (e.type == EventType.MouseUp && _isItemDragged && _visitorsBehaviourEndless.IsEnterCollider && _visitorsBehaviourEndless.IsClientIn)
+        if (_visitorsBehaviourEndless != null)
         {
-            _visitorsBehaviourEndless.AddItem(_draggedItem);
-            _isItemDragged = false;
-            _draggedItem = null;
+            for (int i = 0; i < 3; i++)
+            {
+                if (e.type == EventType.MouseUp && _isItemDragged && _visitorsBehaviourEndless[i].IsEnterCollider && _visitorsBehaviourEndless[i].IsClientIn)
+                {
+                    _visitorsBehaviourEndless[i].AddItem(_draggedItem);
+                    _isItemDragged = false;
+                    _draggedItem = null;
+                }
+            }
         }
+        
+        
 
         if (e.type == EventType.MouseUp && _isItemDragged)
         {

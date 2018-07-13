@@ -37,7 +37,7 @@ public class EndlessGameVariables : MonoBehaviour {
     {
         //print(PlayerPrefs.GetInt("EndlessGameMoney"));
         _money = PlayerPrefs.GetInt("EndlessGameMoney");
-        print(_repositoryWithBread);
+        //print(_repositoryWithBread);
         _repositoryWithBread.AddtoRepository(PlayerPrefs.GetInt("EndlessBreadInBox"), Item.Name.Bread);
         //print("SMTH");
         _repositoryWithMeat.AddtoRepository(PlayerPrefs.GetInt("EndlessMeatInBox"), Item.Name.Meat);

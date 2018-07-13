@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using Random = System.Random;
+//using Random = System.Random;
 
 //Скрипт описывающий посетителей в первый день
 // TODO сделать зависимость выбора рецепта от номера прожитого дня
@@ -23,7 +23,10 @@ public class VisitorsBehaviourEndless : MonoBehaviour
     private float _timeToNextClient;
 
     //WARNING NEED TO CHANGE!!
-    public GameObject SpriteFood; /// TODO решить нужно ли переводить на загрузку по имени или лучше выносить объекты через инспектор
+    public GameObject SpriteFood;
+
+    /// TODO решить нужно ли переводить на загрузку по имени или лучше выносить объекты через инспектор
+
 
 
     // Use this for initialization
@@ -35,6 +38,9 @@ public class VisitorsBehaviourEndless : MonoBehaviour
         _isEmpty = true;
         _isWaiting = false;
         SpriteFood.SetActive(false);
+
+        //???    
+        var text = RandomCreate.Random.Next(5, 10);
     }
 
     void FixedUpdate()
@@ -61,8 +67,9 @@ public class VisitorsBehaviourEndless : MonoBehaviour
             }
             else
             {
-                var rnd = new Random();
-                var time = rnd.Next(5, 10);
+                //var rnd = new Random();
+                
+                var time = RandomCreate.Random.Next(5, 10);
                 _timeToNextClient = time;
                 _createdNewTimeToNextClient = true;
             }
@@ -111,8 +118,8 @@ public class VisitorsBehaviourEndless : MonoBehaviour
     {
         var receipe = GameObject.FindGameObjectWithTag("Recipes").GetComponent<Recipes>();
         var recipes = receipe.Receipes;
-        var rnd = new Random();
-        var number = rnd.Next(0, recipes.Count);
+       // var rnd = new Random();
+        var number = RandomCreate.Random.Next(0, recipes.Count);
         _itemNeed = recipes[number].Result;
         //print(_itemNeed.ItemName.ToString() + _itemNeed.stateOfIncision.ToString() + _itemNeed.stateOfPreparing.ToString());
 
@@ -145,8 +152,8 @@ public class VisitorsBehaviourEndless : MonoBehaviour
 
     void WaitTimerCreate()
     {
-        var rnd = new Random();
-        var time = rnd.Next(10, 20);
+        //var rnd = new Random();
+        var time = RandomCreate.Random.Next(10, 20);
         _waitTimer = time;   
     }
 
