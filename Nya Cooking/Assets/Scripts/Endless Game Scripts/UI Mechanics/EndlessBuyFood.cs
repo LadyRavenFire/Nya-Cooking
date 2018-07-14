@@ -19,8 +19,8 @@ public class EndlessBuyFood : MonoBehaviour
 	    _buyBread = GameObject.Find("BreadBuyButton").GetComponent<Button>();
 	    _buyMeat = GameObject.Find("MeatBuyButton").GetComponent<Button>();
 	    
-        _buyBread.onClick.AddListener(BuyBread);
-	    _buyMeat.onClick.AddListener(BuyMeat);
+        _buyBread.onClick.AddListener(() => BuyProduct(Item.Name.Bread));
+	    _buyMeat.onClick.AddListener(() => BuyProduct(Item.Name.Meat));
         _exitBuyMenu.onClick.AddListener(ExitBuyMenu);
 
         _buyMenuPanel.SetActive(false);
@@ -35,25 +35,24 @@ public class EndlessBuyFood : MonoBehaviour
         }
     }
 
-    void BuyBread()
+    void BuyProduct(Item.Name product)
     {
         var endlessGameVariables = GameObject.Find("LevelManager").GetComponent<EndlessGameVariables>();
         if (endlessGameVariables.ReturnMoney() > 0)
         {
-            var repositoryWithBread = GameObject.Find("BoxWithBread").GetComponent<Repository>();
-            repositoryWithBread.AddtoRepository(1, Item.Name.Bread);
-            endlessGameVariables.AddMoney(-40);
-        }     
-    }
-
-    void BuyMeat()
-    {
-        var endlessGameVariables = GameObject.Find("LevelManager").GetComponent<EndlessGameVariables>();
-        if (endlessGameVariables.ReturnMoney() > 0)
-        {
-            var repositoryWithMeat = GameObject.Find("BoxWithMeat").GetComponent<Repository>();
-            repositoryWithMeat.AddtoRepository(1, Item.Name.Meat);
-            endlessGameVariables.AddMoney(-40);
+            switch (product)
+            {
+                case Item.Name.Bread:
+                    var repositoryWithBread = GameObject.Find("BoxWithBread").GetComponent<Repository>();
+                    repositoryWithBread.AddtoRepository(1, product);
+                    endlessGameVariables.AddMoney(-40);
+                    break;
+                case Item.Name.Meat:
+                    var repositoryWithMeat = GameObject.Find("BoxWithMeat").GetComponent<Repository>();
+                    repositoryWithMeat.AddtoRepository(1, Item.Name.Meat);
+                    endlessGameVariables.AddMoney(-50);
+                    break;
+            }
         }
     }
 
