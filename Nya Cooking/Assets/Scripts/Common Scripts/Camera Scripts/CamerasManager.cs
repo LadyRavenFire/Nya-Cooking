@@ -7,6 +7,12 @@ using UnityEngine.UI;
 
 public class CamerasManager : MonoBehaviour {
 
+    // TODO сделать организацию камер через массив
+    // По одному индексу выставляется в true
+    // все другие сбрасываются в false
+    // Для каждого уровня в инспекторе задается размер массива
+    // и набор камер для этого уровня
+
     private Button _leftButton;
     private Button _rightButton;
 

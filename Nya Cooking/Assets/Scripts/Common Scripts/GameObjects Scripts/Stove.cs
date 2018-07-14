@@ -17,6 +17,22 @@ public class Stove : MonoBehaviour
 
     private Inventory _inventory;
 
+    private Dictionary<Item.Name, Dictionary<Item.StateOfIncision, float>> _productTimers = new Dictionary<Item.Name, Dictionary<Item.StateOfIncision, float>>
+    {
+        {Item.Name.Bread,
+            new Dictionary<Item.StateOfIncision, float>
+            {
+                { Item.StateOfIncision.Whole, 5 },
+                { Item.StateOfIncision.Cutted, 3}
+            }},
+        {Item.Name.Meat,
+            new Dictionary<Item.StateOfIncision, float>
+            {
+                { Item.StateOfIncision.Whole, 5 },
+                { Item.StateOfIncision.Cutted, 3 }
+            }}
+    };
+
     void Start()
     {
         _items.Add(null);
@@ -34,7 +50,7 @@ public class Stove : MonoBehaviour
         {
             if (_items[0].ItemName == Item.Name.Meat && _timerFlag == false)
             {
-                _timer = 5;
+                _timer = _productTimers[_items[0].ItemName][_items[0].stateOfIncision];
                 _timerFlag = true;
             }
             _isCooking = true;            

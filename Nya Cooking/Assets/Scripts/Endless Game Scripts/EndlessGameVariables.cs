@@ -45,7 +45,6 @@ public class EndlessGameVariables : MonoBehaviour {
 
     public void SaveToData()
     {
-       
         PlayerPrefs.SetInt("EndlessGameMoney", _money);
         PlayerPrefs.SetInt("EndlessMeatInBox", _repositoryWithMeat.CountOfItemsInRepository());
         PlayerPrefs.SetInt("EndlessBreadInBox", _repositoryWithBread.CountOfItemsInRepository());

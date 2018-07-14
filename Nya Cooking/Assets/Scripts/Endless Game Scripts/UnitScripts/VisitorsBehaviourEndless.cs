@@ -27,8 +27,6 @@ public class VisitorsBehaviourEndless : MonoBehaviour
 
     /// TODO решить нужно ли переводить на загрузку по имени или лучше выносить объекты через инспектор
 
-
-
     // Use this for initialization
     void Start () {
 	    _itemIn = null;
@@ -39,7 +37,7 @@ public class VisitorsBehaviourEndless : MonoBehaviour
         _isWaiting = false;
         SpriteFood.SetActive(false);
 
-        //???    
+        // TODO use seed in constructor parameter 
         var text = RandomCreate.Random.Next(5, 10);
     }
 
@@ -117,10 +115,9 @@ public class VisitorsBehaviourEndless : MonoBehaviour
     void NeedItemCreate()
     {
         var receipe = GameObject.FindGameObjectWithTag("Recipes").GetComponent<Recipes>();
-        var recipes = receipe.Receipes;
        // var rnd = new Random();
-        var number = RandomCreate.Random.Next(0, recipes.Count);
-        _itemNeed = recipes[number].Result;
+        var number = RandomCreate.Random.Next(0, receipe.Receipes.Count);
+        _itemNeed = receipe.Receipes[number].Result;
         //print(_itemNeed.ItemName.ToString() + _itemNeed.stateOfIncision.ToString() + _itemNeed.stateOfPreparing.ToString());
 
         //warning need to change

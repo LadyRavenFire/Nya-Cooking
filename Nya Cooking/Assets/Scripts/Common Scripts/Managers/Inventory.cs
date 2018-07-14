@@ -13,6 +13,11 @@ public class Inventory : MonoBehaviour
 
     public GUISkin Skin; // скин инвентаря (ака текстурка)
 
+    // TODO переделать системы драга
+    // Вся логика по IsMouseEnter должна лежать внутри ссответствующего объекта: stove, workbench, garbage, mexicans и т.д.
+    // Там проверяется, что предмет вошел в колайдер и меняет _isItemDragged и _draggedItem
+    // А их значит, нужно сделать публичными
+
     private bool _isItemDragged;
     private Item _draggedItem;
     private int _prevIndex;

@@ -23,5 +23,4 @@ public class Leve_1_Dialogue : MonoBehaviour
         DialoguePanel.SetActive(false);
         Time.timeScale = 1f;
     }
-
 }

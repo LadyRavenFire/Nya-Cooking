@@ -26,8 +26,6 @@ public class LevelManager : MonoBehaviour
         _pauseComponent.SetActive(false);
     }
 
-
-
     void QuitGame()
     {
         Application.Quit();
