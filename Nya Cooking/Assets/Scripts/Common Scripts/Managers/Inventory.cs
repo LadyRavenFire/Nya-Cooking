@@ -14,6 +14,8 @@ public class Inventory : MonoBehaviour
     public GUISkin Skin; // скин инвентаря (ака текстурка)
     private bool _isItemInOtherGameobject;
 
+    private bool _pauseInventory;
+
     private bool _isItemDragged;
     private Item _draggedItem;
     private int _prevIndex;
@@ -22,6 +24,7 @@ public class Inventory : MonoBehaviour
 
     void Start()
     {
+        _pauseInventory = false;
         _isItemInOtherGameobject = false;
         _slots = new Item[SlotsX*SlotsY];
         for (int i = 0; i < (SlotsX*SlotsY); i++) 
@@ -36,7 +39,10 @@ public class Inventory : MonoBehaviour
     void OnGUI()
     {
         GUI.skin = Skin;
-        DrawInventory();
+        if (!_pauseInventory)
+        {
+            DrawInventory();
+        }        
         if (_isItemDragged)
         {
             var obj = GameObject.Find("Image0");
@@ -174,5 +180,15 @@ public class Inventory : MonoBehaviour
         _slots[_prevIndex] = _draggedItem;
         _isItemDragged = false;
         _draggedItem = null;
+    }
+
+    public void OffInventory()
+    {
+        _pauseInventory = true;
+    }
+
+    public void OnInventory()
+    {
+        _pauseInventory = false;
     }
 }

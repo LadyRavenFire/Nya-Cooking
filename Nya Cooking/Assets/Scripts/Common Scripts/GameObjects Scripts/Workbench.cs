@@ -204,7 +204,7 @@ public class Workbench : MonoBehaviour {
 
                 // если найденных рецептов несколько, то берем только первый из найденных
                 var found = receipeFounds.First(x => x.IsFound);
-                print("result " + found.Result.ToString());
+                //print("result " + found.Result.ToString());
 
                 // и добавляем в инвентарь результат работы рецепта
                 _inventory.AddItem(found.Result);
