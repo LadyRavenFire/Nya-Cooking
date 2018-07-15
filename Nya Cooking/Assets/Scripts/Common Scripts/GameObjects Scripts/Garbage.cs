@@ -1,25 +1,32 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 // Скрипт описывающий мусорку
 
 public class Garbage : MonoBehaviour {
 
-    public bool IsEnterCollider;
-
+    private Inventory _inventory;
     void Start()
     {
-        IsEnterCollider = false;
+        _inventory = GameObject.FindGameObjectWithTag("Inventory").GetComponent<Inventory>();
     }
 
     void OnMouseEnter()
     {
-        IsEnterCollider = true;
+        _inventory.IsInOther();
     }
 
     void OnMouseExit()
     {
-        IsEnterCollider = false;
+        _inventory.IsNotInOther();
     }
 
+    void OnMouseOver()
+    {
+        if (Input.GetMouseButtonUp(0) && _inventory.IsDragged())
+        {
+                _inventory.DeleteDraggedItem();          
+        }
+    }
     
 }

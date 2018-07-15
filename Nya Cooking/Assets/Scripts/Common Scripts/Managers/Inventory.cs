@@ -12,6 +12,7 @@ public class Inventory : MonoBehaviour
     private Item[] _slots;
 
     public GUISkin Skin; // скин инвентаря (ака текстурка)
+    private bool _isItemInOtherGameobject;
 
     // TODO переделать системы драга
     // Вся логика по IsMouseEnter должна лежать внутри ссответствующего объекта: stove, workbench, garbage, mexicans и т.д.
@@ -25,12 +26,12 @@ public class Inventory : MonoBehaviour
     private ItemDataBase _database;
     private Stove _stove;
     private Workbench _workbench;
-    private Garbage _garbage;
 
     private readonly List<VisitorsBehaviourEndless> _visitorsBehaviourEndless = new List<VisitorsBehaviourEndless>(); // TODO реализовать работу с множеством посетителей!!!
 
     void Start()
     {
+        _isItemInOtherGameobject = false;
         _slots = new Item[SlotsX*SlotsY];
         for (int i = 0; i < (SlotsX*SlotsY); i++) 
         {
@@ -40,7 +41,6 @@ public class Inventory : MonoBehaviour
         _database = GameObject.FindGameObjectWithTag("ItemDataBase").GetComponent<ItemDataBase>();
         _stove = GameObject.FindGameObjectWithTag("Stove").GetComponent<Stove>();
         _workbench = GameObject.FindGameObjectWithTag("Workbench").GetComponent<Workbench>();
-        _garbage = GameObject.FindGameObjectWithTag("Garbage").GetComponent<Garbage>();
 
         if (GameObject.Find("mexicans") != null)
         {
@@ -146,12 +146,6 @@ public class Inventory : MonoBehaviour
             }
         }
 
-        if (e.type == EventType.MouseUp && _isItemDragged && _garbage.IsEnterCollider)
-        {
-                _isItemDragged = false;
-                _draggedItem = null;
-        }
-
         if (_visitorsBehaviourEndless != null)
         {
             for (int i = 0; i < 3; i++)
@@ -164,10 +158,8 @@ public class Inventory : MonoBehaviour
                 }
             }
         }
-        
-        
 
-        if (e.type == EventType.MouseUp && _isItemDragged)
+        if (e.type == EventType.MouseUp && _isItemDragged && !_isItemInOtherGameobject)
         {
             _slots[_prevIndex] = _draggedItem;
             _isItemDragged = false;
@@ -202,5 +194,26 @@ public class Inventory : MonoBehaviour
                 break;
             }
         }
+    }
+
+    public bool IsDragged()
+    {
+        return _isItemDragged;
+    }
+
+    public void DeleteDraggedItem()
+    {
+        _draggedItem = null;
+        _isItemDragged = false;        
+    }
+
+    public void IsInOther()
+    {
+        _isItemInOtherGameobject = true;
+    }
+
+    public void IsNotInOther()
+    {
+        _isItemInOtherGameobject = false;
     }
 }
