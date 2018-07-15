@@ -11,7 +11,7 @@ public class VisitorsBehaviourEndless : MonoBehaviour
     private Item _itemNeed;
     private Item _itemIn;
 
-    public bool IsEnterCollider; //
+    //public bool IsEnterCollider; //
     private bool _isEmpty;
 
     private float _waitTimer;
@@ -25,11 +25,14 @@ public class VisitorsBehaviourEndless : MonoBehaviour
     //WARNING NEED TO CHANGE!!
     public GameObject SpriteFood;
 
+    private Inventory _inventory;
+
     /// TODO решить нужно ли переводить на загрузку по имени или лучше выносить объекты через инспектор
 
     // Use this for initialization
     void Start () {
-	    _itemIn = null;
+        _inventory = GameObject.FindGameObjectWithTag("Inventory").GetComponent<Inventory>();
+        _itemIn = null;
         TextureAndCollider(false);
         _createdNewTimeToNextClient = false;
         IsClientIn = false;
@@ -37,8 +40,7 @@ public class VisitorsBehaviourEndless : MonoBehaviour
         _isWaiting = false;
         SpriteFood.SetActive(false);
 
-        // TODO use seed in constructor parameter 
-        var text = RandomCreate.Random.Next(5, 10);
+        RandomStart();
     }
 
     void FixedUpdate()
@@ -55,7 +57,6 @@ public class VisitorsBehaviourEndless : MonoBehaviour
                 if (_timeToNextClient > 0)
                 {
                     _timeToNextClient -= Time.deltaTime;
-                    //print("Client will come: " + _timeToNextClient);
                 }
                 else
                 {
@@ -65,8 +66,6 @@ public class VisitorsBehaviourEndless : MonoBehaviour
             }
             else
             {
-                //var rnd = new Random();
-                
                 var time = RandomCreate.Random.Next(5, 10);
                 _timeToNextClient = time;
                 _createdNewTimeToNextClient = true;
@@ -81,7 +80,6 @@ public class VisitorsBehaviourEndless : MonoBehaviour
             if (_itemNeed == _itemIn)
             {
                 ClientExitGood();
-                //gameObject.SetActive(false);
             }
             else
             {
@@ -92,12 +90,26 @@ public class VisitorsBehaviourEndless : MonoBehaviour
 
     void OnMouseEnter()
     {
-        IsEnterCollider = true;
+        _inventory.IsInOther();
     }
 
     void OnMouseExit()
     {
-        IsEnterCollider = false;       
+        _inventory.IsNotInOther();
+    }
+
+    void OnMouseOver()
+    {
+        if (Input.GetMouseButtonUp(0) && _inventory.IsDragged() && IsClientIn)
+        {
+            AddItem(_inventory.GiveDraggedItem());
+            _inventory.DeleteDraggedItem();
+        }
+
+        if (Input.GetMouseButtonUp(0) && _inventory.IsDragged() && !IsClientIn)
+        {
+            _inventory.ReturnInInventory();
+        }
     }
 
     public void AddItem(Item item)
@@ -115,10 +127,8 @@ public class VisitorsBehaviourEndless : MonoBehaviour
     void NeedItemCreate()
     {
         var receipe = GameObject.FindGameObjectWithTag("Recipes").GetComponent<Recipes>();
-       // var rnd = new Random();
         var number = RandomCreate.Random.Next(0, receipe.Receipes.Count);
         _itemNeed = receipe.Receipes[number].Result;
-        //print(_itemNeed.ItemName.ToString() + _itemNeed.stateOfIncision.ToString() + _itemNeed.stateOfPreparing.ToString());
 
         //warning need to change
         SpriteFood.SetActive(true);
@@ -139,7 +149,6 @@ public class VisitorsBehaviourEndless : MonoBehaviour
         if (_waitTimer > 0)
         {
             _waitTimer -= Time.deltaTime;
-            //print("Client will go away frome: " + _waitTimer);
         }
         else
         {
@@ -149,7 +158,6 @@ public class VisitorsBehaviourEndless : MonoBehaviour
 
     void WaitTimerCreate()
     {
-        //var rnd = new Random();
         var time = RandomCreate.Random.Next(10, 20);
         _waitTimer = time;   
     }
@@ -193,5 +201,11 @@ public class VisitorsBehaviourEndless : MonoBehaviour
         collider2D.enabled = trigger;
         var texture = gameObject.GetComponent<SpriteRenderer>();
         texture.enabled = trigger;
-    }  
+    }
+
+    void RandomStart()
+    {
+        // TODO use seed in constructor parameter 
+        var text = RandomCreate.Random.Next(5, 10);
+    }
 }

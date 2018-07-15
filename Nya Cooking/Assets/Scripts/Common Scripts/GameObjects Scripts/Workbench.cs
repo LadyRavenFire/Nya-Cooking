@@ -10,7 +10,7 @@ public class Workbench : MonoBehaviour {
     [SerializeField] private int _slotsCount = 5; ///TODO решить делать ли поле readonly
     private Item[] _items;
 
-    public bool IsEnterCollider;
+    //public bool IsEnterCollider;
     public bool IsEmpty;
 
     private Inventory _inventory;
@@ -22,19 +22,41 @@ public class Workbench : MonoBehaviour {
         {
             _items[i] = null;
         }
-        IsEnterCollider = false;
+        //IsEnterCollider = false;
         IsEmpty = true;
         _inventory = GameObject.FindGameObjectWithTag("Inventory").GetComponent<Inventory>();
     }
 
     void OnMouseEnter()
     {
-        IsEnterCollider = true;
+        _inventory.IsInOther();
+        //IsEnterCollider = true;
     }
 
     void OnMouseExit()
     {
-        IsEnterCollider = false;
+        _inventory.IsNotInOther();
+        //IsEnterCollider = false;
+    }
+
+    void OnMouseOver()
+    {
+        if (Input.GetMouseButtonUp(0) && _inventory.IsDragged() && IsPlace())
+        {
+            AddItem(_inventory.GiveDraggedItem());
+            _inventory.DeleteDraggedItem();
+        }
+
+        if (Input.GetMouseButtonUp(0) && _inventory.IsDragged() && !IsPlace())
+        {
+            _inventory.ReturnInInventory();
+        }
+
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            CreateNewProduct();
+        }
     }
 
     public void AddItem(Item item)
@@ -72,14 +94,6 @@ public class Workbench : MonoBehaviour {
         else
         {
             print("V pechke stoto ostalos` moi gospodin");            
-        }
-    }
-
-    void OnMouseOver()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            CreateNewProduct();
         }
     }
 

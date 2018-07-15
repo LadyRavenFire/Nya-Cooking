@@ -7,7 +7,7 @@ public class Stove : MonoBehaviour
 {
     private readonly List<Item> _items = new List<Item>();
 
-    public bool IsEnterCollider;
+    //public bool IsEnterCollider;
     public bool IsEmpty;
 
     private bool _isCooking;
@@ -36,7 +36,7 @@ public class Stove : MonoBehaviour
     void Start()
     {
         _items.Add(null);
-        IsEnterCollider = false;
+        //IsEnterCollider = false;
         IsEmpty = true;
         _isCooking = false;
         _inventory = GameObject.FindGameObjectWithTag("Inventory").GetComponent<Inventory>();
@@ -80,16 +80,30 @@ public class Stove : MonoBehaviour
 
     void OnMouseEnter()
     {
-        IsEnterCollider = true;
+        //IsEnterCollider = true;
+        _inventory.IsInOther();
+
     }
 
     void OnMouseExit()
     {
-        IsEnterCollider = false;
+        //IsEnterCollider = false;
+        _inventory.IsNotInOther();
     }
 
     void OnMouseOver()
     {
+        if (Input.GetMouseButtonUp(0) && _inventory.IsDragged() && IsEmpty)
+        {
+            AddItem(_inventory.GiveDraggedItem());
+            _inventory.DeleteDraggedItem();
+        }
+
+        if (Input.GetMouseButtonUp(0) && _inventory.IsDragged() && !IsEmpty)
+        {
+            _inventory.ReturnInInventory();
+        }
+
         if (Input.GetMouseButtonDown(0) && _isCooking)
         {
             _inventory.AddItem(_items[0]);

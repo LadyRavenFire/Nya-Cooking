@@ -14,20 +14,11 @@ public class Inventory : MonoBehaviour
     public GUISkin Skin; // скин инвентаря (ака текстурка)
     private bool _isItemInOtherGameobject;
 
-    // TODO переделать системы драга
-    // Вся логика по IsMouseEnter должна лежать внутри ссответствующего объекта: stove, workbench, garbage, mexicans и т.д.
-    // Там проверяется, что предмет вошел в колайдер и меняет _isItemDragged и _draggedItem
-    // А их значит, нужно сделать публичными
-
     private bool _isItemDragged;
     private Item _draggedItem;
     private int _prevIndex;
 
     private ItemDataBase _database;
-    private Stove _stove;
-    private Workbench _workbench;
-
-    private readonly List<VisitorsBehaviourEndless> _visitorsBehaviourEndless = new List<VisitorsBehaviourEndless>(); // TODO реализовать работу с множеством посетителей!!!
 
     void Start()
     {
@@ -39,18 +30,7 @@ public class Inventory : MonoBehaviour
         }
 
         _database = GameObject.FindGameObjectWithTag("ItemDataBase").GetComponent<ItemDataBase>();
-        _stove = GameObject.FindGameObjectWithTag("Stove").GetComponent<Stove>();
-        _workbench = GameObject.FindGameObjectWithTag("Workbench").GetComponent<Workbench>();
-
-        if (GameObject.Find("mexicans") != null)
-        {
-            for (int i = 0; i < 3; i++)
-            {
-                _visitorsBehaviourEndless.Add(GameObject.Find("mexican"+i).GetComponent<VisitorsBehaviourEndless>());//
-            }            
-        }
         
-
     }
 
     void OnGUI()
@@ -126,39 +106,6 @@ public class Inventory : MonoBehaviour
             }
         }
 
-        if (e.type == EventType.MouseUp && _isItemDragged && _stove.IsEnterCollider)
-        {
-            if (_stove.IsEmpty)
-            {
-                _stove.AddItem(_draggedItem);
-                _isItemDragged = false;
-                _draggedItem = null;
-            }
-        }
-
-        if (e.type == EventType.MouseUp && _isItemDragged && _workbench.IsEnterCollider)
-        {
-            if (_workbench.IsPlace())
-            {
-                _workbench.AddItem(_draggedItem);
-                _isItemDragged = false;
-                _draggedItem = null;
-            }
-        }
-
-        if (_visitorsBehaviourEndless != null)
-        {
-            for (int i = 0; i < 3; i++)
-            {
-                if (e.type == EventType.MouseUp && _isItemDragged && _visitorsBehaviourEndless[i].IsEnterCollider && _visitorsBehaviourEndless[i].IsClientIn)
-                {
-                    _visitorsBehaviourEndless[i].AddItem(_draggedItem);
-                    _isItemDragged = false;
-                    _draggedItem = null;
-                }
-            }
-        }
-
         if (e.type == EventType.MouseUp && _isItemDragged && !_isItemInOtherGameobject)
         {
             _slots[_prevIndex] = _draggedItem;
@@ -215,5 +162,17 @@ public class Inventory : MonoBehaviour
     public void IsNotInOther()
     {
         _isItemInOtherGameobject = false;
+    }
+
+    public Item GiveDraggedItem()
+    {
+        return _draggedItem;
+    }
+
+    public void ReturnInInventory()
+    {
+        _slots[_prevIndex] = _draggedItem;
+        _isItemDragged = false;
+        _draggedItem = null;
     }
 }
