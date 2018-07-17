@@ -2045,7 +2045,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c3bd3b745d53094b9c486b9c69ce357, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsEnterCollider: 0
 --- !u!212 &580661917
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4471,7 +4470,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47b7df9cbacd2c940a4fcb20b518335f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsEnterCollider: 0
   IsClientIn: 0
   SpriteFood: {fileID: 797572573}
 --- !u!61 &1437698942
@@ -4998,7 +4996,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _slotsCount: 5
-  IsEnterCollider: 0
   IsEmpty: 0
 --- !u!61 &1621249742
 BoxCollider2D:
@@ -5952,7 +5949,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3e3772595880d54e8c9695f15016a29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _room: 1
+  Cameras:
+  - {fileID: 1955487496}
+  - {fileID: 903413368}
+  - {fileID: 57953462}
+  - {fileID: 1412365529}
 --- !u!1 &2073456453
 GameObject:
   m_ObjectHideFlags: 0
@@ -6229,7 +6230,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47c48b0058468d44699353b41e26a74b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsEnterCollider: 0
   IsEmpty: 0
 --- !u!61 &2145118707
 BoxCollider2D:

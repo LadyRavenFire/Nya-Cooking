@@ -6169,7 +6169,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3e3772595880d54e8c9695f15016a29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _room: 0
+  Cameras:
+  - {fileID: 1955487496}
+  - {fileID: 903413368}
+  - {fileID: 57953462}
+  - {fileID: 1412365529}
 --- !u!1 &2073456453
 GameObject:
   m_ObjectHideFlags: 0

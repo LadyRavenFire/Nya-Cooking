@@ -7,30 +7,11 @@ using UnityEngine.UI;
 
 public class CamerasManager : MonoBehaviour {
 
-    // TODO сделать организацию камер через массив
-    // По одному индексу выставляется в true
-    // все другие сбрасываются в false
-    // Для каждого уровня в инспекторе задается размер массива
-    // и набор камер для этого уровня
+    public Camera[] Cameras; // TODO из проблем - правиьный порядок закидывания камер
+    private int _count;
 
     private Button _leftButton;
     private Button _rightButton;
-
-    private Camera _kitchenCamera;
-    private Camera _guestRoomCamera;
-    private Camera _storageCamera;
-    private Camera _myRoomCamera;
-
-    [SerializeField] private Room _room;
-
-    //тут будут номера комнат храниться, в которых может быть игрок. Удобно и можно расширять в зависимости от ивентов(для ивентов?).
-    private enum Room
-    {
-        Kitchen,
-        GuestRoom,
-        Storage,
-        MyRoom
-    }
 
     void Start()
     {
@@ -38,12 +19,15 @@ public class CamerasManager : MonoBehaviour {
         _leftButton = GameObject.Find("LeftChangeCameraButton").GetComponent<Button>();
         _rightButton = GameObject.Find("RightChangeCameraButton").GetComponent<Button>();
 
-        _kitchenCamera = GameObject.Find("KitchenCamera").GetComponent<Camera>();
-        _guestRoomCamera = GameObject.Find("GuestRoomCamera").GetComponent<Camera>();
-        _storageCamera = GameObject.Find("StorageCamera").GetComponent<Camera>();
-        _myRoomCamera = GameObject.Find("MyRoomCamera").GetComponent<Camera>();
+        for (int i = 1; i < Cameras.Length; i++)
+        {            
+            var audio = Cameras[i].GetComponent<AudioListener>();
+            audio.enabled = false;
+            Cameras[i].enabled = false;
+        }
 
-        CameraRoom(_room);
+        _count = 0;
+
         //Сюда подцепляем кнопки и ждем клика, заодно говорим, какой ивент случится при клике на кнопку.
         _leftButton.onClick.AddListener(LeftButton_Click);
         _rightButton.onClick.AddListener(RightButton_Click);
@@ -52,124 +36,45 @@ public class CamerasManager : MonoBehaviour {
     //ивент на левую кнопку мыши
     void LeftButton_Click()
     {
-        //Debug.Log("You have clicked the button left!");
-        if (_room == Room.Kitchen)
+        var audio = Cameras[_count].GetComponent<AudioListener>();
+        audio.enabled = false;
+        Cameras[_count].enabled = false;
+
+        if (_count != 0)
         {
-            _room = Room.MyRoom;
-            CameraRoom(_room);
-            return;
-        }
-        if (_room == Room.MyRoom)
-        {
-            _room = Room.Storage;
-            CameraRoom(_room);
-            return;
-        }
-        if (_room == Room.Storage)
-        {
-            _room = Room.GuestRoom;
-            CameraRoom(_room);
-            return;
-        }
-        if (_room == Room.GuestRoom)
-        {
-            _room = Room.Kitchen;
-            CameraRoom(_room);
+            _count--;
         }
 
+        if (_count == 0)
+        {
+            _count = Cameras.Length-1;
+            //print(_count);
+        }
+
+        Cameras[_count].enabled = true;
+        audio = Cameras[_count].GetComponent<AudioListener>();
+        audio.enabled = true;
+        
     }
     //ивент на правую кнопку мыши
     void RightButton_Click()
     {
-        //Debug.Log("You have clicked the button right!");
-        if (_room == Room.MyRoom)
-        {
-            _room = Room.Kitchen;
-            CameraRoom(_room);
-            return;
-        }
-        if (_room == Room.Kitchen)
-        {
-            _room = Room.GuestRoom;
-            CameraRoom(_room);
-            return;
-        }
-        if (_room == Room.GuestRoom)
-        {
-            _room = Room.Storage;
-            CameraRoom(_room);
-            return;
-        }
-        if (_room == Room.Storage)
-        {
-            _room = Room.MyRoom;
-            CameraRoom(_room);
-        }
-    }
+        var audio = Cameras[_count].GetComponent<AudioListener>();
+        audio.enabled = false;
+        Cameras[_count].enabled = false;
 
+        if (_count < Cameras.Length)
+        {
+            _count++;
+        }
 
-    void CameraRoom(Room newRoom)
-    {
-        //print(newRoom.ToString());
-        if (newRoom == Room.Kitchen)
+        if (_count == Cameras.Length)
         {
-            _kitchenCamera.enabled = true;
-            var audio = _kitchenCamera.GetComponent<AudioListener>();
-            audio.enabled = true;
-            _guestRoomCamera.enabled = false;
-            audio = _guestRoomCamera.GetComponent<AudioListener>();
-            audio.enabled = false;
-            _storageCamera.enabled = false;
-            audio = _storageCamera.GetComponent<AudioListener>();
-            audio.enabled = false;
-            _myRoomCamera.enabled = false;
-            audio = _myRoomCamera.GetComponent<AudioListener>();
-            audio.enabled = false;
+            _count = 0;
         }
-        if (newRoom == Room.GuestRoom)
-        {
-            _kitchenCamera.enabled = false;
-            var audio = _kitchenCamera.GetComponent<AudioListener>();
-            audio.enabled = false;
-            _guestRoomCamera.enabled = true;
-            audio = _guestRoomCamera.GetComponent<AudioListener>();
-            audio.enabled = true;
-            _storageCamera.enabled = false;
-            audio = _storageCamera.GetComponent<AudioListener>();
-            audio.enabled = false;
-            _myRoomCamera.enabled = false;
-            audio = _myRoomCamera.GetComponent<AudioListener>();
-            audio.enabled = false;
-        }
-        if (newRoom == Room.Storage)
-        {
-            _kitchenCamera.enabled = false;
-            var audio = _kitchenCamera.GetComponent<AudioListener>();
-            audio.enabled = false;
-            _guestRoomCamera.enabled = false;
-            audio = _guestRoomCamera.GetComponent<AudioListener>();
-            audio.enabled = false;
-            _storageCamera.enabled = true;
-            audio = _storageCamera.GetComponent<AudioListener>();
-            audio.enabled = true;
-            _myRoomCamera.enabled = false;
-            audio = _myRoomCamera.GetComponent<AudioListener>();
-            audio.enabled = false;
-        }
-        if (newRoom == Room.MyRoom)
-        {
-            _kitchenCamera.enabled = false;
-            var audio = _kitchenCamera.GetComponent<AudioListener>();
-            audio.enabled = false;
-            _guestRoomCamera.enabled = false;
-            audio = _guestRoomCamera.GetComponent<AudioListener>();
-            audio.enabled = false;
-            _storageCamera.enabled = false;
-            audio = _storageCamera.GetComponent<AudioListener>();
-            audio.enabled = false;
-            _myRoomCamera.enabled = true;
-            audio = _myRoomCamera.GetComponent<AudioListener>();
-            audio.enabled = true;
-        }
+
+        Cameras[_count].enabled = true;
+        audio = Cameras[_count].GetComponent<AudioListener>();
+        audio.enabled = true;       
     }
 }

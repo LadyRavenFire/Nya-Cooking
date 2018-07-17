@@ -5,126 +5,142 @@ using UnityEngine;
 
 public class Stove : MonoBehaviour
 {
-    private readonly List<Item> _items = new List<Item>();
-
-    //public bool IsEnterCollider;
-    public bool IsEmpty;
+    private Item _item;
 
     private bool _isCooking;
 
     private float _timer;
-    private bool _timerFlag;
 
     private Inventory _inventory;
 
-    private Dictionary<Item.Name, Dictionary<Item.StateOfIncision, float>> _productTimers = new Dictionary<Item.Name, Dictionary<Item.StateOfIncision, float>>
+    private Dictionary<Item.Name,Dictionary<Item.StateOfPreparing, Dictionary<Item.StateOfIncision, float>>> _productTimers = new Dictionary<Item.Name, Dictionary<Item.StateOfPreparing, Dictionary<Item.StateOfIncision, float>>>
     {
-        {Item.Name.Bread,
-            new Dictionary<Item.StateOfIncision, float>
+        {
+            Item.Name.Meat, new Dictionary<Item.StateOfPreparing, Dictionary<Item.StateOfIncision, float>>
             {
-                { Item.StateOfIncision.Whole, 5 },
-                { Item.StateOfIncision.Cutted, 3}
-            }},
-        {Item.Name.Meat,
-            new Dictionary<Item.StateOfIncision, float>
-            {
-                { Item.StateOfIncision.Whole, 5 },
-                { Item.StateOfIncision.Cutted, 3 }
-            }}
+                {
+                    Item.StateOfPreparing.Raw, new Dictionary<Item.StateOfIncision, float>
+                    {
+                        {Item.StateOfIncision.Whole, 5},
+                        {Item.StateOfIncision.Cutted, 3}
+                    }                    
+                },
+
+                {
+                    Item.StateOfPreparing.Fried, new Dictionary<Item.StateOfIncision, float>
+                    {
+                        {Item.StateOfIncision.Whole, 10},
+                        {Item.StateOfIncision.Cutted, 2}
+                    }
+                },
+
+                {
+                    Item.StateOfPreparing.Burnt, new Dictionary<Item.StateOfIncision, float>
+                    {
+                        {Item.StateOfIncision.Whole, 666},
+                        {Item.StateOfIncision.Cutted, 666}
+                    }
+                }
+            }
+        }
     };
 
     void Start()
     {
-        _items.Add(null);
-        //IsEnterCollider = false;
-        IsEmpty = true;
+        _item = null;
+
         _isCooking = false;
+
         _inventory = GameObject.FindGameObjectWithTag("Inventory").GetComponent<Inventory>();
+
         _timer = 0;
-        _timerFlag = false;
     }
 
     void Update()
     {
-        if (!IsEmpty && _isCooking == false)
+        if (!IsEmpty() && _isCooking == false)
         {
-            if (_items[0].ItemName == Item.Name.Meat && _timerFlag == false)
+            if (_item.ItemName == Item.Name.Meat)
             {
-                _timer = _productTimers[_items[0].ItemName][_items[0].stateOfIncision];
-                _timerFlag = true;
+                _timer = _productTimers[_item.ItemName][_item.stateOfPreparing][_item.stateOfIncision];
             }
-            _isCooking = true;            
-            //print("EDA V NYTRI!!!");
-        }
-        
+            _isCooking = true;
+        }       
     }
 
     void FixedUpdate()
     {
-        PreparingTimer();
+        if (_isCooking && !IsEmpty())
+        {
+            PreparingTimer();
+        }
     }
 
-    void DeleteItem(int index)
+    void DeleteItem()
     {
-        _items[index] = null;
-        IsEmpty = true;
+        _item = null;
         _isCooking = false;
-        _timerFlag = false;
     }
 
     public void AddItem(Item item)
     {
-        _items[0] = item;
-        IsEmpty = false;
+        _item = item;
     }
 
     void OnMouseEnter()
     {
-        //IsEnterCollider = true;
         _inventory.IsInOther();
-
     }
 
     void OnMouseExit()
     {
-        //IsEnterCollider = false;
         _inventory.IsNotInOther();
     }
 
     void OnMouseOver()
     {
-        if (Input.GetMouseButtonUp(0) && _inventory.IsDragged() && IsEmpty)
+        if (IsEmpty() && Input.GetMouseButtonUp(0) && _inventory.IsDragged())
         {
             AddItem(_inventory.GiveDraggedItem());
             _inventory.DeleteDraggedItem();
         }
 
-        if (Input.GetMouseButtonUp(0) && _inventory.IsDragged() && !IsEmpty)
+        if (Input.GetMouseButtonUp(0) && _inventory.IsDragged() && !IsEmpty())
         {
             _inventory.ReturnInInventory();
         }
 
         if (Input.GetMouseButtonDown(0) && _isCooking)
         {
-            _inventory.AddItem(_items[0]);
-            DeleteItem(0);
+            _inventory.AddItem(_item);
+            DeleteItem();
         }
     }
 
     void Prepare()
     {
-        if (_items[0].ItemName == Item.Name.Meat)
+        if (_item.ItemName == Item.Name.Meat && _item.stateOfPreparing == Item.StateOfPreparing.Raw)
         {
-            _items[0].stateOfPreparing = Item.StateOfPreparing.Fried;
-            _items[0].UpdateTexture();        
+            print("Fried");
+            _item.stateOfPreparing = Item.StateOfPreparing.Fried;
+            _item.UpdateTexture();  
+            _isCooking = false;
+            return;
         }
-        _timerFlag = false;
-        _timer = 0;
+
+        if (_item.ItemName == Item.Name.Meat && _item.stateOfPreparing == Item.StateOfPreparing.Fried)
+        {
+            print("Burnt");
+            _item.stateOfPreparing = Item.StateOfPreparing.Burnt;
+            _item.UpdateTexture();
+            _isCooking = false;
+            return;
+        }     
     }
 
     void PreparingTimer()
     {
-        if (_isCooking && _timerFlag)
+        if (_isCooking)
         {
             if (_timer > 0)
             {
@@ -136,5 +152,15 @@ public class Stove : MonoBehaviour
                 Prepare();
             }
         }
+    }
+
+   private bool IsEmpty()
+    {
+        if (_item == null)
+        {
+            return true;
+        }
+
+        return false;
     }
 }

@@ -27,8 +27,6 @@ public class VisitorsBehaviourEndless : MonoBehaviour
 
     private Inventory _inventory;
 
-    /// TODO решить нужно ли переводить на загрузку по имени или лучше выносить объекты через инспектор
-
     // Use this for initialization
     void Start () {
         _inventory = GameObject.FindGameObjectWithTag("Inventory").GetComponent<Inventory>();
