@@ -48,8 +48,8 @@ public class Inventory : MonoBehaviour
             var obj = GameObject.Find("Image0");
             var rectransform = obj.GetComponent<RectTransform>();
             GUI.DrawTexture(
-                new Rect(Event.current.mousePosition.x, 
-                         Event.current.mousePosition.y, 
+                new Rect(Event.current.mousePosition.x - rectransform.rect.width/3, 
+                         Event.current.mousePosition.y - rectransform.rect.height/3, 
                          rectransform.rect.width - rectransform.rect.width / 10, 
                          rectransform.rect.height - rectransform.rect.height / 10), 
                 _draggedItem.ItemIcon);

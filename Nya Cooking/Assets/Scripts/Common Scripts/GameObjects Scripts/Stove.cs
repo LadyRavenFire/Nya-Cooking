@@ -6,12 +6,9 @@ using UnityEngine;
 public class Stove : MonoBehaviour
 {
     private Item _item;
-
-    private bool _isCooking;
-
-    private float _timer;
-
     private Inventory _inventory;
+    private bool _isCooking;
+    private float _timer;
 
     private Dictionary<Item.Name,Dictionary<Item.StateOfPreparing, Dictionary<Item.StateOfIncision, float>>> _productTimers = new Dictionary<Item.Name, Dictionary<Item.StateOfPreparing, Dictionary<Item.StateOfIncision, float>>>
     {
@@ -48,12 +45,8 @@ public class Stove : MonoBehaviour
     void Start()
     {
         _item = null;
-
         _isCooking = false;
-
         _inventory = GameObject.FindGameObjectWithTag("Inventory").GetComponent<Inventory>();
-
-        _timer = 0;
     }
 
     void Update()
@@ -122,8 +115,10 @@ public class Stove : MonoBehaviour
         if (_item.ItemName == Item.Name.Meat && _item.stateOfPreparing == Item.StateOfPreparing.Raw)
         {
             print("Fried");
+
             _item.stateOfPreparing = Item.StateOfPreparing.Fried;
             _item.UpdateTexture();  
+
             _isCooking = false;
             return;
         }
@@ -131,8 +126,10 @@ public class Stove : MonoBehaviour
         if (_item.ItemName == Item.Name.Meat && _item.stateOfPreparing == Item.StateOfPreparing.Fried)
         {
             print("Burnt");
+
             _item.stateOfPreparing = Item.StateOfPreparing.Burnt;
             _item.UpdateTexture();
+
             _isCooking = false;
             return;
         }     
