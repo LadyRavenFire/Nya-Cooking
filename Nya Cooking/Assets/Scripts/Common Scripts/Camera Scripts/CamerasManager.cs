@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 using UnityEngine.UI;
 
 
@@ -7,7 +9,7 @@ using UnityEngine.UI;
 
 public class CamerasManager : MonoBehaviour {
 
-    public Camera[] Cameras; // TODO из проблем - правиьный порядок закидывания камер
+    public List<Camera> Cameras; // TODO из проблем - правиьный порядок закидывания камер
     private int _count;
 
     private Button _leftButton;
@@ -19,12 +21,16 @@ public class CamerasManager : MonoBehaviour {
         _leftButton = GameObject.Find("LeftChangeCameraButton").GetComponent<Button>();
         _rightButton = GameObject.Find("RightChangeCameraButton").GetComponent<Button>();
 
-        for (int i = 1; i < Cameras.Length; i++)
+        for (int i = 1; i < Cameras.Count; i++)
         {            
             var audio = Cameras[i].GetComponent<AudioListener>();
             audio.enabled = false;
             Cameras[i].enabled = false;
         }
+
+        //var kitchenCamera = Cameras.First(x => x.name == "kitchen");
+
+        //Camera kitchen1 = Cameras.FirstOrDefault(t => t.name == "kitchenCamera");
 
         _count = 0;
 
@@ -47,7 +53,7 @@ public class CamerasManager : MonoBehaviour {
 
         if (_count == 0)
         {
-            _count = Cameras.Length-1;
+            _count = Cameras.Count-1;
             //print(_count);
         }
 
@@ -63,12 +69,12 @@ public class CamerasManager : MonoBehaviour {
         audio.enabled = false;
         Cameras[_count].enabled = false;
 
-        if (_count < Cameras.Length)
+        if (_count < Cameras.Count)
         {
             _count++;
         }
 
-        if (_count == Cameras.Length)
+        if (_count == Cameras.Count)
         {
             _count = 0;
         }
