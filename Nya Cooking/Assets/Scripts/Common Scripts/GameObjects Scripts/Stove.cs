@@ -22,7 +22,7 @@ public class Stove : MonoBehaviour
                     {
                         {Item.StateOfIncision.Whole, 5},
                         {Item.StateOfIncision.Cutted, 3},
-                        {Item.StateOfIncision.Forcemeat, 4}
+                        {Item.StateOfIncision.Forcemeat, 666}
                     }                    
                 },
 
@@ -30,8 +30,8 @@ public class Stove : MonoBehaviour
                     Item.StateOfPreparing.Fried, new Dictionary<Item.StateOfIncision, float>
                     {
                         {Item.StateOfIncision.Whole, 10},
-                        {Item.StateOfIncision.Cutted, 6},
-                        {Item.StateOfIncision.Forcemeat, 8}
+                        {Item.StateOfIncision.Cutted, 6666},
+                        {Item.StateOfIncision.Forcemeat, 666}
                     }
                 },
 

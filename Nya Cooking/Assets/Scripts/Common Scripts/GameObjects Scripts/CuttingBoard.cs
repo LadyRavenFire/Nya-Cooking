@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class MeatGrinder : MonoBehaviour {
+public class CuttingBoard : MonoBehaviour {
 
     private Item _item;
     private Inventory _inventory;
@@ -20,14 +20,14 @@ public class MeatGrinder : MonoBehaviour {
                     {
                         {Item.StateOfIncision.Whole, 5},
                         {Item.StateOfIncision.Cutted, 666},
-                        {Item.StateOfIncision.Forcemeat, 9999 }
-                    }              
+                        {Item.StateOfIncision.Forcemeat, 666 }
+                    }
                 },
 
                 {
                     Item.StateOfPreparing.Fried, new Dictionary<Item.StateOfIncision, float>
                     {
-                        {Item.StateOfIncision.Whole, 666},
+                        {Item.StateOfIncision.Whole, 7},
                         {Item.StateOfIncision.Cutted, 666},
                         {Item.StateOfIncision.Forcemeat, 666}
                     }
@@ -61,10 +61,7 @@ public class MeatGrinder : MonoBehaviour {
             if (_item.ItemName == Item.Name.Meat)
             {
                 _timer = _productTimers[_item.ItemName][_item.stateOfPreparing][_item.stateOfIncision];
-                if (_item.stateOfPreparing == Item.StateOfPreparing.Raw && _item.stateOfIncision == Item.StateOfIncision.Whole)
-                {
-                    _sprite.color = Color.yellow; // delete
-                }
+                _sprite.color = Color.yellow; // delete            
             }
             _isCooking = true;
         }
@@ -88,7 +85,7 @@ public class MeatGrinder : MonoBehaviour {
         _item = null;
         _isCooking = false;
 
-        _sprite.sprite = Resources.Load<Sprite>("Kitchenware/MeatGrinder_empty");
+        _sprite.sprite = Resources.Load<Sprite>("Kitchenware/CuttingBoard_empty");
         _sprite.color = Color.white;
 
     }
@@ -135,12 +132,11 @@ public class MeatGrinder : MonoBehaviour {
             if (_item.stateOfIncision == Item.StateOfIncision.Whole)
             {
                 print("ForceMeated");
-                
 
-                _item.stateOfIncision = Item.StateOfIncision.Forcemeat;
+                _item.stateOfIncision = Item.StateOfIncision.Cutted;
                 _item.UpdateTexture();
 
-                _sprite.sprite = Resources.Load<Sprite>("Kitchenware/MeatGrinder_with_Meat_Raw_Forcemeat"); //need to delete later
+                _sprite.sprite = Resources.Load<Sprite>("Kitchenware/CuttingBoard_with_Meat_Raw_Cutted"); //need to delete later
                 _sprite.color = Color.white;
                 _isCooking = false;
                 return;
