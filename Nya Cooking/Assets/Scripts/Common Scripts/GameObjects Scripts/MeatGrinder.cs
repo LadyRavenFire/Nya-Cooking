@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-// Скрипт описывающий печку
+public class MeatGrinder : MonoBehaviour {
 
-public class Stove : MonoBehaviour
-{
     private Item _item;
     private Inventory _inventory;
     private bool _isCooking;
@@ -12,7 +10,7 @@ public class Stove : MonoBehaviour
     private float _upgrade = 1f;
     private SpriteRenderer _sprite;
 
-    private Dictionary<Item.Name,Dictionary<Item.StateOfPreparing, Dictionary<Item.StateOfIncision, float>>> _productTimers = new Dictionary<Item.Name, Dictionary<Item.StateOfPreparing, Dictionary<Item.StateOfIncision, float>>>
+    private Dictionary<Item.Name, Dictionary<Item.StateOfPreparing, Dictionary<Item.StateOfIncision, float>>> _productTimers = new Dictionary<Item.Name, Dictionary<Item.StateOfPreparing, Dictionary<Item.StateOfIncision, float>>>
     {
         {
             Item.Name.Meat, new Dictionary<Item.StateOfPreparing, Dictionary<Item.StateOfIncision, float>>
@@ -22,8 +20,8 @@ public class Stove : MonoBehaviour
                     {
                         {Item.StateOfIncision.Whole, 5},
                         {Item.StateOfIncision.Cutted, 3},
-                        {Item.StateOfIncision.Forcemeat, 4}
-                    }                    
+                        {Item.StateOfIncision.Forcemeat, 9999 }
+                    }              
                 },
 
                 {
@@ -60,16 +58,16 @@ public class Stove : MonoBehaviour
     {
         if (!IsEmpty() && _isCooking == false)
         {
-            if (_item.ItemName == Item.Name.Meat) // change later
+            if (_item.ItemName == Item.Name.Meat)
             {
                 _timer = _productTimers[_item.ItemName][_item.stateOfPreparing][_item.stateOfIncision];
                 if (_item.stateOfPreparing == Item.StateOfPreparing.Raw && _item.stateOfIncision == Item.StateOfIncision.Whole)
-                {               
-                    _sprite.sprite = Resources.Load<Sprite>("Kitchenware/Stove_with_Meat_Raw_Whole");
-                }              
-            }           
+                {
+                    _sprite.color = Color.yellow; // delete
+                }
+            }
             _isCooking = true;
-        }       
+        }
     }
 
     public void Upgrade(float level)
@@ -90,7 +88,7 @@ public class Stove : MonoBehaviour
         _item = null;
         _isCooking = false;
 
-        _sprite.sprite = Resources.Load<Sprite>("Kitchenware/Stove_empty");
+        _sprite.sprite = Resources.Load<Sprite>("Kitchenware/MeatGrinder_empty");
         _sprite.color = Color.white;
 
     }
@@ -134,28 +132,16 @@ public class Stove : MonoBehaviour
     {
         if (_item.ItemName == Item.Name.Meat)
         {
-            if (_item.stateOfPreparing == Item.StateOfPreparing.Raw)
+            if (_item.stateOfIncision == Item.StateOfIncision.Whole)
             {
-                print("Fried");
+                print("ForceMeated");
+                
 
-                _item.stateOfPreparing = Item.StateOfPreparing.Fried;
+                _item.stateOfIncision = Item.StateOfIncision.Forcemeat;
                 _item.UpdateTexture();
 
-                _sprite.color = Color.red; //need to delete later
-
-                _isCooking = false;
-                return;
-            }
-
-            else if (_item.stateOfPreparing == Item.StateOfPreparing.Fried)
-            {
-                print("Burnt");
-
-                _item.stateOfPreparing = Item.StateOfPreparing.Burnt;
-                _item.UpdateTexture();
-
-                _sprite.color = Color.black; //need to delete later
-
+                _sprite.sprite = Resources.Load<Sprite>("Kitchenware/MeatGrinder_with_Meat_Raw_Forcemeat"); //need to delete later
+                _sprite.color = Color.white;
                 _isCooking = false;
                 return;
             }
@@ -168,7 +154,7 @@ public class Stove : MonoBehaviour
         {
             if (_timer > 0)
             {
-                _timer-= (Time.deltaTime * _upgrade);
+                _timer -= (Time.deltaTime * _upgrade);
             }
 
             if (_timer <= 0)
@@ -178,7 +164,7 @@ public class Stove : MonoBehaviour
         }
     }
 
-   private bool IsEmpty()
+    private bool IsEmpty()
     {
         if (_item == null)
         {
