@@ -9,6 +9,7 @@ public class Stove : MonoBehaviour
     private Inventory _inventory;
     private bool _isCooking;
     private float _timer;
+    private float _upgrade = 1f;
 
     private Dictionary<Item.Name,Dictionary<Item.StateOfPreparing, Dictionary<Item.StateOfIncision, float>>> _productTimers = new Dictionary<Item.Name, Dictionary<Item.StateOfPreparing, Dictionary<Item.StateOfIncision, float>>>
     {
@@ -47,6 +48,7 @@ public class Stove : MonoBehaviour
         _item = null;
         _isCooking = false;
         _inventory = GameObject.FindGameObjectWithTag("Inventory").GetComponent<Inventory>();
+        print(_upgrade);
     }
 
     void Update()
@@ -59,6 +61,11 @@ public class Stove : MonoBehaviour
             }
             _isCooking = true;
         }       
+    }
+
+    public void Upgrade(float level)
+    {
+        _upgrade = level;
     }
 
     void FixedUpdate()
@@ -112,27 +119,30 @@ public class Stove : MonoBehaviour
 
     void Prepare()
     {
-        if (_item.ItemName == Item.Name.Meat && _item.stateOfPreparing == Item.StateOfPreparing.Raw)
+        if (_item.ItemName == Item.Name.Meat)
         {
-            print("Fried");
+            if (_item.stateOfPreparing == Item.StateOfPreparing.Raw)
+            {
+                print("Fried");
 
-            _item.stateOfPreparing = Item.StateOfPreparing.Fried;
-            _item.UpdateTexture();  
+                _item.stateOfPreparing = Item.StateOfPreparing.Fried;
+                _item.UpdateTexture();
 
-            _isCooking = false;
-            return;
+                _isCooking = false;
+                return;
+            }
+
+            else if (_item.stateOfPreparing == Item.StateOfPreparing.Fried)
+            {
+                print("Burnt");
+
+                _item.stateOfPreparing = Item.StateOfPreparing.Burnt;
+                _item.UpdateTexture();
+
+                _isCooking = false;
+                return;
+            }
         }
-
-        if (_item.ItemName == Item.Name.Meat && _item.stateOfPreparing == Item.StateOfPreparing.Fried)
-        {
-            print("Burnt");
-
-            _item.stateOfPreparing = Item.StateOfPreparing.Burnt;
-            _item.UpdateTexture();
-
-            _isCooking = false;
-            return;
-        }     
     }
 
     void PreparingTimer()
@@ -141,7 +151,7 @@ public class Stove : MonoBehaviour
         {
             if (_timer > 0)
             {
-                _timer-= Time.deltaTime;
+                _timer-= (Time.deltaTime * _upgrade);
             }
 
             if (_timer <= 0)
