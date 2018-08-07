@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class EndlessUpgrade : MonoBehaviour
@@ -10,9 +11,14 @@ public class EndlessUpgrade : MonoBehaviour
     void Start()
     {
         UpgradeStoveButton.onClick.AddListener(Upgrade);
-        for (int i = 0; i < Stoves.Length; i++)
+
+        if (PlayerPrefs.GetFloat("EndlessStoveUpgrade") >= 3)
         {
-            Stove stove = Stoves[i].GetComponent<Stove>();
+            UpgradeStoveButton.enabled = false;
+        }
+        foreach (var t in Stoves)
+        {
+            Stove stove = t.GetComponent<Stove>();
             float upgradelevel = PlayerPrefs.GetFloat("EndlessStoveUpgrade");
             stove.Upgrade(upgradelevel);
         }
@@ -24,15 +30,24 @@ public class EndlessUpgrade : MonoBehaviour
         if (endlessGameVariables.ReturnMoney() > UpgradeStoveCost)
         {
             float upgradelevel = PlayerPrefs.GetFloat("EndlessStoveUpgrade");
+
             upgradelevel++;
+
             PlayerPrefs.SetFloat("EndlessStoveUpgrade", upgradelevel);
             print(PlayerPrefs.GetFloat("EndlessStoveUpgrade"));
-            for (int i = 0; i < Stoves.Length; i++)
+
+            foreach (var t in Stoves)
             {
-                Stove stove = Stoves[i].GetComponent<Stove>();
+                Stove stove = t.GetComponent<Stove>();
                 stove.Upgrade(upgradelevel);
             }
+
             endlessGameVariables.AddMoney(-UpgradeStoveCost);
+        }
+
+        if (PlayerPrefs.GetFloat("EndlessStoveUpgrade") >= 3)
+        {
+            UpgradeStoveButton.enabled = false;
         }
     }
 }

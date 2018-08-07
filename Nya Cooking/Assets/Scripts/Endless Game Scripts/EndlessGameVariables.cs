@@ -56,7 +56,8 @@ public class EndlessGameVariables : MonoBehaviour {
     }
 
     void GoToMainMenu()
-    {       
+    {
+        Time.timeScale = 1f;
         SceneManager.LoadScene("MainMenu");
     }
 
