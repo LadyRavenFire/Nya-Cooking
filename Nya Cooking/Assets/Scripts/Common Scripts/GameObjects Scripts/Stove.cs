@@ -10,6 +10,7 @@ public class Stove : MonoBehaviour
     private bool _isCooking;
     private float _timer;
     private float _upgrade = 1f;
+    private SpriteRenderer _sprite;
 
     private Dictionary<Item.Name,Dictionary<Item.StateOfPreparing, Dictionary<Item.StateOfIncision, float>>> _productTimers = new Dictionary<Item.Name, Dictionary<Item.StateOfPreparing, Dictionary<Item.StateOfIncision, float>>>
     {
@@ -49,6 +50,7 @@ public class Stove : MonoBehaviour
         _isCooking = false;
         _inventory = GameObject.FindGameObjectWithTag("Inventory").GetComponent<Inventory>();
         print(_upgrade);
+        _sprite = gameObject.GetComponent<SpriteRenderer>();
     }
 
     void Update()
@@ -58,6 +60,10 @@ public class Stove : MonoBehaviour
             if (_item.ItemName == Item.Name.Meat)
             {
                 _timer = _productTimers[_item.ItemName][_item.stateOfPreparing][_item.stateOfIncision];
+                if (_item.stateOfPreparing == Item.StateOfPreparing.Raw && _item.stateOfIncision == Item.StateOfIncision.Whole)
+                {               
+                    _sprite.sprite = Resources.Load<Sprite>("Kitchenware/Stove_with_Meat_Raw_Whole");
+                }              
             }
             _isCooking = true;
         }       
@@ -80,6 +86,10 @@ public class Stove : MonoBehaviour
     {
         _item = null;
         _isCooking = false;
+
+        _sprite.sprite = Resources.Load<Sprite>("Kitchenware/Stove_empty");
+        _sprite.color = Color.white;
+
     }
 
     public void AddItem(Item item)
@@ -128,6 +138,8 @@ public class Stove : MonoBehaviour
                 _item.stateOfPreparing = Item.StateOfPreparing.Fried;
                 _item.UpdateTexture();
 
+                _sprite.color = Color.red; //need to delete later
+
                 _isCooking = false;
                 return;
             }
@@ -138,6 +150,8 @@ public class Stove : MonoBehaviour
 
                 _item.stateOfPreparing = Item.StateOfPreparing.Burnt;
                 _item.UpdateTexture();
+
+                _sprite.color = Color.black; //need to delete later
 
                 _isCooking = false;
                 return;

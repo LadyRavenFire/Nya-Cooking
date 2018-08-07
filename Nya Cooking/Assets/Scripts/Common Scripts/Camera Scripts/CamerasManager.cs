@@ -46,12 +46,12 @@ public class CamerasManager : MonoBehaviour {
         audio.enabled = false;
         Cameras[_count].enabled = false;
 
-        if (_count != 0)
+        if (_count >= 0)
         {
             _count--;
         }
 
-        if (_count == 0)
+        if (_count < 0)
         {
             _count = Cameras.Count-1;
             //print(_count);
