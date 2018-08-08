@@ -154,7 +154,7 @@ public class MeatGrinder : MonoBehaviour {
         {
             if (_timer > 0)
             {
-                _timer -= (Time.deltaTime * _upgrade);
+                _timer -= (Time.deltaTime + Mathf.Log(_upgrade));
             }
 
             if (_timer <= 0)
