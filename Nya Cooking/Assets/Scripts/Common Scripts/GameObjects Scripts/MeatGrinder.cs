@@ -63,7 +63,7 @@ public class MeatGrinder : MonoBehaviour {
         _item = null;
         _isCooking = false;
         _inventory = GameObject.FindGameObjectWithTag("Inventory").GetComponent<Inventory>();
-        print(_upgrade);
+        //print(_upgrade);
         _sprite = gameObject.GetComponent<SpriteRenderer>();
     }
 

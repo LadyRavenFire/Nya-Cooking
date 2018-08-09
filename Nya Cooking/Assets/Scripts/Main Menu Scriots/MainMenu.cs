@@ -85,12 +85,19 @@ public class MainMenu : MonoBehaviour
         // Кнопкам компании
         _campaignNewGameButton.onClick.AddListener(() =>
         {
-
+            PlayerPrefs.SetInt("CompanyGameMoney", 100);
+            PlayerPrefs.SetInt("CompanyMeatInBox", 2);
+            PlayerPrefs.SetInt("CompanyBreadInBox", 2);
+            PlayerPrefs.SetInt("CompanyLevel", 1);
+            SceneManager.LoadScene("Company Level 1");
         });
 
         _campaignContinueButton.onClick.AddListener(() =>
         {
-
+            if (PlayerPrefs.GetInt("CompanyLevel") == 1)
+            {
+                SceneManager.LoadScene("Company Level 1");
+            }
         });
 
         _campaignBackButton.onClick.AddListener(() =>
@@ -103,7 +110,7 @@ public class MainMenu : MonoBehaviour
 
         _endlessNewGameButton.onClick.AddListener(() =>
         {
-            PlayerPrefs.SetInt("EndlessGameMoney", 0);
+            PlayerPrefs.SetInt("EndlessGameMoney", 150);
             PlayerPrefs.SetInt("EndlessMeatInBox", 5);
             PlayerPrefs.SetInt("EndlessBreadInBox", 5);
             PlayerPrefs.SetFloat("EndlessStoveUpgrade", 1f);
