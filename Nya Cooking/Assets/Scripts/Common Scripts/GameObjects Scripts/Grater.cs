@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class Pan : MonoBehaviour {
+public class Grater : MonoBehaviour {
 
     private Item _item;
     private Inventory _inventory;
@@ -18,9 +18,9 @@ public class Pan : MonoBehaviour {
                 {
                     Item.StateOfPreparing.Raw, new Dictionary<Item.StateOfIncision, float>
                     {
-                        {Item.StateOfIncision.Whole, 666},
-                        {Item.StateOfIncision.Cutted, 5},
-                        {Item.StateOfIncision.Forcemeat, 666 },
+                        {Item.StateOfIncision.Whole, 3},
+                        {Item.StateOfIncision.Cutted, 666},
+                        {Item.StateOfIncision.Forcemeat, 666},
                         {Item.StateOfIncision.Grated, 666}
                     }
                 },
@@ -98,7 +98,7 @@ public class Pan : MonoBehaviour {
         _item = null;
         _isCooking = false;
 
-       // _sprite.sprite = Resources.Load<Sprite>("Kitchenware/CuttingBoard_empty");
+        // _sprite.sprite = Resources.Load<Sprite>("Kitchenware/CuttingBoard_empty");
         _sprite.color = Color.white;
 
     }
@@ -142,11 +142,11 @@ public class Pan : MonoBehaviour {
     {
         if (_item.ItemName == Item.Name.Meat)
         {
-            if (_item.stateOfIncision == Item.StateOfIncision.Cutted && _item.stateOfPreparing == Item.StateOfPreparing.Raw)
+            if (_item.stateOfIncision == Item.StateOfIncision.Whole && _item.stateOfPreparing == Item.StateOfPreparing.Raw)
             {
                 //print("ForceMeated");
 
-                _item.stateOfPreparing = Item.StateOfPreparing.Cooked;
+                _item.stateOfIncision = Item.StateOfIncision.Forcemeat;
                 _item.UpdateTexture();
 
                 //_sprite.sprite = Resources.Load<Sprite>("Kitchenware/CuttingBoard_with_Meat_Raw_Cutted"); //need to delete later
