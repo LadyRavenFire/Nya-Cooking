@@ -6,14 +6,15 @@ public class DialogueSystemLevel1 : MonoBehaviour
     private DialogueCompanyComponent _dialogueComponents;
     private int _flag;
     private Inventory _inventory;
+    private Stove _stove;
 
 	// Use this for initialization
 	void Start ()
 	{
 	    _dialogueComponents = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<DialogueCompanyComponent>();
 	    _inventory = GameObject.FindGameObjectWithTag("Inventory").GetComponent<Inventory>();
-        _flag = 0;
-	    
+	    _stove = GameObject.FindGameObjectWithTag("Stove").GetComponent<Stove>();
+        _flag = 0;	    
 	}
 
     void FixedUpdate()
@@ -37,18 +38,23 @@ public class DialogueSystemLevel1 : MonoBehaviour
                 }
             }
         }
+
+        if (_flag == 2)
+        {
+            if (_stove.ReturnItem() != null)
+            {
+                if (_stove.ReturnItem().ItemName == Item.Name.Meat)
+                {
+                   ThirdDialogue(); 
+                }
+            }
+        }
     }
 
     void FirstDialogue()
     {      
-        Time.timeScale = 0f;        
-        _inventory.OffInventory();
-        _dialogueComponents.InventoryPanel.SetActive(false);
-        _dialogueComponents.DialogueUi.SetActive(true);
-        _dialogueComponents.Avatar.SetActive(true);
-        _dialogueComponents.ChatPanel.SetActive(true);
+        _dialogueComponents.OnPanels(true, true, true, true, false, false, false);
         _dialogueComponents.ChatText.text = "Достань мясо из коробки";
-        _dialogueComponents.NextDialogue.SetActive(true);
         _dialogueComponents.NextButtonText.text = "Ок";
         _dialogueComponents.NextDialogueButton.onClick.AddListener(Close);
 
@@ -57,33 +63,28 @@ public class DialogueSystemLevel1 : MonoBehaviour
 
     void Close()
     {
-        print("Lol");
-
-        _dialogueComponents.NextDialogue.SetActive(false);
-        _dialogueComponents.ChatPanel.SetActive(false);
-        _dialogueComponents.Avatar.SetActive(false);
-        _dialogueComponents.DialogueUi.SetActive(false);
-        _dialogueComponents.InventoryPanel.SetActive(true);
-        _inventory.OnInventory();
-        Time.timeScale = 1f;
+        _dialogueComponents.OffPanels();
         print(_flag);
     }
 
     void SecondDialogue()
     {
-        Time.timeScale = 0f;
-        _inventory.OffInventory();
-        _dialogueComponents.InventoryPanel.SetActive(false);
-        _dialogueComponents.DialogueUi.SetActive(true);
-        _dialogueComponents.Avatar.SetActive(true);
-        _dialogueComponents.ChatPanel.SetActive(true);
-        _dialogueComponents.ChatText.text = "Молодец, теперь пожарь его";
-        _dialogueComponents.NextDialogue.SetActive(true);
-        _dialogueComponents.NextButtonText.text = "Ок";
+        _dialogueComponents.OnPanels(true, true, true, true, false, false, false);
+        _dialogueComponents.ChatText.text = "Молодец, теперь прижарь его на сковороде";
+        _dialogueComponents.NextButtonText.text = "Хорошо";
         _dialogueComponents.NextDialogueButton.onClick.AddListener(Close);
         _flag = 2;
     }
+
+    void ThirdDialogue()
+    {
+        _dialogueComponents.OnPanels(true, true, true, false, true, true, true);
+        _dialogueComponents.ChatText.text = "Молодец, теперь пожарь его";
+        _dialogueComponents.Answer1Text.text = "A что будет, если я его пережарю?";
+        _dialogueComponents.Answer2Text.text = "Как понять, что мясо готово?";
+        _dialogueComponents.Answer3Text.text = "Oкей";
+        _dialogueComponents.Answer3Button.onClick.AddListener(Close);
+        _flag = 3;
+    }
     
-	
-	
 }

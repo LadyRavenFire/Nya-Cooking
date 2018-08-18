@@ -200,4 +200,9 @@ public class Stove : MonoBehaviour
 
         return false;
     }
+
+    public Item ReturnItem()
+    {
+        return _item;
+    }
 }
