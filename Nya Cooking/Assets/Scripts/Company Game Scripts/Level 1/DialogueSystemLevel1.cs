@@ -1,11 +1,15 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class DialogueSystemLevel1 : MonoBehaviour
 {
 
     private DialogueCompanyComponent _dialogueComponents;
+
+    private IEnumerator _textCoroutine;
     private int _flag;
+
     private Inventory _inventory;
     private Stove _stove;
 
@@ -17,6 +21,11 @@ public class DialogueSystemLevel1 : MonoBehaviour
 	    _stove = GameObject.FindGameObjectWithTag("Stove").GetComponent<Stove>();
         _flag = 0;	    
 	}
+
+    void Update()
+    {
+        _textCoroutine.MoveNext();
+    }
 
     void FixedUpdate()
     {
@@ -57,7 +66,8 @@ public class DialogueSystemLevel1 : MonoBehaviour
         _dialogueComponents.OnPanels(true, true, true, true, false, false, false);
         Image avatar = _dialogueComponents.Avatar.GetComponent<Image>();
         avatar.sprite = Resources.Load<Sprite>("Avatars/tyan2");
-        _dialogueComponents.ChatText.text = "Достань мясо из коробки";
+        _dialogueComponents.ChatText.text = null;
+        _textCoroutine = TextCoroutine("Доброе утро, братик! С сегодняшнего дня эта закусочная твоя, надеюсь ты сможешь о ней позаботиться. Давай попробуем сделать дедушкин сэндвич. Сходи на склад и достань мясо из коробки."); 
         _dialogueComponents.NextButtonText.text = "Ок";
         _dialogueComponents.NextDialogueButton.onClick.AddListener(Close);
 
@@ -75,7 +85,8 @@ public class DialogueSystemLevel1 : MonoBehaviour
         _dialogueComponents.OnPanels(true, true, true, true, false, false, false);
         Image avatar = _dialogueComponents.Avatar.GetComponent<Image>();
         avatar.sprite = Resources.Load<Sprite>("Avatars/tyan");
-        _dialogueComponents.ChatText.text = "Молодец, теперь прижарь его на сковороде";
+        _dialogueComponents.ChatText.text = null;
+        _textCoroutine = TextCoroutine("Молодец, теперь прижарь его на сковороде.");
         _dialogueComponents.NextButtonText.text = "Хорошо";
         _dialogueComponents.NextDialogueButton.onClick.AddListener(Close);
         _flag = 2;
@@ -84,12 +95,50 @@ public class DialogueSystemLevel1 : MonoBehaviour
     void ThirdDialogue()
     {
         _dialogueComponents.OnPanels(true, true, true, false, true, true, true);
-        _dialogueComponents.ChatText.text = "Молодец, теперь пожарь его";
+        _dialogueComponents.ChatText.text = null;
+        _textCoroutine = TextCoroutine("Хорошо, теперь прожарь его до легкой корочки.");
+        Image avatar = _dialogueComponents.Avatar.GetComponent<Image>();
+        avatar.sprite = Resources.Load<Sprite>("Avatars/tyan2");
         _dialogueComponents.Answer1Text.text = "A что будет, если я его пережарю?";
         _dialogueComponents.Answer2Text.text = "Как понять, что мясо готово?";
         _dialogueComponents.Answer3Text.text = "Oкей";
-        _dialogueComponents.Answer3Button.onClick.AddListener(Close);
-        _flag = 3;
+
+        _dialogueComponents.Answer1Button.onClick.AddListener(delegate { ThirdDialogue2(1); });
+        _dialogueComponents.Answer2Button.onClick.AddListener(delegate { ThirdDialogue2(2); });
+        _dialogueComponents.Answer3Button.onClick.AddListener(delegate {ThirdDialogue2(3);});
+        
     }
-    
+
+    void ThirdDialogue2(int flag)
+    {
+        if (flag == 1)
+        {
+            Close();
+            return;
+        }
+
+        if (flag == 2)
+        {
+            Close();
+            return;
+        }
+
+        if (flag == 3)
+        {
+            _flag = 3;
+            Close();
+            return;
+        }
+    }
+
+    IEnumerator TextCoroutine(string text)
+    {
+        foreach (char c in text)
+        {
+            //print(c);
+            _dialogueComponents.ChatText.text = _dialogueComponents.ChatText.text + c;
+            yield return new WaitForEndOfFrame();
+        }
+    }
+
 }
