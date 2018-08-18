@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class DialogueSystemLevel1 : MonoBehaviour
 {
@@ -54,6 +55,8 @@ public class DialogueSystemLevel1 : MonoBehaviour
     void FirstDialogue()
     {      
         _dialogueComponents.OnPanels(true, true, true, true, false, false, false);
+        Image avatar = _dialogueComponents.Avatar.GetComponent<Image>();
+        avatar.sprite = Resources.Load<Sprite>("Avatars/tyan2");
         _dialogueComponents.ChatText.text = "Достань мясо из коробки";
         _dialogueComponents.NextButtonText.text = "Ок";
         _dialogueComponents.NextDialogueButton.onClick.AddListener(Close);
@@ -70,6 +73,8 @@ public class DialogueSystemLevel1 : MonoBehaviour
     void SecondDialogue()
     {
         _dialogueComponents.OnPanels(true, true, true, true, false, false, false);
+        Image avatar = _dialogueComponents.Avatar.GetComponent<Image>();
+        avatar.sprite = Resources.Load<Sprite>("Avatars/tyan");
         _dialogueComponents.ChatText.text = "Молодец, теперь прижарь его на сковороде";
         _dialogueComponents.NextButtonText.text = "Хорошо";
         _dialogueComponents.NextDialogueButton.onClick.AddListener(Close);
