@@ -191,4 +191,14 @@ public class Inventory : MonoBehaviour
     {
         _pauseInventory = false;
     }
+
+    public int ReturnSlots()
+    {
+        return SlotsX;
+    }
+
+    public Item ReturnItem(int i)
+    {
+        return _slots[i];
+    }
 }
