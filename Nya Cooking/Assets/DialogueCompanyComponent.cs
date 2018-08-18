@@ -29,9 +29,12 @@ public class DialogueCompanyComponent : MonoBehaviour
     public Text Answer2Text;
     public Text Answer3Text;
 
+    public Image AvatarImage;
+
     void Start()
     {
         _inventory = GameObject.FindGameObjectWithTag("Inventory").GetComponent<Inventory>();
+        AvatarImage = Avatar.GetComponent<Image>();
 
         Answer1.SetActive(false);
         Answer2.SetActive(false);
@@ -42,44 +45,48 @@ public class DialogueCompanyComponent : MonoBehaviour
         DialogueUi.SetActive(false);
     }
 
-    public void OnPanels( bool DialogueUibool, bool ChatPanelbool, bool Avatarbool, bool NextDialoguebool, bool Answer1bool, bool Answer2bool, bool Answer3bool)
+    public void OnPanels( bool isDialogueUiVisible, bool isChatPanelVisible, bool isAvatarVisivble, bool isNextDialogueVisible, bool isAnswer1Visible, bool isAnswer2Visible, bool isAnswer3Visible)
     {
         Time.timeScale = 0f;
 
         _inventory.OffInventory();
-        InventoryPanel.SetActive(false);        
+        InventoryPanel.SetActive(false);
 
-        if (DialogueUibool)
+        // TODO isDialogueUiVisible deprecated (удалить isDialogueUiVisible)
+        // TODO make ChatPanel.SetActive(isChatPanelVisible);
+        // TODO rename function and params
+
+        if (isDialogueUiVisible)
         {
             DialogueUi.SetActive(true);
         }
 
-        if (ChatPanelbool)
+        if (isChatPanelVisible)
         {
             ChatPanel.SetActive(true);
         }
 
-        if (Avatarbool)
+        if (isAvatarVisivble)
         {
             Avatar.SetActive(true);
         }
 
-        if (NextDialoguebool)
+        if (isNextDialogueVisible)
         {
             NextDialogue.SetActive(true);
         }
 
-        if (Answer1bool)
+        if (isAnswer1Visible)
         {
             Answer1.SetActive(true);
         }
 
-        if (Answer2bool)
+        if (isAnswer2Visible)
         {
             Answer2.SetActive(true);
         }
 
-        if (Answer3bool)
+        if (isAnswer3Visible)
         {
            Answer3.SetActive(true); 
         }
