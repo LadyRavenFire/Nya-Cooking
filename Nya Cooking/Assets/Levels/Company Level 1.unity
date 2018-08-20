@@ -783,6 +783,7 @@ MonoBehaviour:
   Answer1Text: {fileID: 1420170495}
   Answer2Text: {fileID: 1430998082}
   Answer3Text: {fileID: 956726402}
+  AvatarImage: {fileID: 205408722}
 --- !u!1 &294513625
 GameObject:
   m_ObjectHideFlags: 0
@@ -2706,6 +2707,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1768494050100660, guid: c2a14f91cec8e844d8f1243077d14144, type: 2}
+      propertyPath: m_Name
+      value: CuttingBoard
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c2a14f91cec8e844d8f1243077d14144, type: 2}
   m_IsPrefabParent: 0
@@ -3623,7 +3628,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '1 Bread + 1 Meat '
+  m_Text: '1 Raw Bread + 1 Raw Meat '
 --- !u!222 &1826213621
 CanvasRenderer:
   m_ObjectHideFlags: 0

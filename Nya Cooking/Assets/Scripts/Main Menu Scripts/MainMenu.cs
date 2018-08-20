@@ -85,7 +85,7 @@ public class MainMenu : MonoBehaviour
         // Кнопкам компании
         _campaignNewGameButton.onClick.AddListener(() =>
         {
-            PlayerPrefs.SetInt("CompanyGameMoney", 100);
+            PlayerPrefs.SetInt("CompanyGameMoney", 0);
             PlayerPrefs.SetInt("CompanyMeatInBox", 2);
             PlayerPrefs.SetInt("CompanyBreadInBox", 2);
             PlayerPrefs.SetInt("CompanyLevel", 1);

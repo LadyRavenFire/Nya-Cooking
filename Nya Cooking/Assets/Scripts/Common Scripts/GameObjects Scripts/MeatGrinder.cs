@@ -96,7 +96,7 @@ public class MeatGrinder : MonoBehaviour {
         }
     }
 
-    void DeleteItem()
+    public void DeleteItem()
     {
         _item = null;
         _isCooking = false;
@@ -185,5 +185,10 @@ public class MeatGrinder : MonoBehaviour {
         }
 
         return false;
+    }
+
+    public Item ReturnItem()
+    {
+        return _item;
     }
 }

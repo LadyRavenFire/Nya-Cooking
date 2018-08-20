@@ -45,7 +45,7 @@ public class DialogueCompanyComponent : MonoBehaviour
         DialogueUi.SetActive(false);
     }
 
-    public void OnPanels( bool isDialogueUiVisible, bool isChatPanelVisible, bool isAvatarVisivble, bool isNextDialogueVisible, bool isAnswer1Visible, bool isAnswer2Visible, bool isAnswer3Visible)
+    public void OnPanels( bool isChatPanelVisible, bool isAvatarVisivble, bool isNextDialogueVisible, bool isAnswer1Visible, bool isAnswer2Visible, bool isAnswer3Visible)
     {
         Time.timeScale = 0f;
 
@@ -56,40 +56,15 @@ public class DialogueCompanyComponent : MonoBehaviour
         // TODO make ChatPanel.SetActive(isChatPanelVisible);
         // TODO rename function and params
 
-        if (isDialogueUiVisible)
-        {
-            DialogueUi.SetActive(true);
-        }
 
-        if (isChatPanelVisible)
-        {
-            ChatPanel.SetActive(true);
-        }
+        DialogueUi.SetActive(true);
+        ChatPanel.SetActive(isChatPanelVisible);
+        Avatar.SetActive(isAvatarVisivble);
+        NextDialogue.SetActive(isNextDialogueVisible);
+        Answer1.SetActive(isAnswer1Visible);
+        Answer2.SetActive(isAnswer2Visible);
+        Answer3.SetActive(isAnswer3Visible); 
 
-        if (isAvatarVisivble)
-        {
-            Avatar.SetActive(true);
-        }
-
-        if (isNextDialogueVisible)
-        {
-            NextDialogue.SetActive(true);
-        }
-
-        if (isAnswer1Visible)
-        {
-            Answer1.SetActive(true);
-        }
-
-        if (isAnswer2Visible)
-        {
-            Answer2.SetActive(true);
-        }
-
-        if (isAnswer3Visible)
-        {
-           Answer3.SetActive(true); 
-        }
         
     }
 

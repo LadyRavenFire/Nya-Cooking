@@ -230,4 +230,13 @@ public class Workbench : MonoBehaviour {
         }
         return false;
     }
+    public int ReturnCount()
+    {
+        return _slotsCount;
+    }
+
+    public Item ReturnItem(int i)
+    {
+        return _items[i];
+    }
 }

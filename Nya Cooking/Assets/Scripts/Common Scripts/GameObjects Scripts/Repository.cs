@@ -99,4 +99,18 @@ public class Repository : MonoBehaviour
             AddFromRepository();
         }
     }
+
+    public bool IsEmptyRepository()
+    {
+        _isEmpty = true;
+        for (int i = 0; i < _items.Length; i++)
+        {
+            if (_items[i] != null)
+            {
+                _isEmpty = false;
+                return _isEmpty;
+            }
+        }
+        return _isEmpty;
+    }
 }

@@ -93,7 +93,7 @@ public class CuttingBoard : MonoBehaviour {
         }
     }
 
-    void DeleteItem()
+    public void DeleteItem()
     {
         _item = null;
         _isCooking = false;
@@ -181,5 +181,10 @@ public class CuttingBoard : MonoBehaviour {
         }
 
         return false;
+    }
+
+    public Item ReturnItem()
+    {
+        return _item;
     }
 }

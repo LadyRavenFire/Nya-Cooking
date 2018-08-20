@@ -201,4 +201,22 @@ public class Inventory : MonoBehaviour
     {
         return _slots[i];
     }
+
+    public Item ReturnDraggedItem()
+    {
+        return _draggedItem;
+    }
+
+    public void Clear()
+    {
+        for (int i = 0; i < SlotsX; i++)
+        {
+            _slots[i] = null;
+        }
+    }
+
+    public void DeleteItem(int i)
+    {
+        _slots[i] = null;
+    }
 }
