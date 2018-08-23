@@ -9,6 +9,7 @@ public class DialogueCompanyComponent : MonoBehaviour
     public GameObject DialogueUi;
 
     public GameObject ChatPanel;
+    public GameObject NamePanel;
     public GameObject Avatar;
 
     public GameObject NextDialogue;
@@ -20,6 +21,8 @@ public class DialogueCompanyComponent : MonoBehaviour
     public Button Answer1Button;
     public Button Answer2Button;
     public Button Answer3Button;
+
+    public Text NameText;
 
     public Text ChatText;
 
@@ -36,6 +39,7 @@ public class DialogueCompanyComponent : MonoBehaviour
         _inventory = GameObject.FindGameObjectWithTag("Inventory").GetComponent<Inventory>();
         AvatarImage = Avatar.GetComponent<Image>();
 
+        NamePanel.SetActive(false);
         Answer1.SetActive(false);
         Answer2.SetActive(false);
         Answer3.SetActive(false);
@@ -58,14 +62,14 @@ public class DialogueCompanyComponent : MonoBehaviour
 
 
         DialogueUi.SetActive(true);
+        NamePanel.SetActive(true);
         ChatPanel.SetActive(isChatPanelVisible);
         Avatar.SetActive(isAvatarVisivble);
         NextDialogue.SetActive(isNextDialogueVisible);
         Answer1.SetActive(isAnswer1Visible);
         Answer2.SetActive(isAnswer2Visible);
         Answer3.SetActive(isAnswer3Visible); 
-
-        
+       
     }
 
     public void OffPanels()
@@ -77,6 +81,7 @@ public class DialogueCompanyComponent : MonoBehaviour
         Answer1.SetActive(false);
         Answer2.SetActive(false);
         Answer3.SetActive(false);
+        NamePanel.SetActive(false);
 
         InventoryPanel.SetActive(true);
         _inventory.OnInventory();

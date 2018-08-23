@@ -36,6 +36,7 @@ public class DialogueSystemLevel1 : MonoBehaviour
 
         public string AvatarPath;
 
+        public string NameText;
         public string DialogueText;
         public string Answer1Text;
         public string Answer2Text;
@@ -80,7 +81,11 @@ public class DialogueSystemLevel1 : MonoBehaviour
         LostAll,
         WaitForSandwich,
 
-        End
+        WaitForDroppingSandwichToSister,
+        EndDialogue,
+        LevelLoad
+
+
 
     }
 
@@ -117,6 +122,7 @@ public class DialogueSystemLevel1 : MonoBehaviour
 
                     AvatarPath = "Avatars/tyan2",
 
+                    NameText = "Сестренка",
                     DialogueText =
                         "Доброе утро, братик! С сегодняшнего дня эта закусочная твоя, надеюсь ты сможешь о ней позаботиться. Давай попробуем сделать дедушкин сэндвич. Сходи на склад и достань мясо из коробки.",
                     NextBtnText = "Ок",
@@ -139,6 +145,7 @@ public class DialogueSystemLevel1 : MonoBehaviour
 
                     AvatarPath = "Avatars/tyan2",
 
+                    NameText = "Сестренка",
                     DialogueText = "Сейчас прижарь его на сковороде.",
                     NextBtnText = "Хорошо",
                     NextBtnCallback = () =>
@@ -160,6 +167,7 @@ public class DialogueSystemLevel1 : MonoBehaviour
 
                     AvatarPath = "Avatars/tyan",
 
+                    NameText = "Сестренка",
                     DialogueText = "Это похоже на мясо? Мне кажется это хлеб. Возьми мясо из соседней коробки!",
                     NextBtnText = "Угу",
                     NextBtnCallback = () =>
@@ -181,6 +189,7 @@ public class DialogueSystemLevel1 : MonoBehaviour
 
                     AvatarPath = "Avatars/tyan2",
 
+                    NameText = "Сестренка",
                     DialogueText = "Хорошо, теперь прожарь его до легкой корочки.",
                     Answer1Text = "A что будет, если я его пережарю?",
                     Answer2Text = "Как понять, что мясо готово?",
@@ -214,7 +223,7 @@ public class DialogueSystemLevel1 : MonoBehaviour
 
                     AvatarPath = "Avatars/tyan",
 
-
+                    NameText = "Сестренка",
                     DialogueText = "Я же сказала, положи мясо на сковороду!",
 
                     NextBtnText = "Хорошо, хорошо...",
@@ -242,7 +251,7 @@ public class DialogueSystemLevel1 : MonoBehaviour
 
                     AvatarPath = "Avatars/tyan",
 
-
+                    NameText = "Сестренка",
                     DialogueText = "Зачем ты выкинул кусок отличной вырезки в мусорку? Ты ебобо?! Иди и возьми новый кусок мяса!",
 
                     NextBtnText = "Ой...",
@@ -266,6 +275,7 @@ public class DialogueSystemLevel1 : MonoBehaviour
 
                     AvatarPath = "Avatars/tyan2",
 
+                    NameText = "Сестренка",
                     DialogueText = "Готов жарить мясо?",
                     Answer1Text = "A что будет, если я его пережарю?",
                     Answer2Text = "Как понять, что мясо готово?",
@@ -299,7 +309,7 @@ public class DialogueSystemLevel1 : MonoBehaviour
 
                     AvatarPath = "Avatars/tyan",
 
-
+                    NameText = "Сестренка",
                     DialogueText = "Оно сгорит, глупенький! Что же оно ещё может сделать?!",
 
                     NextBtnText = "Ладно, ладно...",
@@ -322,7 +332,7 @@ public class DialogueSystemLevel1 : MonoBehaviour
 
                     AvatarPath = "Avatars/tyan2",
 
-
+                    NameText = "Сестренка",
                     DialogueText = "Все просто! Когда мясо покраснеет, оно будет готово!",
 
                     NextBtnText = "Окей",
@@ -346,7 +356,7 @@ public class DialogueSystemLevel1 : MonoBehaviour
 
                     AvatarPath = "Avatars/tyan",
 
-
+                    NameText = "Сестренка",
                     DialogueText = "Братик, ты испортил кусок отличного мяса! Постарайся так больше не делать.",
 
                     NextBtnText = "Хорошо",
@@ -370,7 +380,7 @@ public class DialogueSystemLevel1 : MonoBehaviour
 
                     AvatarPath = "Avatars/tyan",
 
-
+                    NameText = "Сестренка",
                     DialogueText = "Положи этот кусок хлеба, сейчас он тебе ещё не нужен.",
 
                     NextBtnText = "Хорошо",
@@ -394,7 +404,7 @@ public class DialogueSystemLevel1 : MonoBehaviour
 
                     AvatarPath = "Avatars/tyan2",
 
-
+                    NameText = "Сестренка",
                     DialogueText = "Отлично, а сейчас достань кусок хлеба из коробки.",
 
                     NextBtnText = "Хорошо",
@@ -418,7 +428,7 @@ public class DialogueSystemLevel1 : MonoBehaviour
 
                     AvatarPath = "Avatars/tyan",
 
-
+                    NameText = "Сестренка",
                     DialogueText = "Я попросила взять тебя кусок хлеба, а ты взял ещё один кусок мяса. Зачем?",
 
                     NextBtnText = "Оу...",
@@ -442,7 +452,7 @@ public class DialogueSystemLevel1 : MonoBehaviour
 
                     AvatarPath = "Avatars/tyan2",
 
-
+                    NameText = "Сестренка",
                     DialogueText = "Теперь просто сделай бутерброд на рабочем столе. Рецепт бутреброда можно посмотреть в книге рецептов. " +
                                    "(Рабочий стол работает по принципу положил в него нужные ингридиенты, нажал, получил продукт. Однако, если положить туда не те продукты, которые требуются, на выходе получишь что - то совсем иное...)",
 
@@ -467,7 +477,7 @@ public class DialogueSystemLevel1 : MonoBehaviour
 
                     AvatarPath = "Avatars/tyan",
 
-
+                    NameText = "Сестренка",
                     DialogueText =
                         "Не очень то похоже на сэндвич! Открой книгу рецептов, прочти её и попробуй снова! >_>",
 
@@ -492,7 +502,7 @@ public class DialogueSystemLevel1 : MonoBehaviour
 
                     AvatarPath = "Avatars/tyan",
 
-
+                    NameText = "Сестренка",
                     DialogueText =
                         "<_< Ты похерил всю еду на кухне! Фиговый из тебя повар, попробуй ещё раз. >_>",
 
@@ -517,14 +527,14 @@ public class DialogueSystemLevel1 : MonoBehaviour
 
                     AvatarPath = "Avatars/tyan2",
 
-
+                    NameText = "Сестренка",
                     DialogueText = "Думаю ты справишься с покупателями в первые дни. Главное не забудь читать книгу рецептов в поисках новых рецептов!",
 
                     NextBtnText = "Хорошо",
                     NextBtnCallback = () =>
                     {
                         Close();
-                        _stage = Stage.End;
+                        _stage = Stage.WaitForDroppingSandwichToSister;
                     }
                 }
             }
@@ -800,6 +810,8 @@ public class DialogueSystemLevel1 : MonoBehaviour
                 info.IsNextBtnVisible, info.IsAnswer1BtnVisible, info.IsAnswer2Visible, info.IsAnswer3Visible);
             _dialogueComponents.ChatText.text = null;
             _textCoroutine = TextCoroutine(info.DialogueText);
+            _dialogueComponents.NameText.text = null;
+            _dialogueComponents.NameText.text = info.NameText;
             _dialogueComponents.AvatarImage.sprite = Resources.Load<Sprite>(info.AvatarPath);
 
             _dialogueComponents.NextButtonText.text = info.NextBtnText;
@@ -826,8 +838,7 @@ public class DialogueSystemLevel1 : MonoBehaviour
     void Close()
     {
         _dialogueComponents.OffPanels();
-        print(_stage);
-        
+        //print(_stage);        
     }
 
     IEnumerator TextCoroutine(string text)

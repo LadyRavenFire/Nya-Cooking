@@ -1,14 +1,19 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class MeatGrinder : MonoBehaviour {
+public class MeatGrinder : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+{
 
     private Item _item;
     private Inventory _inventory;
     private bool _isCooking;
     private float _timer;
     private float _upgrade = 1f;
-    private SpriteRenderer _sprite;
+    private Image _sprite;
+
+    private bool _checkInFlag;
 
     private Dictionary<Item.Name, Dictionary<Item.StateOfPreparing, Dictionary<Item.StateOfIncision, float>>> _productTimers = new Dictionary<Item.Name, Dictionary<Item.StateOfPreparing, Dictionary<Item.StateOfIncision, float>>>
     {
@@ -61,14 +66,20 @@ public class MeatGrinder : MonoBehaviour {
     void Start()
     {
         _item = null;
+        _checkInFlag = false;
         _isCooking = false;
         _inventory = GameObject.FindGameObjectWithTag("Inventory").GetComponent<Inventory>();
         //print(_upgrade);
-        _sprite = gameObject.GetComponent<SpriteRenderer>();
+        _sprite = gameObject.GetComponent<Image>();
     }
 
     void Update()
     {
+        if (_checkInFlag)
+        {
+            CheckMouseUp();
+        }
+
         if (!IsEmpty() && _isCooking == false)
         {
             if (_item.ItemName == Item.Name.Meat)
@@ -109,36 +120,6 @@ public class MeatGrinder : MonoBehaviour {
     public void AddItem(Item item)
     {
         _item = item;
-    }
-
-    void OnMouseEnter()
-    {
-        _inventory.IsInOther();
-    }
-
-    void OnMouseExit()
-    {
-        _inventory.IsNotInOther();
-    }
-
-    void OnMouseOver()
-    {
-        if (IsEmpty() && Input.GetMouseButtonUp(0) && _inventory.IsDragged())
-        {
-            AddItem(_inventory.GiveDraggedItem());
-            _inventory.DeleteDraggedItem();
-        }
-
-        if (Input.GetMouseButtonUp(0) && _inventory.IsDragged() && !IsEmpty())
-        {
-            _inventory.ReturnInInventory();
-        }
-
-        if (Input.GetMouseButtonDown(0) && _isCooking)
-        {
-            _inventory.AddItem(_item);
-            DeleteItem();
-        }
     }
 
     void Prepare()
@@ -190,5 +171,38 @@ public class MeatGrinder : MonoBehaviour {
     public Item ReturnItem()
     {
         return _item;
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        _checkInFlag = true;
+        _inventory.IsInOther();
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        _checkInFlag = false;
+        _inventory.IsNotInOther();
+    }
+
+
+    void CheckMouseUp()
+    {
+        if (IsEmpty() && Input.GetMouseButtonUp(0) && _inventory.IsDragged())
+        {
+            AddItem(_inventory.GiveDraggedItem());
+            _inventory.DeleteDraggedItem();
+        }
+
+        if (Input.GetMouseButtonUp(0) && _inventory.IsDragged() && !IsEmpty())
+        {
+            _inventory.ReturnInInventory();
+        }
+
+        if (Input.GetMouseButtonDown(0) && _isCooking)
+        {
+            _inventory.AddItem(_item);
+            DeleteItem();
+        }
     }
 }

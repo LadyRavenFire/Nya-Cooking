@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
+
 
 // Скрипт описывающий работу верстака
 
-public class Workbench : MonoBehaviour {
+public class Workbench : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+{
 
 
     [SerializeField] private int _slotsCount = 5; ///TODO решить делать ли поле readonly
@@ -12,11 +15,13 @@ public class Workbench : MonoBehaviour {
 
     //public bool IsEnterCollider;
     public bool IsEmpty;
+    private bool _checkInFlag;
 
     private Inventory _inventory;
 
     void Start()
     {
+        _checkInFlag = false;
         _items = new Item[_slotsCount];
         for (int i = 0; i < _slotsCount; i++)
         {
@@ -27,7 +32,15 @@ public class Workbench : MonoBehaviour {
         _inventory = GameObject.FindGameObjectWithTag("Inventory").GetComponent<Inventory>();
     }
 
-    void OnMouseEnter()
+    void Update()
+    {
+        if (_checkInFlag)
+        {
+            CheckMouseUp();
+        }
+    }
+
+   /* void OnMouseEnter()
     {
         _inventory.IsInOther();
         //IsEnterCollider = true;
@@ -57,7 +70,7 @@ public class Workbench : MonoBehaviour {
         {
             CreateNewProduct();
         }
-    }
+    }*/
 
     public void AddItem(Item item)
     {
@@ -238,5 +251,38 @@ public class Workbench : MonoBehaviour {
     public Item ReturnItem(int i)
     {
         return _items[i];
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        _checkInFlag = true;
+        _inventory.IsInOther();
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        _checkInFlag = false;
+        _inventory.IsNotInOther();
+    }
+
+
+    void CheckMouseUp()
+    {
+        if (Input.GetMouseButtonUp(0) && _inventory.IsDragged() && IsPlace())
+        {
+            AddItem(_inventory.GiveDraggedItem());
+            _inventory.DeleteDraggedItem();
+        }
+
+        if (Input.GetMouseButtonUp(0) && _inventory.IsDragged() && !IsPlace())
+        {
+            _inventory.ReturnInInventory();
+        }
+
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            CreateNewProduct();
+        }
     }
 }

@@ -22,7 +22,6 @@ public class AspectRatio : MonoBehaviour {
         {
             camera.orthographicSize = camera.orthographicSize / scaleAspect;
         }
-
     }
 
 }
