@@ -7,6 +7,14 @@ TagManager:
   - ItemDataBase
   - Stove
   - Inventory
+  - Workbench
+  - Recipes
+  - Garbage
+  - LevelManager
+  - MoneyText
+  - PauseMenuButton
+  - PauseMenu
+  - MenuButton
   layers:
   - Default
   - TransparentFX
