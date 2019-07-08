@@ -3,51 +3,36 @@ using UnityEngine.EventSystems;
 
 // Скрипт описывающий мусорку
 
-public class Garbage : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class Garbage : MonoBehaviour
 {
-
     private Inventory _inventory;
-    private bool _checkInFlag;
+    private bool _itemInside;
+
     void Start()
     {
-        _checkInFlag = false;
+        _itemInside = false;
         _inventory = GameObject.FindGameObjectWithTag("Inventory").GetComponent<Inventory>();
     }
 
     void Update()
     {
-        if (_checkInFlag)
+        if (_itemInside)
         {
             CheckMouseUp();
         }
     }
 
-
-    void OnMouseExit()
+    void OnMouseEnter()
     {
-        _inventory.IsNotInOther();
-    }
-
-    void OnMouseOver()
-    {
-        if (Input.GetMouseButtonUp(0) && _inventory.IsDragged())
-        {
-                _inventory.DeleteDraggedItem();          
-        }
-    }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        _checkInFlag = true;
+        _itemInside = true;
         _inventory.IsInOther();
     }
 
-    public void OnPointerExit(PointerEventData eventData)
+    void OnMouseExit()
     {
-        _checkInFlag = false;
+        _itemInside = false;
         _inventory.IsNotInOther();
     }
-
 
     void CheckMouseUp()
     {

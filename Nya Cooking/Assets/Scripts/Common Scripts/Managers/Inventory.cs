@@ -46,13 +46,13 @@ public class Inventory : MonoBehaviour
         if (_isItemDragged)
         {
             var obj = GameObject.Find("Image0");
-            var rectransform = obj.GetComponent<RectTransform>();
+            var rectransform = obj.GetComponent<RectTransform>(); //Object reference not set to an instance of an object
             GUI.DrawTexture(
                 new Rect(Event.current.mousePosition.x - rectransform.rect.width/3, 
                          Event.current.mousePosition.y - rectransform.rect.height/3, 
                          rectransform.rect.width - rectransform.rect.width / 10, 
                          rectransform.rect.height - rectransform.rect.height / 10), 
-                _draggedItem.ItemIcon);
+                _draggedItem.ItemIcon.texture);
         }
     }
 
@@ -76,7 +76,7 @@ public class Inventory : MonoBehaviour
                 var temp = _slots[index];
                 if (temp != null)
                 {
-                    GUI.DrawTexture(obj2, temp.ItemIcon); // функция отрисовки предметов в инвентаре
+                    GUI.DrawTexture(obj2, temp.ItemIcon.texture); // функция отрисовки предметов в инвентаре
                     if (obj2.Contains(e.mousePosition))
                     {
                         if (e.button == 0 && e.type == EventType.MouseDrag && !_isItemDragged) 

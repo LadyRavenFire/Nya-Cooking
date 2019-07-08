@@ -6,7 +6,7 @@
 public class Item
 {
     public readonly Name ItemName; // название
-    public Texture2D ItemIcon; // иконка
+    public Sprite ItemIcon; // иконка
     public string TexturePath;
     public StateOfPreparing stateOfPreparing; // состояние приготовленности
     public StateOfIncision stateOfIncision; // состояние предварителности??? 
@@ -51,7 +51,11 @@ public class Item
     public void UpdateTexture()
     {
         TexturePath = "ItemIcons/" + this.ToString();
-        ItemIcon = Resources.Load<Texture2D>(TexturePath); //загружаем иконку по названию предмета
+        var sprite = Resources.Load<Sprite>(TexturePath);
+        if (sprite == null)
+            ItemIcon = Resources.Load<Sprite>("ItemIcons/NotFound");
+        else
+            ItemIcon = sprite; //загружаем иконку по названию предмета
     }
 
     public sealed override string ToString()

@@ -5,153 +5,54 @@ using UnityEngine.UI;
 
 // Скрипт описывающий печку
 
-public class Stove : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class Stove : Appliance
 {
-    private Item _item;
-    private Inventory _inventory;
-    private bool _isCooking;
-    private float _timer;
-    private float _upgrade = 1f;
-    private Image _sprite;
-
-    private bool _checkInFlag;
-
-    private Dictionary<Item.Name,Dictionary<Item.StateOfPreparing, Dictionary<Item.StateOfIncision, float>>> _productTimers = new Dictionary<Item.Name, Dictionary<Item.StateOfPreparing, Dictionary<Item.StateOfIncision, float>>>
-    {
-        {
-            Item.Name.Meat, new Dictionary<Item.StateOfPreparing, Dictionary<Item.StateOfIncision, float>>
-            {
-                {
-                    Item.StateOfPreparing.Raw, new Dictionary<Item.StateOfIncision, float>
-                    {
-                        {Item.StateOfIncision.Whole, 5},
-                        {Item.StateOfIncision.Cutted, 3},
-                        {Item.StateOfIncision.Forcemeat, 5},
-                        {Item.StateOfIncision.Grated, 666}
-                    }                    
-                },
-
-                {
-                    Item.StateOfPreparing.Fried, new Dictionary<Item.StateOfIncision, float>
-                    {
-                        {Item.StateOfIncision.Whole, 10},
-                        {Item.StateOfIncision.Cutted, 6666},
-                        {Item.StateOfIncision.Forcemeat, 10},
-                        {Item.StateOfIncision.Grated, 666}
-                    }
-                },
-
-                {
-                    Item.StateOfPreparing.Burnt, new Dictionary<Item.StateOfIncision, float>
-                    {
-                        {Item.StateOfIncision.Whole, 666},
-                        {Item.StateOfIncision.Cutted, 666},
-                        {Item.StateOfIncision.Forcemeat, 666},
-                        {Item.StateOfIncision.Grated, 666}
-                    }
-                },
-
-                {
-                    Item.StateOfPreparing.Cooked, new Dictionary<Item.StateOfIncision, float>
-                    {
-                        {Item.StateOfIncision.Whole, 666},
-                        {Item.StateOfIncision.Cutted, 666},
-                        {Item.StateOfIncision.Forcemeat, 666},
-                        {Item.StateOfIncision.Grated, 666}
-                    }
-                }
-            }
-        }
-    };
-
-    void Start()
-    {
-        _item = null;
-        _checkInFlag = false;
-        _isCooking = false;
-        _inventory = GameObject.FindGameObjectWithTag("Inventory").GetComponent<Inventory>();
-        //print(_upgrade);
-        _sprite = gameObject.GetComponent<Image>();
-    }
 
     void Update()
     {
-        if (_checkInFlag)
+        if (_itemIsInside)
         {
             CheckMouseUp();
         }
 
-        if (!IsEmpty() && _isCooking == false)
+        if (!IsEmpty && !_isCooking)
         {
-            if (_item.ItemName == Item.Name.Meat) // change later
-            {
-                _timer = _productTimers[_item.ItemName][_item.stateOfPreparing][_item.stateOfIncision];
-                if (_item.stateOfPreparing == Item.StateOfPreparing.Raw && _item.stateOfIncision == Item.StateOfIncision.Whole)
-                {               
-                    _sprite.sprite = Resources.Load<Sprite>("Kitchenware/Stove_with_Meat_Raw_Whole");
-                }              
-            }           
+            _timer = 4;                     
             _isCooking = true;
-        }       
-    }
-
-    public void Upgrade(float level)
-    {
-        _upgrade = level;
+            PlaceItem();
+        }
     }
 
     void FixedUpdate()
     {
-        if (_isCooking && !IsEmpty())
+        if (_isCooking && !IsEmpty)
         {
             PreparingTimer();
         }
     }
 
-    void DeleteItem()
-    {
-        _item = null;
-        _isCooking = false;
-
-        _sprite.sprite = Resources.Load<Sprite>("Kitchenware/Stove_empty");
-        _sprite.color = Color.white;
-
-    }
-
-    public void AddItem(Item item)
-    {
-        _item = item;
-    }
-
     void Prepare()
     {
-        if (_item.ItemName == Item.Name.Meat)
+        if (_item.stateOfPreparing == Item.StateOfPreparing.Raw)
         {
-            if (_item.stateOfPreparing == Item.StateOfPreparing.Raw)
-            {
-                print("Fried");
+            _item.stateOfPreparing = Item.StateOfPreparing.Fried;
+            _item.UpdateTexture();
 
-                _item.stateOfPreparing = Item.StateOfPreparing.Fried;
-                _item.UpdateTexture();
+            this.GetComponent<SpriteRenderer>().color = Color.yellow;
 
-                _sprite.color = Color.red; //need to delete later
+            _isCooking = false;
+            return;
+        }
 
-                _isCooking = false;
-                return;
-            }
+        else if (_item.stateOfPreparing == Item.StateOfPreparing.Fried)
+        {
+            _item.stateOfPreparing = Item.StateOfPreparing.Burnt;
+            _item.UpdateTexture();
 
-            else if (_item.stateOfPreparing == Item.StateOfPreparing.Fried)
-            {
-                print("Burnt");
+            this.GetComponent<SpriteRenderer>().color = Color.red;
 
-                _item.stateOfPreparing = Item.StateOfPreparing.Burnt;
-                _item.UpdateTexture();
-
-                _sprite.color = Color.black; //need to delete later
-
-                _isCooking = false;
-                return;
-            }
+            _isCooking = false;
+            return;
         }
     }
 
@@ -161,7 +62,7 @@ public class Stove : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         {
             if (_timer > 0)
             {
-                _timer-= (Time.deltaTime + Mathf.Log(_upgrade));
+                _timer -= (Time.deltaTime + Mathf.Log(_upgrade));
             }
 
             if (_timer <= 0)
@@ -171,44 +72,15 @@ public class Stove : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         }
     }
 
-   private bool IsEmpty()
-    {
-        if (_item == null)
-        {
-            return true;
-        }
-
-        return false;
-    }
-
-    public Item ReturnItem()
-    {
-        return _item;
-    }
-
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        _checkInFlag = true;
-        _inventory.IsInOther();
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        _checkInFlag = false;
-        _inventory.IsNotInOther();
-    }
-
-
     void CheckMouseUp()
     {
-        if (IsEmpty() && Input.GetMouseButtonUp(0) && _inventory.IsDragged())
+        if (IsEmpty && Input.GetMouseButtonUp(0) && _inventory.IsDragged())
         {
             AddItem(_inventory.GiveDraggedItem());
             _inventory.DeleteDraggedItem();
         }
 
-        if (Input.GetMouseButtonUp(0) && _inventory.IsDragged() && !IsEmpty())
+        if (Input.GetMouseButtonUp(0) && _inventory.IsDragged() && !IsEmpty)
         {
             _inventory.ReturnInInventory();
         }
@@ -219,5 +91,4 @@ public class Stove : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             DeleteItem();
         }
     }
-
 }

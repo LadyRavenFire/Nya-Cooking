@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 // Скрипт описывающий работу верстака
 
-public class Workbench : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class Workbench : MonoBehaviour
 {
 
 
@@ -253,13 +253,13 @@ public class Workbench : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         return _items[i];
     }
 
-    public void OnPointerEnter(PointerEventData eventData)
+    public void OnMouseEnter()
     {
         _checkInFlag = true;
         _inventory.IsInOther();
     }
 
-    public void OnPointerExit(PointerEventData eventData)
+    public void OnMouseExit()
     {
         _checkInFlag = false;
         _inventory.IsNotInOther();
