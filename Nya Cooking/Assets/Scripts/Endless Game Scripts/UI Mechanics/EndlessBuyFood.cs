@@ -7,24 +7,11 @@ using UnityEngine.UI;
 public class EndlessBuyFood : MonoBehaviour
 {
     private GameObject _buyMenuPanel;
-    private Button _exitBuyMenu;
-    private Button _buyMeat;
-    private Button _buyBread;
-    [SerializeField] private int _meatCost = 50;
-    [SerializeField] private int _breadCost = 40;
-
 
     // Use this for initialization
     void Start ()
 	{
 		_buyMenuPanel = GameObject.Find("BuyFoodPanel");
-	    _exitBuyMenu = GameObject.Find("ExitBuyButton").GetComponent<Button>();
-	    _buyBread = GameObject.Find("BreadBuyButton").GetComponent<Button>();
-	    _buyMeat = GameObject.Find("MeatBuyButton").GetComponent<Button>();
-	    
-        _buyBread.onClick.AddListener(() => BuyProduct(Item.Name.Bread));
-	    _buyMeat.onClick.AddListener(() => BuyProduct(Item.Name.Meat));
-        _exitBuyMenu.onClick.AddListener(ExitBuyMenu);
 
         _buyMenuPanel.SetActive(false);
     }
@@ -38,45 +25,30 @@ public class EndlessBuyFood : MonoBehaviour
         }
     }
 
-    void BuyProduct(Item.Name product)
+    public static void BuyProduct(Item.Name product)
     {
         var endlessGameVariables = GameObject.Find("LevelManager").GetComponent<EndlessGameVariables>();
-        if (endlessGameVariables.ReturnMoney() > 0)
+        var repositories = GameObject.FindGameObjectsWithTag("Repository");
+
+        //поиск коробки с подходящим продуктом
+        for (int i = 0; i < repositories.Length; i++)
         {
-            switch (product)
+            var box = repositories[i].GetComponent<Repository>();
+            if (box.StoredItemType != product) continue;
+            else
             {
-                case Item.Name.Bread:
-                    if (endlessGameVariables.ReturnMoney() - _breadCost > 0)
-                    {
-                        var repositoryWithBread = GameObject.Find("BoxWithBread").GetComponent<Repository>();
-                        repositoryWithBread.AddtoRepository(1, product);
-                        endlessGameVariables.AddMoney(-_breadCost);
-                        break;
-                    }
-                    else
-                    {
-                        break;
-                    }
-                case Item.Name.Meat:
-                    if (endlessGameVariables.ReturnMoney() - _meatCost > 0)
-                    {
-                        var repositoryWithMeat = GameObject.Find("BoxWithMeat").GetComponent<Repository>();
-                        repositoryWithMeat.AddtoRepository(1, Item.Name.Meat);
-                        endlessGameVariables.AddMoney(-_meatCost);
-                        break;
-                    }
-                    else
-                    {
-                        break;
-                    }                    
+                var price = new Catalog().GetPriceOf(product); //поиск цены в каталоге
+                if (endlessGameVariables.ReturnMoney() < price) break;
+
+                box.AddtoRepository(1, product);
+                endlessGameVariables.AddMoney(-price);
+                break;
             }
-        }
+        };
     }
 
-    void ExitBuyMenu()
+    public void ExitBuyMenu()
     {
         _buyMenuPanel.SetActive(false);
-        //Time.timeScale = 0f;
     }
-
 }

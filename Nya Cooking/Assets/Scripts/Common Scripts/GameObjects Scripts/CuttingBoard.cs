@@ -14,10 +14,7 @@ public class CuttingBoard : Appliance
 
         if (!IsEmpty && _isCooking == false)
         {
-            if (_item.ItemName == Item.Name.Meat)
-            {
-                _timer = 2f;         
-            }
+            _timer = 2f;         
             _isCooking = true;
             PlaceItem();
         }

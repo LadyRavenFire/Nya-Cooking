@@ -209,7 +209,7 @@ public class Workbench : MonoBehaviour
 
                 // значит, нет ни одного найденного рецепта и... 
                 // мы добавляем фигню в инвентарь
-                _inventory.AddItem(Item.Name.Ubisoft, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw, false);
+                _inventory.AddItem(Item.Name.Ubisoft, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw);
             }
             else
             {

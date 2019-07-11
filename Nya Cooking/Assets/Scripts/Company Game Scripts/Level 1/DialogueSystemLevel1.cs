@@ -235,7 +235,7 @@ public class DialogueSystemLevel1 : MonoBehaviour
                         _cuttingBoard.DeleteItem();
                         _grater.DeleteItem();
                         _pan.DeleteItem();
-                        _inventory.AddItem(Item.Name.Meat,Item.StateOfIncision.Whole,Item.StateOfPreparing.Raw,false);
+                        _inventory.AddItem(Item.Name.Meat,Item.StateOfIncision.Whole,Item.StateOfPreparing.Raw);
                     }
                 }
             },

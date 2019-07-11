@@ -14,8 +14,8 @@ public class Repository : MonoBehaviour
     private Inventory _inventory;
     private ItemDataBase _db;
 
-
-
+    public Item.Name StoredItemType { get { return _storedItemType; } }
+    
     void Start ()
     {
         _items = new Item[_slotsCount];
@@ -37,7 +37,7 @@ public class Repository : MonoBehaviour
             {
                 if (quantity > 0)
                 {
-                    _items[i] = _db.Generate(_storedItemType, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw, false);
+                    _items[i] = _db.Generate(_storedItemType, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw);
                     if (_isEmpty)
                     {
                         _isEmpty = false;

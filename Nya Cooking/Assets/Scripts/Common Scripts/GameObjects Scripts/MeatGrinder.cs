@@ -14,10 +14,7 @@ public class MeatGrinder : Appliance
 
         if (!IsEmpty && _isCooking == false)
         {
-            if (_item.ItemName == Item.Name.Meat)
-            {
-                _timer = 3;
-            }
+            _timer = 3;
             _isCooking = true;
             PlaceItem();
         }
@@ -34,18 +31,15 @@ public class MeatGrinder : Appliance
 
     void Prepare()
     {
-        if (_item.ItemName == Item.Name.Meat)
+        if (_item.stateOfIncision == Item.StateOfIncision.Whole)
         {
-            if (_item.stateOfIncision == Item.StateOfIncision.Whole)
-            {
-                print("ForceMeated");
+            print("ForceMeated");
                 
 
-                _item.stateOfIncision = Item.StateOfIncision.Forcemeat;
-                _item.UpdateTexture();
-                _isCooking = false;
-                return;
-            }
+            _item.stateOfIncision = Item.StateOfIncision.Forcemeat;
+            _item.UpdateTexture();
+            _isCooking = false;
+            return;
         }
     }
 

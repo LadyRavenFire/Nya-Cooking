@@ -19,14 +19,12 @@ public class Recipes : MonoBehaviour
             {
                 new Item(Item.Name.Meat,
                         Item.StateOfIncision.Whole,
-                        Item.StateOfPreparing.Raw,
-                        false),
+                        Item.StateOfPreparing.Raw),
                 new Item(Item.Name.Bread,
                         Item.StateOfIncision.Whole,
-                        Item.StateOfPreparing.Raw,
-                        false),
+                        Item.StateOfPreparing.Raw),
             },
-            Result = _db.Generate(Item.Name.Sandwich, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw, false)
+            Result = _db.Generate(Item.Name.Sandwich, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw)
 
         };
         Receipe recipe2 = new Receipe()
@@ -35,14 +33,12 @@ public class Recipes : MonoBehaviour
             {
                 new Item(Item.Name.Meat,
                     Item.StateOfIncision.Whole,
-                    Item.StateOfPreparing.Raw,
-                    false),
+                    Item.StateOfPreparing.Raw),
                 new Item(Item.Name.Meat,
                     Item.StateOfIncision.Whole,
-                    Item.StateOfPreparing.Raw,
-                    false)
+                    Item.StateOfPreparing.Raw)
             },
-            Result = _db.Generate(Item.Name.Meat, Item.StateOfIncision.Whole, Item.StateOfPreparing.Fried, false)
+            Result = _db.Generate(Item.Name.Meat, Item.StateOfIncision.Whole, Item.StateOfPreparing.Fried)
         };
         Receipes = new List<Receipe>() { recipe1, recipe2};
     }

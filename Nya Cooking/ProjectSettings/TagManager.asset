@@ -15,6 +15,7 @@ TagManager:
   - PauseMenuButton
   - PauseMenu
   - MenuButton
+  - Repository
   layers:
   - Default
   - TransparentFX

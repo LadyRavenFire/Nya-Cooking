@@ -125,13 +125,13 @@ public class Inventory : MonoBehaviour
         _slots[index] = null;
     }
 
-    public void AddItem(Item.Name name, Item.StateOfIncision stateOfIncision, Item.StateOfPreparing stateOfPreparing, bool isBreaded)
+    public void AddItem(Item.Name name, Item.StateOfIncision stateOfIncision, Item.StateOfPreparing stateOfPreparing)
     {
         for (int i = 0; i < _slots.Length; i++)
         {
             if (_slots[i] == null)
             {
-                _slots[i] = _database.Generate(name, stateOfIncision, stateOfPreparing, isBreaded);
+                _slots[i] = _database.Generate(name, stateOfIncision, stateOfPreparing);
                 break;
             }
         }

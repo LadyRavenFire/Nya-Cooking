@@ -13,6 +13,7 @@ public class EndlessGameVariables : MonoBehaviour {
     //need to be changed
     private Repository _repositoryWithMeat;
     private Repository _repositoryWithBread;
+    private Repository _repositoryWithPotato;
 
     //private Inventory _inventory;
     //TODO реализовать сохранение и загрузку предметов в инвентаре
@@ -26,6 +27,7 @@ public class EndlessGameVariables : MonoBehaviour {
 
         _repositoryWithBread = GameObject.Find("BoxWithBread").GetComponent<Repository>();
         _repositoryWithMeat = GameObject.Find("BoxWithMeat").GetComponent<Repository>();
+        _repositoryWithPotato = GameObject.Find("BoxWithPotato").GetComponent<Repository>();
 
         _menuButton.onClick.AddListener(GoToMainMenu);
 
@@ -46,6 +48,7 @@ public class EndlessGameVariables : MonoBehaviour {
         _repositoryWithBread.AddtoRepository(PlayerPrefs.GetInt("EndlessBreadInBox"), Item.Name.Bread);
         //print("SMTH");
         _repositoryWithMeat.AddtoRepository(PlayerPrefs.GetInt("EndlessMeatInBox"), Item.Name.Meat);
+        _repositoryWithPotato.AddtoRepository(5, Item.Name.Potato);
     }
 
     public void SaveToData()

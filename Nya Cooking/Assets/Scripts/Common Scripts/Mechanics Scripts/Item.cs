@@ -9,13 +9,13 @@ public class Item
     public Sprite ItemIcon; // иконка
     public string TexturePath;
     public StateOfPreparing stateOfPreparing; // состояние приготовленности
-    public StateOfIncision stateOfIncision; // состояние предварителности??? 
-    public bool IsBreaded; // запанированно (???)
+    public StateOfIncision stateOfIncision; // состояние предварителности???
 
     public enum Name
     {
         Meat, // Мясо
         Bread, // Хлеб
+        Potato, // Картошка
         Sandwich, // Бутер
         Ubisoft
     }
@@ -26,7 +26,6 @@ public class Item
         Burnt, // пережаренное
         Cooked, // сваренное
         Baked, // запеченное
-        Stew // тушеное // <- нафиг с пляжа
     }
 
     public enum StateOfIncision
@@ -34,16 +33,14 @@ public class Item
         Whole, //целое
         Cutted, //порезанное
         Grated, //тертое
-        Beaten, //отбитое
         Forcemeat //фарш
     }
 
-    public Item(Name name, StateOfIncision incision, StateOfPreparing preparing, bool isBreaded)
+    public Item(Name name, StateOfIncision incision, StateOfPreparing preparing)
     {
         ItemName = name;
         stateOfPreparing = preparing;
         stateOfIncision = incision;       
-        IsBreaded = isBreaded;
 
         UpdateTexture();
     }
@@ -74,8 +71,7 @@ public class Item
 
         return (item1.ItemName == item2.ItemName
                 && item1.stateOfIncision == item2.stateOfIncision
-                && item1.stateOfPreparing == item2.stateOfPreparing
-                && item1.IsBreaded == item2.IsBreaded);
+                && item1.stateOfPreparing == item2.stateOfPreparing);
     } 
 
     public static bool operator !=(Item item1, Item item2) 
@@ -89,8 +85,7 @@ public class Item
 
         return !(item1.ItemName == item2.ItemName
                 && item1.stateOfIncision == item2.stateOfIncision
-                && item1.stateOfPreparing == item2.stateOfPreparing
-                && item1.IsBreaded == item2.IsBreaded);
+                && item1.stateOfPreparing == item2.stateOfPreparing);
     }
 
     public override bool Equals(object item)
@@ -101,8 +96,7 @@ public class Item
 
         return (ItemName == item2.ItemName
                 && stateOfIncision == item2.stateOfIncision
-                && stateOfPreparing == item2.stateOfPreparing
-                && IsBreaded == item2.IsBreaded);
+                && stateOfPreparing == item2.stateOfPreparing);
     }
 
     public override int GetHashCode()
