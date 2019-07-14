@@ -11,8 +11,11 @@ public class Workbench : MonoBehaviour
 
 
     [SerializeField] private int _slotsCount = 5; ///TODO решить делать ли поле readonly
-    private Item[] _items;
+    [SerializeField] private GameObject[] _itemSprites = new GameObject[5];
+    [SerializeField] private GameObject _resultSprite;
 
+    private Item[] _items;
+    private Item _result;
     //public bool IsEnterCollider;
     public bool IsEmpty;
     private bool _checkInFlag;
@@ -29,6 +32,9 @@ public class Workbench : MonoBehaviour
         }
         //IsEnterCollider = false;
         IsEmpty = true;
+        _result = null;
+        foreach (var sprite in _itemSprites) sprite.SetActive(false);
+        _resultSprite.SetActive(false);
         _inventory = GameObject.FindGameObjectWithTag("Inventory").GetComponent<Inventory>();
     }
 
@@ -72,6 +78,21 @@ public class Workbench : MonoBehaviour
         }
     }*/
 
+    public void SetResult(Item result)
+    {
+        if (result == null)
+        {
+            _result = null;
+            _resultSprite.SetActive(false);
+        }
+        else
+        {
+            _result = result;
+            _resultSprite.GetComponent<SpriteRenderer>().sprite = _result.ItemIcon;
+            _resultSprite.SetActive(true);
+        }
+    }
+
     public void AddItem(Item item)
     {
         for (int i = 0; i < _items.Length; i++)
@@ -79,6 +100,8 @@ public class Workbench : MonoBehaviour
             if (_items[i] == null)
             {
                 _items[i] = item;
+                _itemSprites[i].GetComponent<SpriteRenderer>().sprite = item.ItemIcon;
+                _itemSprites[i].SetActive(true);
                 if (IsEmpty)
                 {
                     IsEmpty = false;
@@ -91,6 +114,7 @@ public class Workbench : MonoBehaviour
     void DeleteItem(int index)
     {
         _items[index] = null;
+        _itemSprites[index].SetActive(false);
         bool flag = false;
         for (int i = 0; i < _items.Length; i++)
         {
@@ -209,7 +233,7 @@ public class Workbench : MonoBehaviour
 
                 // значит, нет ни одного найденного рецепта и... 
                 // мы добавляем фигню в инвентарь
-                _inventory.AddItem(Item.Name.Ubisoft, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw);
+                SetResult(new Item(Item.Name.Ubisoft, Item.StateOfIncision.Whole, Item.StateOfPreparing.Raw));
             }
             else
             {
@@ -220,7 +244,9 @@ public class Workbench : MonoBehaviour
                 //print("result " + found.Result.ToString());
 
                 // и добавляем в инвентарь результат работы рецепта
-                _inventory.AddItem(found.Result);
+                //_inventory.AddItem(found.Result);
+
+                SetResult(found.Result);
             }
 
             // очищаем воркбенч
@@ -282,7 +308,13 @@ public class Workbench : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            CreateNewProduct();
+            if(_result == null)
+                CreateNewProduct();
+            else
+            {
+                _inventory.AddItem(_result);
+                SetResult(null);
+            }
         }
     }
 }

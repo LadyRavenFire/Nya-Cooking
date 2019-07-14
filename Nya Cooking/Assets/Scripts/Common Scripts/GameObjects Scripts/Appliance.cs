@@ -24,6 +24,7 @@ public class Appliance: MonoBehaviour
         _inventory = GameObject.FindGameObjectWithTag("Inventory").GetComponent<Inventory>();
     }
 
+
     private void OnMouseEnter()
     {
         _itemIsInside = true;
@@ -46,7 +47,6 @@ public class Appliance: MonoBehaviour
     {
         _item = null;
         _isCooking = false;
-        this.GetComponent<SpriteRenderer>().color = Color.white;
         _itemSprite.SetActive(false);
     }
 
@@ -64,6 +64,6 @@ public class Appliance: MonoBehaviour
     {
         var spriteRenderer = _itemSprite.GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = _item.ItemIcon;
-        spriteRenderer.transform.localScale = new Vector3(1, 1, 1);
+        //spriteRenderer.transform.localScale = new Vector3(1, 1, 1);
     }
 }

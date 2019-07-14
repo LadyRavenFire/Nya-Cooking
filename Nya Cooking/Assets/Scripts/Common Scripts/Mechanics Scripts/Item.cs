@@ -17,6 +17,7 @@ public class Item
         Bread, // Хлеб
         Potato, // Картошка
         Sandwich, // Бутер
+        MeatWithPotato, //всё что связано с мясом + картошкой
         Ubisoft
     }
     public enum StateOfPreparing

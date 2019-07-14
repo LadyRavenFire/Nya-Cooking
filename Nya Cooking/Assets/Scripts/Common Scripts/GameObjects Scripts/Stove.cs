@@ -38,8 +38,6 @@ public class Stove : Appliance
             _item.stateOfPreparing = Item.StateOfPreparing.Fried;
             _item.UpdateTexture();
 
-            this.GetComponent<SpriteRenderer>().color = Color.yellow;
-
             _isCooking = false;
             return;
         }
@@ -48,8 +46,6 @@ public class Stove : Appliance
         {
             _item.stateOfPreparing = Item.StateOfPreparing.Burnt;
             _item.UpdateTexture();
-
-            this.GetComponent<SpriteRenderer>().color = Color.red;
 
             _isCooking = false;
             return;

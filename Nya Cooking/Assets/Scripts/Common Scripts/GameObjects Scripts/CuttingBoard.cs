@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class CuttingBoard : Appliance
 {
+
     void Update()
     {
         if (_itemIsInside)

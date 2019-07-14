@@ -24,7 +24,6 @@ public class MeatGrinder : Appliance
     {
         if (_isCooking && !IsEmpty)
         {
-            this.GetComponent<SpriteRenderer>().color = Color.green;
             PreparingTimer();
         }
     }
