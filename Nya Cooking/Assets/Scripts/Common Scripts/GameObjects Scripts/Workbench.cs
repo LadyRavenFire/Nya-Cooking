@@ -2,6 +2,7 @@
 using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 
 // Скрипт описывающий работу верстака
@@ -10,21 +11,24 @@ public class Workbench : MonoBehaviour
 {
 
 
-    [SerializeField] private int _slotsCount = 5; ///TODO решить делать ли поле readonly
-    [SerializeField] private GameObject[] _itemSprites = new GameObject[5];
-    [SerializeField] private GameObject _resultSprite;
+    [SerializeField]
+    private int _slotsCount = 5; ///TODO решить делать ли поле readonly
+    [SerializeField]
+    private GameObject[] _itemSprites = new GameObject[5];
+    [SerializeField]
+    private GameObject _resultSprite;
 
     private Item[] _items;
     private Item _result;
     //public bool IsEnterCollider;
     public bool IsEmpty;
-    private bool _checkInFlag;
+    private bool _itemIsInside;
 
     private Inventory _inventory;
 
     void Start()
     {
-        _checkInFlag = false;
+        _itemIsInside = false;
         _items = new Item[_slotsCount];
         for (int i = 0; i < _slotsCount; i++)
         {
@@ -40,7 +44,7 @@ public class Workbench : MonoBehaviour
 
     void Update()
     {
-        if (_checkInFlag)
+        if (_itemIsInside)
         {
             CheckMouseUp();
         }
@@ -151,7 +155,7 @@ public class Workbench : MonoBehaviour
         if (!IsEmpty)
         {
             var receipe = GameObject.FindGameObjectWithTag("Recipes").GetComponent<Recipes>();
-            var recipes = receipe.Receipes;   
+            var recipes = receipe.RecipesList;   
 
             // Создаем структуру рецепт - был ли рецепт найден
             List<ReceipeFound> receipeFounds = recipes.Select(x => new ReceipeFound
@@ -269,40 +273,41 @@ public class Workbench : MonoBehaviour
         }
         return false;
     }
-    public int ReturnCount()
+
+    public void Cancel()
     {
-        return _slotsCount;
+        for (int i = 0; i < _items.Length; i++)
+        {
+            _inventory.AddItem(_items[i]);
+            _items[i] = null;
+            _itemSprites[i].SetActive(false);
+        }
     }
 
-    public Item ReturnItem(int i)
+    private void OnMouseEnter()
     {
-        return _items[i];
+        _itemIsInside = true;
+        _inventory.ItemTriggered = true;
     }
 
-    public void OnMouseEnter()
+    void OnMouseExit()
     {
-        _checkInFlag = true;
-        _inventory.IsInOther();
-    }
-
-    public void OnMouseExit()
-    {
-        _checkInFlag = false;
-        _inventory.IsNotInOther();
+        _itemIsInside = false;
+        _inventory.ItemTriggered = false;
     }
 
 
     void CheckMouseUp()
     {
-        if (Input.GetMouseButtonUp(0) && _inventory.IsDragged() && IsPlace())
+        if (Input.GetMouseButtonUp(0) && _inventory.ItemIsDragged() && IsPlace())
         {
-            AddItem(_inventory.GiveDraggedItem());
+            AddItem(_inventory.GetDraggedItem());
             _inventory.DeleteDraggedItem();
         }
 
-        if (Input.GetMouseButtonUp(0) && _inventory.IsDragged() && !IsPlace())
+        if (Input.GetMouseButtonUp(0) && _inventory.ItemIsDragged() && !IsPlace())
         {
-            _inventory.ReturnInInventory();
+            _inventory.ReturnDraggedItemInInventory();
         }
 
 

@@ -28,13 +28,13 @@ public class Appliance: MonoBehaviour
     private void OnMouseEnter()
     {
         _itemIsInside = true;
-        _inventory.IsInOther();
+        _inventory.ItemTriggered = true;
     }
 
     void OnMouseExit()
     {
         _itemIsInside = false;
-        _inventory.IsNotInOther();
+        _inventory.ItemTriggered = false;
     }
 
     public void AddItem(Item item)

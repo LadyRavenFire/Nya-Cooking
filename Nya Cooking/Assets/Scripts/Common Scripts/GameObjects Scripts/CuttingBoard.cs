@@ -61,15 +61,15 @@ public class CuttingBoard : Appliance
 
     void CheckMouseUp()
     {
-        if (IsEmpty && Input.GetMouseButtonUp(0) && _inventory.IsDragged())
+        if (IsEmpty && Input.GetMouseButtonUp(0) && _inventory.ItemIsDragged())
         {
-            AddItem(_inventory.GiveDraggedItem());
+            AddItem(_inventory.GetDraggedItem());
             _inventory.DeleteDraggedItem();
         }
 
-        if (Input.GetMouseButtonUp(0) && _inventory.IsDragged() && !IsEmpty)
+        if (Input.GetMouseButtonUp(0) && _inventory.ItemIsDragged() && !IsEmpty)
         {
-            _inventory.ReturnInInventory();
+            _inventory.ReturnDraggedItemInInventory();
         }
 
         if (Input.GetMouseButtonDown(0) && _isCooking)

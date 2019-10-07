@@ -25,18 +25,18 @@ public class Garbage : MonoBehaviour
     void OnMouseEnter()
     {
         _itemInside = true;
-        _inventory.IsInOther();
+        _inventory.ItemTriggered = true;
     }
 
     void OnMouseExit()
     {
         _itemInside = false;
-        _inventory.IsNotInOther();
+        _inventory.ItemTriggered = false;
     }
 
     void CheckMouseUp()
     {
-        if (Input.GetMouseButtonUp(0) && _inventory.IsDragged())
+        if (Input.GetMouseButtonUp(0) && _inventory.ItemIsDragged())
         {
             _inventory.DeleteDraggedItem();
         }

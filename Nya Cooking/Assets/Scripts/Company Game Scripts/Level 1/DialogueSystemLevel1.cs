@@ -258,7 +258,7 @@ public class DialogueSystemLevel1 : MonoBehaviour
                     NextBtnCallback = () =>
                     {
                         Close();
-                        _boxWithMeat.AddtoRepository(1, Item.Name.Meat);
+                        _boxWithMeat.AddtoRepository(1);
                         _stage = Stage.WaitForMeat;
                     }
                 }
@@ -575,7 +575,7 @@ public class DialogueSystemLevel1 : MonoBehaviour
                             {
                                 _stage = Stage.TakeBreadBeforeMeat;
                                 UpdateDialogue(_stage);
-                                _boxWithBread.AddtoRepository(1, Item.Name.Bread);
+                                _boxWithBread.AddtoRepository(1);
                                 _inventory.DeleteItem(i);
                                 break;                              
                             }
@@ -643,7 +643,7 @@ public class DialogueSystemLevel1 : MonoBehaviour
                         }
                     }
 
-                    if (_inventory.ReturnDraggedItem() != null)
+                    if (_inventory.GetDraggedItem() != null)
                     {
                         garbageFlag = false;
                     }
@@ -687,8 +687,8 @@ public class DialogueSystemLevel1 : MonoBehaviour
                             item.stateOfIncision != Item.StateOfIncision.Whole)
                         {
                             _inventory.DeleteItem(i);
-                            _boxWithBread.AddtoRepository(1, Item.Name.Bread);
-                            _boxWithMeat.AddtoRepository(1, Item.Name.Meat);
+                            _boxWithBread.AddtoRepository(1);
+                            _boxWithMeat.AddtoRepository(1);
                             _stage = Stage.CreateBadMeat;
                             UpdateDialogue(_stage);
                             break;
@@ -700,8 +700,8 @@ public class DialogueSystemLevel1 : MonoBehaviour
                             if (item.stateOfPreparing != Item.StateOfPreparing.Raw)
                             {
                                 _inventory.DeleteItem(i);
-                                _boxWithBread.AddtoRepository(1, Item.Name.Bread);
-                                _boxWithMeat.AddtoRepository(1, Item.Name.Meat);
+                                _boxWithBread.AddtoRepository(1);
+                                _boxWithMeat.AddtoRepository(1);
                                 _stage = Stage.CreateBadMeat;
                                 UpdateDialogue(_stage);
                                 break;
@@ -711,8 +711,8 @@ public class DialogueSystemLevel1 : MonoBehaviour
                         if (item.ItemName == Item.Name.Bread)
                         {
                             _inventory.DeleteItem(i);
-                            _boxWithBread.AddtoRepository(1, Item.Name.Bread);
-                            _boxWithMeat.AddtoRepository(1, Item.Name.Meat);
+                            _boxWithBread.AddtoRepository(1);
+                            _boxWithMeat.AddtoRepository(1);
                             _stage = Stage.TakeBreadWhenCreateWholeFriedMeat;
                             UpdateDialogue(_stage);
                             break;
@@ -739,7 +739,7 @@ public class DialogueSystemLevel1 : MonoBehaviour
                             _inventory.ReturnItem(i).stateOfIncision == Item.StateOfIncision.Whole)
                         {
                             _stage = Stage.TakeMeatBeforeBread;
-                            _boxWithMeat.AddtoRepository(1, Item.Name.Meat);
+                            _boxWithMeat.AddtoRepository(1);
                             _inventory.DeleteItem(i);
                             UpdateDialogue(_stage);
                             break;
@@ -766,8 +766,8 @@ public class DialogueSystemLevel1 : MonoBehaviour
                             _stage = Stage.DoBadThing;
                             UpdateDialogue(_stage);
                             _inventory.DeleteItem(i);
-                            _boxWithMeat.AddtoRepository(1, Item.Name.Meat);
-                            _boxWithBread.AddtoRepository(1, Item.Name.Bread);
+                            _boxWithMeat.AddtoRepository(1);
+                            _boxWithBread.AddtoRepository(1);
                             break;
                         }
 
@@ -777,15 +777,15 @@ public class DialogueSystemLevel1 : MonoBehaviour
 
                 if (emptyflag)
                 {
-                    if (_boxWithBread.IsEmptyRepository())
+                    if (_boxWithBread.IsEmpty)
                     {
-                        if (_boxWithMeat.IsEmptyRepository())
+                        if (_boxWithMeat.IsEmpty)
                         {
-                            if (_inventory.ReturnDraggedItem() == null)
+                            if (_inventory.GetDraggedItem() == null)
                             {
                                 _stage = Stage.LostAll;
-                                _boxWithBread.AddtoRepository(1, Item.Name.Bread);
-                                _boxWithMeat.AddtoRepository(1, Item.Name.Meat);
+                                _boxWithBread.AddtoRepository(1);
+                                _boxWithMeat.AddtoRepository(1);
                                 UpdateDialogue(_stage);
                                 break;
                             }

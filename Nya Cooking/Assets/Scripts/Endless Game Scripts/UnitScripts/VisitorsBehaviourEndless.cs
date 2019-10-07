@@ -86,27 +86,18 @@ public class VisitorsBehaviourEndless : MonoBehaviour
         }
     }
 
-    void OnMouseEnter()
-    {
-        _inventory.IsInOther();
-    }
-
-    void OnMouseExit()
-    {
-        _inventory.IsNotInOther();
-    }
 
     void OnMouseOver()
     {
-        if (Input.GetMouseButtonUp(0) && _inventory.IsDragged() && IsClientIn)
+        if (Input.GetMouseButtonUp(0) && _inventory.ItemIsDragged() && IsClientIn)
         {
-            AddItem(_inventory.GiveDraggedItem());
+            AddItem(_inventory.GetDraggedItem());
             _inventory.DeleteDraggedItem();
         }
 
-        if (Input.GetMouseButtonUp(0) && _inventory.IsDragged() && !IsClientIn)
+        if (Input.GetMouseButtonUp(0) && _inventory.ItemIsDragged() && !IsClientIn)
         {
-            _inventory.ReturnInInventory();
+            _inventory.ReturnDraggedItemInInventory();
         }
     }
 
@@ -125,8 +116,8 @@ public class VisitorsBehaviourEndless : MonoBehaviour
     void NeedItemCreate()
     {
         var receipe = GameObject.FindGameObjectWithTag("Recipes").GetComponent<Recipes>();
-        var number = RandomCreate.Random.Next(0, receipe.Receipes.Count);
-        _itemNeed = receipe.Receipes[number].Result;
+        var number = RandomCreate.Random.Next(0, receipe.RecipesList.Count);
+        _itemNeed = receipe.RecipesList[number].Result;
 
         //warning need to change
         SpriteFood.SetActive(true);

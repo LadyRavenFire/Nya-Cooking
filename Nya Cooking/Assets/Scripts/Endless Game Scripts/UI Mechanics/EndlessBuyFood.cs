@@ -8,11 +8,9 @@ public class EndlessBuyFood : MonoBehaviour
 {
     private GameObject _buyMenuPanel;
 
-    // Use this for initialization
     void Start ()
 	{
 		_buyMenuPanel = GameObject.Find("BuyFoodPanel");
-
         _buyMenuPanel.SetActive(false);
     }
 
@@ -30,21 +28,15 @@ public class EndlessBuyFood : MonoBehaviour
         var endlessGameVariables = GameObject.Find("LevelManager").GetComponent<EndlessGameVariables>();
         var repositories = GameObject.FindGameObjectsWithTag("Repository");
 
-        //поиск коробки с подходящим продуктом
-        for (int i = 0; i < repositories.Length; i++)
-        {
-            var box = repositories[i].GetComponent<Repository>();
-            if (box.StoredItemType != product) continue;
-            else
-            {
-                var price = new Catalog().GetPriceOf(product); //поиск цены в каталоге
-                if (endlessGameVariables.ReturnMoney() < price) break;
+        var catalog = FindObjectOfType<Catalog>();
+        var price = catalog.GetPriceOf(product);
 
-                box.AddtoRepository(1, product);
-                endlessGameVariables.AddMoney(-price);
-                break;
-            }
-        };
+
+        if (endlessGameVariables.ReturnMoney() >= price)
+        {
+            catalog.GetRepository(product).AddtoRepository(1);
+            endlessGameVariables.AddMoney(-price);
+        }
     }
 
     public void ExitBuyMenu()

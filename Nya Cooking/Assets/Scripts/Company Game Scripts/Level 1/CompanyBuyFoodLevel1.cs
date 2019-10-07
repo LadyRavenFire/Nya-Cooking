@@ -46,7 +46,7 @@ public class CompanyBuyFoodLevel1 : MonoBehaviour {
                     if (endlessGameVariables.ReturnMoney() - _breadCost > 0)
                     {
                         var repositoryWithBread = GameObject.Find("BoxWithBread").GetComponent<Repository>();
-                        repositoryWithBread.AddtoRepository(1, product);
+                        repositoryWithBread.AddtoRepository(1);
                         endlessGameVariables.AddMoney(-_breadCost);
                         break;
                     }
@@ -58,7 +58,7 @@ public class CompanyBuyFoodLevel1 : MonoBehaviour {
                     if (endlessGameVariables.ReturnMoney() - _meatCost > 0)
                     {
                         var repositoryWithMeat = GameObject.Find("BoxWithMeat").GetComponent<Repository>();
-                        repositoryWithMeat.AddtoRepository(1, Item.Name.Meat);
+                        repositoryWithMeat.AddtoRepository(1);
                         endlessGameVariables.AddMoney(-_meatCost);
                         break;
                     }

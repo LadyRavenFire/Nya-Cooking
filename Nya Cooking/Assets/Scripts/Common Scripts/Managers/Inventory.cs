@@ -8,130 +8,75 @@ using UnityEngine;
 public class Inventory : MonoBehaviour
 {
     [SerializeField]
-    private int SlotsX = 5 , SlotsY = 1; // количество слотов инвентаря в длинну и высоту
-    private Item[] _slots;
-
+    private int SlotsX = 8 , SlotsY = 1; // количество слотов инвентаря в длинну и высоту
+    private float slotSize;
     public GUISkin Skin; // скин инвентаря (ака текстурка)
-    private bool _isItemInOtherGameobject;
 
-    private bool _pauseInventory;
-
-    private bool _isItemDragged;
+    private Item[] _items;
     private Item _draggedItem;
-    private int _prevIndex;
 
-    private ItemDataBase _database;
+    public bool ItemTriggered;
+    
+    private bool _onPause;
 
     void Start()
     {
-        _pauseInventory = false;
-        _isItemInOtherGameobject = false;
-        _slots = new Item[SlotsX*SlotsY];
+        _onPause = false;
+        _items = new Item[SlotsX*SlotsY];
         for (int i = 0; i < (SlotsX*SlotsY); i++) 
         {
-            _slots[i] = null;
+            _items[i] = null;
         }
-
-        _database = GameObject.FindGameObjectWithTag("ItemDataBase").GetComponent<ItemDataBase>();
         
     }
 
     void OnGUI()
     {
+        if (!_onPause) DrawInventorySlots();
+    }
+
+    void DrawInventorySlots()
+    {
         GUI.skin = Skin;
-        if (!_pauseInventory)
-        {
-            DrawInventory();
-        }        
-        if (_isItemDragged)
-        {
-            var obj = GameObject.Find("Image0");
-            var rectransform = obj.GetComponent<RectTransform>(); //Object reference not set to an instance of an object
-            GUI.DrawTexture(
-                new Rect(Event.current.mousePosition.x - rectransform.rect.width/3, 
-                         Event.current.mousePosition.y - rectransform.rect.height/3, 
-                         rectransform.rect.width - rectransform.rect.width / 10, 
-                         rectransform.rect.height - rectransform.rect.height / 10), 
-                _draggedItem.ItemIcon.texture);
-        }
-    }
-
-    void DrawInventory()
-    {
         Event e = Event.current;
-        int index = 0;
-        for (int y = 0; y < SlotsY; y++)
+        slotSize = Screen.width * 0.8f / SlotsX - 10;
+
+        for (int x = 0; x < SlotsX; x++)
         {
-            for (int x = 0; x < SlotsX; x++)
+            var slotRect = new Rect(Screen.width * 0.1f + x * (slotSize + 10) + 5, Screen.height - slotSize, slotSize, slotSize);
+
+            //Проверяем нажатие на слот инвентаря
+            if (slotRect.Contains(e.mousePosition) && e.type == EventType.MouseDown)
             {
-                //пытаюсь оптимизировать под разные разешения, что бы инвентарь подстраивался и всегда был по середине и не мелким и не большим. Пока идет так себе.
-                //Rect slotRect = new Rect(((Screen.width / 5) + x * 80), ((Screen.height - (Screen.height / 8)) + (y * 80)), 70, 70); // функция отрисовки ячеек инвентаря               
-                //GUI.Box(slotRect, "", Skin.GetStyle("Slot")); // функция отрисовки ячеек инвентаря
-                var obj = GameObject.Find("Image" + x);
-                var rectransform = obj.GetComponent<RectTransform>();
-                Rect obj2 = new Rect(obj.transform.position.x + rectransform.rect.width/20,
-                                     Screen.height - obj.transform.position.y + rectransform.rect.height/20,
-                                     rectransform.rect.width - rectransform.rect.width/10,
-                                     rectransform.rect.height - rectransform.rect.height/10);
-                var temp = _slots[index];
-                if (temp != null)
-                {
-                    GUI.DrawTexture(obj2, temp.ItemIcon.texture); // функция отрисовки предметов в инвентаре
-                    if (obj2.Contains(e.mousePosition))
-                    {
-                        if (e.button == 0 && e.type == EventType.MouseDrag && !_isItemDragged) 
-                        {
-                            _isItemDragged = true;
-                            _prevIndex = index;
-                            _draggedItem = temp;
-                            RemoveItem(index);
-                        }
-
-                        if (e.type == EventType.MouseUp && _isItemDragged)
-                        {
-                            _slots[_prevIndex] = _slots[index];
-                            _slots[index] = _draggedItem;
-                            _isItemDragged = false;
-                            _draggedItem = null;
-                        }
-                    }
-                }
-                else
-                {
-                    if (obj2.Contains(e.mousePosition))
-                    {
-                        if (e.type == EventType.MouseUp && _isItemDragged)
-                        {
-                            _slots[index] = _draggedItem;
-                            _isItemDragged = false;
-                            _draggedItem = null;
-                        }
-                    }
-                }
-                index++;
+                //выбираем предмет при нажатии на него
+                _draggedItem = _items[x];
+                _items[x] = null;
             }
-        }
+            if (_draggedItem != null && e.type == EventType.MouseUp && !ItemTriggered) ReturnDraggedItemInInventory();
 
-        if (e.type == EventType.MouseUp && _isItemDragged && !_isItemInOtherGameobject)
-        {
-            _slots[_prevIndex] = _draggedItem;
-            _isItemDragged = false;
-            _draggedItem = null;
+            //отрисовка слота
+            GUI.DrawTexture(slotRect, Resources.Load<Texture>("UI/cell"), ScaleMode.StretchToFill);
+
+            //отрисовка перетаскиваемого предмета
+            if (_draggedItem != null)
+                GUI.DrawTexture(new Rect(e.mousePosition.x - slotSize / 2, e.mousePosition.y - slotSize / 2, slotSize, slotSize),
+                    _draggedItem.ItemIcon.texture, ScaleMode.StretchToFill);
+
+            //отрисовка предмета в слоте
+            if (_items[x] != null)
+                    GUI.DrawTexture(slotRect, _items[x].ItemIcon.texture, ScaleMode.StretchToFill);
         }
     }
 
-    void RemoveItem(int index)
-    {
-        _slots[index] = null;
-    }
+    
 
     public void AddItem(Item.Name name, Item.StateOfIncision stateOfIncision, Item.StateOfPreparing stateOfPreparing)
     {
-        for (int i = 0; i < _slots.Length; i++)
+        for (int i = 0; i < _items.Length; i++)
         {
-            if (_slots[i] == null)
+            if (_items[i] == null)
             {
-                _slots[i] = _database.Generate(name, stateOfIncision, stateOfPreparing);
+                _items[i] = new Item(name, stateOfIncision, stateOfPreparing);
                 break;
             }
         }
@@ -139,57 +84,47 @@ public class Inventory : MonoBehaviour
 
     public void AddItem(Item item)
     {
-        for (int i = 0; i < _slots.Length; i++)
+        for (int i = 0; i < SlotsX; i++)
         {
-            if (_slots[i] == null)
+            if (_items[i] == null)
             {
-                _slots[i] = item;
+                _items[i] = item;
                 break;
             }
         }
+        
     }
 
-    public bool IsDragged()
+    public bool ItemIsDragged()
     {
-        return _isItemDragged;
+        return _draggedItem != null;
     }
 
     public void DeleteDraggedItem()
     {
         _draggedItem = null;
-        _isItemDragged = false;        
+        //_draggedItem = null;    
     }
 
-    public void IsInOther()
-    {
-        _isItemInOtherGameobject = true;
-    }
-
-    public void IsNotInOther()
-    {
-        _isItemInOtherGameobject = false;
-    }
-
-    public Item GiveDraggedItem()
+    public Item GetDraggedItem()
     {
         return _draggedItem;
     }
 
-    public void ReturnInInventory()
+    public void ReturnDraggedItemInInventory()
     {
-        _slots[_prevIndex] = _draggedItem;
-        _isItemDragged = false;
+        AddItem(_draggedItem);
         _draggedItem = null;
     }
 
     public void OffInventory()
     {
-        _pauseInventory = true;
+        _onPause = true;
     }
 
     public void OnInventory()
     {
-        _pauseInventory = false;
+        _onPause = false;
     }
 
     public int ReturnSlots()
@@ -199,24 +134,19 @@ public class Inventory : MonoBehaviour
 
     public Item ReturnItem(int i)
     {
-        return _slots[i];
-    }
-
-    public Item ReturnDraggedItem()
-    {
-        return _draggedItem;
+        return _items[i];
     }
 
     public void Clear()
     {
         for (int i = 0; i < SlotsX; i++)
         {
-            _slots[i] = null;
+            _items[i] = null;
         }
     }
 
     public void DeleteItem(int i)
     {
-        _slots[i] = null;
+        _items[i] = null;
     }
 }

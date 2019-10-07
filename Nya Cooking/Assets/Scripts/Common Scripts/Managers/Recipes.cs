@@ -7,7 +7,7 @@ public class Recipes : MonoBehaviour
 {
 
     private ItemDataBase _db;
-    public List<Receipe> Receipes;
+    public List<Receipe> RecipesList;
 
     void Start()
     {
@@ -58,7 +58,7 @@ public class Recipes : MonoBehaviour
             },
             Result = _db.Generate(Item.Name.Meat, Item.StateOfIncision.Whole, Item.StateOfPreparing.Fried)
         };
-        Receipes = new List<Receipe>() { potatoWithMeat, sandwich, recipe2};
+        RecipesList = new List<Receipe>() { potatoWithMeat, sandwich, recipe2};
     }
 
     public class Receipe

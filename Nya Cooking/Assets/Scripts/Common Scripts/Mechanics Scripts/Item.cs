@@ -16,6 +16,7 @@ public class Item
         Meat, // Мясо
         Bread, // Хлеб
         Potato, // Картошка
+        Tomato, // Помидорка
         Sandwich, // Бутер
         MeatWithPotato, //всё что связано с мясом + картошкой
         Ubisoft

@@ -12,6 +12,6 @@ class BuyButton: MonoBehaviour
     {
         GetComponent<Button>().onClick.AddListener( () => EndlessBuyFood.BuyProduct(_buyItemType) );
         //подписываем цену согласно каталогу
-        GetComponentInChildren<Text>().text = new Catalog().GetPriceOf(_buyItemType).ToString();
+        GetComponentInChildren<Text>().text = FindObjectOfType<Catalog>().GetPriceOf(_buyItemType).ToString();
     }
 }

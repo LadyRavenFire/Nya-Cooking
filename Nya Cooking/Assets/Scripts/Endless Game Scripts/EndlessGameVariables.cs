@@ -45,17 +45,17 @@ public class EndlessGameVariables : MonoBehaviour {
         //print(PlayerPrefs.GetInt("EndlessGameMoney"));
         _money = PlayerPrefs.GetInt("EndlessGameMoney");
         //print(_repositoryWithBread);
-        _repositoryWithBread.AddtoRepository(PlayerPrefs.GetInt("EndlessBreadInBox"), Item.Name.Bread);
+        _repositoryWithBread.AddtoRepository(PlayerPrefs.GetInt("EndlessBreadInBox"));
         //print("SMTH");
-        _repositoryWithMeat.AddtoRepository(PlayerPrefs.GetInt("EndlessMeatInBox"), Item.Name.Meat);
-        _repositoryWithPotato.AddtoRepository(5, Item.Name.Potato);
+        _repositoryWithMeat.AddtoRepository(PlayerPrefs.GetInt("EndlessMeatInBox"));
+        _repositoryWithPotato.AddtoRepository(5);
     }
 
     public void SaveToData()
     {
         PlayerPrefs.SetInt("EndlessGameMoney", _money);
-        PlayerPrefs.SetInt("EndlessMeatInBox", _repositoryWithMeat.CountOfItemsInRepository());
-        PlayerPrefs.SetInt("EndlessBreadInBox", _repositoryWithBread.CountOfItemsInRepository());
+        PlayerPrefs.SetInt("EndlessMeatInBox", _repositoryWithMeat.ItemsCount);
+        PlayerPrefs.SetInt("EndlessBreadInBox", _repositoryWithBread.ItemsCount);
     }
 
     void GoToMainMenu()

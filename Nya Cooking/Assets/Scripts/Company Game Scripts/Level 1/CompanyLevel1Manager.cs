@@ -50,16 +50,16 @@ public class CompanyLevel1Manager : MonoBehaviour {
         //print(PlayerPrefs.GetInt("EndlessGameMoney"));
         _money = PlayerPrefs.GetInt("CompanyGameMoney");
         //print(_repositoryWithBread);
-        _repositoryWithBread.AddtoRepository(PlayerPrefs.GetInt("CompanyBreadInBox"), Item.Name.Bread);
+        _repositoryWithBread.AddtoRepository(PlayerPrefs.GetInt("CompanyBreadInBox"));
         //print("SMTH");
-        _repositoryWithMeat.AddtoRepository(PlayerPrefs.GetInt("CompanyMeatInBox"), Item.Name.Meat);
+        _repositoryWithMeat.AddtoRepository(PlayerPrefs.GetInt("CompanyMeatInBox"));
     }
 
     public void SaveToData()
     {
         PlayerPrefs.SetInt("CompanyGameMoney", _money);
-        PlayerPrefs.SetInt("CompanyBreadInBox", _repositoryWithMeat.CountOfItemsInRepository());
-        PlayerPrefs.SetInt("CompanyMeatInBox", _repositoryWithBread.CountOfItemsInRepository());
+        PlayerPrefs.SetInt("CompanyBreadInBox", _repositoryWithMeat.ItemsCount);
+        PlayerPrefs.SetInt("CompanyMeatInBox", _repositoryWithBread.ItemsCount);
     }
 
     void GoToMainMenu()
